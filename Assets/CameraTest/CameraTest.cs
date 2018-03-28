@@ -18,13 +18,15 @@ public class CameraTest : MonoBehaviour
 
     private IEnumerator Start()
     {
+        yield return Application.RequestUserAuthorization(UserAuthorization.WebCam);
+
         if (WebCamTexture.devices.Length == 0)
         {
             _Text.text += "カメラのデバイスが無い様だ。撮影は諦めよう。\n";
             yield break;
         }
 
-        yield return Application.RequestUserAuthorization(UserAuthorization.WebCam);
+
         if (!Application.HasUserAuthorization(UserAuthorization.WebCam))
         {
             _Text.text += "カメラを使うことが許可されていないようだ。市役所に届けでてくれ！\n";
