@@ -46,7 +46,7 @@ public class Main_AlbumViewer : MonoBehaviour {
         int NumOfLoding = 0;
         for (int i = 0, size = list.Length; i < size; ++i)
         {
-            while (NumOfLoding <= _MaxSyncLoadNum) yield return null;
+            while (NumOfLoding > _MaxSyncLoadNum) yield return null;
 
             var obj = Instantiate(_Prefab_Node);
             obj.transform.SetParent(_ScrollViewContent, false);
