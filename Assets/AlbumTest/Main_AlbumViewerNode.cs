@@ -12,6 +12,13 @@ public class Main_AlbumViewerNode : MonoBehaviour {
     //[SerializeField]
     //private LayoutElement _LayoutElement;
 
+    private Main_AlbumViewer _ParentComponent;
+
+    public void Init(Main_AlbumViewer parent)
+    {
+        _ParentComponent = parent;
+    }
+
     public void ImageCallBack(Texture texture)
     {
         this.texture = texture;
@@ -40,5 +47,10 @@ public class Main_AlbumViewerNode : MonoBehaviour {
         //        _LayoutElement.preferredWidth = texture.width * q;
         //    }
         //}
+    }
+
+    public void OpenZoomPicture()
+    {
+        _ParentComponent.OpenZoomPicture(_Image.sprite);
     }
 }

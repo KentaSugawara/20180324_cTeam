@@ -20,6 +20,7 @@ public class Main_AlbumViewer : MonoBehaviour {
 
     public void Init()
     {
+        _ZoomImage.gameObject.SetActive(false);
         ClearListInstance();
         ListUpTextures();
     }
@@ -38,6 +39,7 @@ public class Main_AlbumViewer : MonoBehaviour {
             obj.transform.SetParent(_ScrollViewContent, false);
 
             var component = obj.GetComponent<Main_AlbumViewerNode>();
+            component.Init(this);
             _ScrollViewNodes.Add(component);
             _DataFileManager.InputTexture(list[i], component.ImageCallBack);
         }
@@ -50,5 +52,19 @@ public class Main_AlbumViewer : MonoBehaviour {
             Destroy(node.gameObject);
         }
         _ScrollViewNodes.Clear();
+    }
+
+    [SerializeField]
+    private Image _ZoomImage;
+
+    public void OpenZoomPicture(Sprite sprite)
+    {
+        _ZoomImage.gameObject.SetActive(true);
+        _ZoomImage.sprite = sprite;
+    }
+
+    public void CloseZoomPicture()
+    {
+        _ZoomImage.gameObject.SetActive(false);
     }
 }
