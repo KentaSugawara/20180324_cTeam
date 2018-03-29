@@ -22,7 +22,9 @@ public class Main_AlbumViewerNode : MonoBehaviour {
     public void ImageCallBack(Texture texture)
     {
         this.texture = texture;
-        _Image.sprite = Sprite.Create((Texture2D)texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+        //_Image.sprite = Sprite.Create((Texture2D)texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+        _Image.material = new Material(_Image.material);
+        _Image.material.mainTexture = texture;
         //Debug.Log("width" + texture.width);
         //Debug.Log("height" + texture.height);
         //if (texture.width >= texture.height)
@@ -51,6 +53,6 @@ public class Main_AlbumViewerNode : MonoBehaviour {
 
     public void OpenZoomPicture()
     {
-        _ParentComponent.OpenZoomPicture(_Image.sprite);
+        _ParentComponent.OpenZoomPicture(_Image.material.mainTexture);
     }
 }

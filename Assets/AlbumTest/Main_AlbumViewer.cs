@@ -21,6 +21,7 @@ public class Main_AlbumViewer : MonoBehaviour {
     public void Init()
     {
         _ZoomImage.gameObject.SetActive(false);
+        _ZoomImage.material = new Material(_ZoomImage.material);
         ClearListInstance();
         ListUpTextures();
     }
@@ -57,10 +58,10 @@ public class Main_AlbumViewer : MonoBehaviour {
     [SerializeField]
     private Image _ZoomImage;
 
-    public void OpenZoomPicture(Sprite sprite)
+    public void OpenZoomPicture(Texture texture)
     {
         _ZoomImage.gameObject.SetActive(true);
-        _ZoomImage.sprite = sprite;
+        _ZoomImage.material.mainTexture = texture;
     }
 
     public void CloseZoomPicture()
