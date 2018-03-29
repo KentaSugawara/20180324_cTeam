@@ -72,17 +72,17 @@ public class Main_DataFileManager : MonoBehaviour {
     }
 
     public delegate void ImageCallBack(Texture texture);
-    public void InputTexture(FileInfo file, ImageCallBack callback)
+    public void InputTexture(FileInfo file, ImageCallBack callback, System.Action endcallback)
     {
         if (!file.Exists)
         {
             return;
         }
 
-        StartCoroutine(Routine_LoadImage(file.FullName, callback));
+        StartCoroutine(Routine_LoadImage(file.FullName, callback, endcallback));
     }
 
-    IEnumerator Routine_LoadImage(string FilePath, ImageCallBack callback)
+    IEnumerator Routine_LoadImage(string FilePath, ImageCallBack callback, System.Action endcallback)
     {
         using (WWW www = new WWW("file:///" + FilePath))
         {
@@ -91,6 +91,7 @@ public class Main_DataFileManager : MonoBehaviour {
 
             callback(www.texture);
         }
+        endcallback();
     }
 
     public void CreateFile_AlbumDataList(FileInfo file)

@@ -16,6 +16,9 @@ public class Main_AlbumViewer : MonoBehaviour {
     [SerializeField]
     private GameObject _Prefab_Node;
 
+    [SerializeField, Range(1, 30)]
+    private int _MaxSyncLoadNum = 1;
+
     private List<Main_AlbumViewerNode> _ScrollViewNodes = new List<Main_AlbumViewerNode>();
 
     public void Init()
@@ -33,16 +36,26 @@ public class Main_AlbumViewer : MonoBehaviour {
 
     public void ListUpTextures()
     {
+        StartCoroutine(Routine_ListUpTextures());
+    }
+
+    private IEnumerator Routine_ListUpTextures()
+    {
         var list = _DataFileManager.GetAllTexturePath_png();
+
+        int NumOfLoding = 0;
         for (int i = 0, size = list.Length; i < size; ++i)
         {
+            while (NumOfLoding <= _MaxSyncLoadNum) yield return null;
+
             var obj = Instantiate(_Prefab_Node);
             obj.transform.SetParent(_ScrollViewContent, false);
 
             var component = obj.GetComponent<Main_AlbumViewerNode>();
             component.Init(this);
             _ScrollViewNodes.Add(component);
-            _DataFileManager.InputTexture(list[i], component.ImageCallBack);
+            ++NumOfLoding;
+            _DataFileManager.InputTexture(list[i], component.ImageCallBack, () => --NumOfLoding);
         }
     }
 
