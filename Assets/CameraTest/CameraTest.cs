@@ -47,4 +47,6 @@ public class CameraTest : MonoBehaviour
         // さあ、撮影開始だ！
         m_webCamTexture.Play();
     }
+
+    public WebCamTexture camTex { get { return m_webCamTexture; } }
 }
