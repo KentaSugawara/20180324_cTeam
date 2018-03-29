@@ -29,6 +29,11 @@ public class SerchingEgg : MonoBehaviour
         yield break;
     }
 
+    private void Update()
+    {
+        obj.transform.Translate(Vector3.right);
+    }
+
     private void OnGUI()
     {
 
@@ -38,6 +43,7 @@ public class SerchingEgg : MonoBehaviour
 
     IEnumerator MainCoroutine()
     {
+        obj.transform.position = m_eggObj.transform.position;
         ObjApper(true);
         m_kudanTracker.m_isSearching = true;
 
