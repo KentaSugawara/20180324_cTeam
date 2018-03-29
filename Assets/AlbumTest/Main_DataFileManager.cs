@@ -7,55 +7,97 @@ public class Main_DataFileManager : MonoBehaviour {
 
     [SerializeField]
     private Assets_CharacterList _CharacterData;
+    public Assets_CharacterList CharacterData
+    {
+        get { return _CharacterData; }
+    }
 
-    public Json_AlbumDataList AlbumDataLoad()
+    public Json_PictureBook_DataList Load_PictureBookData()
     {
         string FilePath = getRootPath();
-        var file = new FileInfo(FilePath + "/AlbumDataList.json");
+        var file = new FileInfo(FilePath + "/PictureBookDataList.json");
 
         //ファイルが存在しなかったら
         if (!file.Exists)
         {
             //新規作成
             CreateFile_AlbumDataList(file);
-            file = new FileInfo(FilePath + "/AlbumDataList.json");
+            file = new FileInfo(FilePath + "/PictureBookDataList.json");
         }
 
         //アルバムリストのインスタンスを受け取る
-        var album = getJsonClassInstance<Json_AlbumDataList>(file);
-        {
-            bool isExist = false;
+        var album = getJsonClassInstance<Json_PictureBook_DataList>(file);
+        //{
+        //    bool isExist = false;
 
-            //キャラクター用データがあるか精査する
-            foreach (var chara in _CharacterData.CharacterList)
-            {
-                isExist = false;
-                foreach (var node in album.Data)
-                {
-                    if (node.CharacterCloseID == chara.CloseID)
-                    {
-                        isExist = true;
-                        break;
-                    }
-                }
+        //    //キャラクター用データがあるか精査する
+        //    foreach (var chara in _CharacterData.CharacterList)
+        //    {
+        //        isExist = false;
+        //        foreach (var node in album.Data)
+        //        {
+        //            if (node.CharacterCloseID == chara.CloseID)
+        //            {
+        //                isExist = true;
+        //                break;
+        //            }
+        //        }
 
-                if (!isExist)
-                {
-                    //無かったらalubumに追加する
-                    var data = new Json_Album_ListNode(chara.CloseID, getAlubmDataPath(chara.CloseID));
-                    album.Data.Add(data);
-                }
-            }
-        }
+        //        if (!isExist)
+        //        {
+        //            //無かったらalubumに追加する
+        //            var data = new Json_PictureBook_ListNode(chara.CloseID/*, getAlubmDataPath(chara.CloseID)*/);
+        //            album.Data.Add(data);
+        //        }
+        //    }
+        //}
 
         return album;
+    }
+
+    /// <summary>
+    /// ルート以下にある全てのpngファイルのFileInfoを受け取る
+    /// </summary>
+    /// <returns></returns>
+    public FileInfo[] GetAllTexturePath_png()
+    {
+        //Stagesフォルダ
+        var directory = new DirectoryInfo(getRootPath());
+        Debug.Log(directory.FullName);
+        //無かったら作る
+        if (!directory.Exists) directory.Create();
+
+        //jsonをすべて受け取る
+        return directory.GetFiles("*.png", SearchOption.AllDirectories);
+    }
+
+    public delegate void ImageCallBack(Texture texture);
+    public void InputTexture(FileInfo file, ImageCallBack callback)
+    {
+        if (!file.Exists)
+        {
+            return;
+        }
+
+        StartCoroutine(Routine_LoadImage(file.FullName, callback));
+    }
+
+    IEnumerator Routine_LoadImage(string FilePath, ImageCallBack callback)
+    {
+        using (WWW www = new WWW("file:///" + FilePath))
+        {
+            //読み込み完了まで待機
+            yield return www;
+
+            callback(www.texture);
+        }
     }
 
     public void CreateFile_AlbumDataList(FileInfo file)
     {
         using (StreamWriter sw = file.CreateText())
         {
-            sw.WriteLine(JsonUtility.ToJson(new Json_AlbumDataList(), true));
+            sw.WriteLine(JsonUtility.ToJson(new Json_PictureBook_DataList(), true));
         }
     }
 
@@ -152,22 +194,22 @@ public class Json_Album_Data
     public List<Json_Album_Data_Photo> Photos = new List<Json_Album_Data_Photo>(); //順不同です
 }
 
-//アルバムのリストデータのノード(データ自体は別json)
-public class Json_Album_ListNode
+//図鑑のリストデータのノード(データ自体は別json)
+public class Json_PictureBook_ListNode
 {
     public int CharacterCloseID; //キャラの内部ID
-    public string DataPath; //このキャラクターの写真リストを保存しているJsonの絶対パス
+    //public string DataPath; //このキャラクターの写真リストを保存しているJsonの絶対パス
     public int NumOfPhotos = 0; // 今までに撮った写真の数
 
-    public Json_Album_ListNode(int CharacterCloseID, string DataPath)
+    public Json_PictureBook_ListNode(int CharacterCloseID/*, string DataPath*/)
     {
         this.CharacterCloseID = CharacterCloseID;
-        this.DataPath = DataPath;
+        //this.DataPath = DataPath;
     }
 }
 
-//アルバムのリストデータ
-public class Json_AlbumDataList
+//図鑑のリストデータ
+public class Json_PictureBook_DataList
 {
-    public List<Json_Album_ListNode> Data = new List<Json_Album_ListNode>();
+    public List<Json_PictureBook_ListNode> Data = new List<Json_PictureBook_ListNode>();
 }
