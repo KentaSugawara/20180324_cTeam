@@ -10,9 +10,11 @@ public class Snapshot : MonoBehaviour
     Camera m_camera = null;
     [SerializeField]
     RenderTexture m_snap = null;
+
+#if true//UNITY_ANDROID && !UNITY_EDITOR
     Texture2D m_tex2d;
-    
     int m_photoNum = 0;
+#endif
 
     private void Awake()
     {
@@ -21,8 +23,10 @@ public class Snapshot : MonoBehaviour
 
     private void Start()
     {
+#if UNITY_ANDROID && !UNITY_EDITOR
         // Texture2D を作成
         m_tex2d = new Texture2D(m_snap.width, m_snap.height, TextureFormat.RGB24, false);
+#endif
     }
 
     private void Update()
@@ -34,7 +38,7 @@ public class Snapshot : MonoBehaviour
 
     IEnumerator SaveCamImage()
     {
-#if UNITY_ANDROID && !UNITY_EDITOR
+#if true//UNITY_ANDROID && !UNITY_EDITOR
         // アクティブなレンダーテクスチャを一時保管
         var curRT = RenderTexture.active;
         // m_snap をアクティブなレンダーテクスチャに設定
