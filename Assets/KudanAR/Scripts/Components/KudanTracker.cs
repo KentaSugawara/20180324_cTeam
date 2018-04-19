@@ -743,57 +743,61 @@ namespace Kudan.AR
             }
         }
 
+        [SerializeField]
+        DebugGUI m_debugGUI = null;
         /// <summary>
         /// Method used to draw the debug GUI in the upper-left portion of the screen.
         /// </summary>
         void OnGUI()
         {
-            // Display debug GUI with tracking information
-            if (_displayDebugGUI)
-            {
-                GUI.matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, new Vector3(_debugGUIScale, _debugGUIScale, 1f));
-                GUILayout.BeginVertical("box");
+            m_debugGUI.DisplayGUI(_debugGUIScale);
 
-#if UNITY_EDITOR
-                GUILayout.Label("KUDAN AR", UnityEditor.EditorStyles.boldLabel);
-#else
-				GUILayout.Label("KUDAN AR");
-#endif
+//            // Display debug GUI with tracking information
+//            if (_displayDebugGUI)
+//            {
+//                GUI.matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, new Vector3(_debugGUIScale, _debugGUIScale, 1f));
+//                GUILayout.BeginVertical("box");
 
-                // Tracking status
-                if (_trackerPlugin != null && _trackerPlugin.IsTrackingRunning())
-                {
-                    GUI.color = Color.green;
-                    GUILayout.Label("Tracker is running");
-                }
-                else
-                {
-                    GUI.color = Color.red;
-                    GUILayout.Label("Tracker NOT running");
-                }
-                GUI.color = Color.white;
+//#if UNITY_EDITOR
+//                GUILayout.Label("KUDAN AR", UnityEditor.EditorStyles.boldLabel);
+//#else
+//				GUILayout.Label("KUDAN AR");
+//#endif
 
-                // Screen resolution
-                GUILayout.Label("Screen: " + Screen.width + "x" + Screen.height);
+//                // Tracking status
+//                if (_trackerPlugin != null && _trackerPlugin.IsTrackingRunning())
+//                {
+//                    GUI.color = Color.green;
+//                    GUILayout.Label("Tracker is running");
+//                }
+//                else
+//                {
+//                    GUI.color = Color.red;
+//                    GUILayout.Label("Tracker NOT running");
+//                }
+//                GUI.color = Color.white;
 
-                // Frame rates
-                if (_trackerPlugin != null)
-                {
-                    GUILayout.Label("Camera rate:  " + _trackerPlugin.CameraFrameRate.ToString("F2") + "hz");
-                    GUILayout.Label("Tracker rate: " + _trackerPlugin.TrackerFrameRate.ToString("F2") + "hz");
-                    GUILayout.Label("App rate: " + _trackerPlugin.AppFrameRate.ToString("F2") + "hz");
-                }
+//                // Screen resolution
+//                GUILayout.Label("Screen: " + Screen.width + "x" + Screen.height);
 
-                if (_trackerPlugin != null && _trackerPlugin.IsTrackingRunning())
-                {
-                    // Texture image and resolution
-                    if (_currentTrackingMethod != null)
-                    {
-                        GUILayout.Label("Method: " + _currentTrackingMethod.Name);
-                        _currentTrackingMethod.DebugGUI(_debugGUIScale);
-                    }
-                }
-            }
+//                // Frame rates
+//                if (_trackerPlugin != null)
+//                {
+//                    GUILayout.Label("Camera rate:  " + _trackerPlugin.CameraFrameRate.ToString("F2") + "hz");
+//                    GUILayout.Label("Tracker rate: " + _trackerPlugin.TrackerFrameRate.ToString("F2") + "hz");
+//                    GUILayout.Label("App rate: " + _trackerPlugin.AppFrameRate.ToString("F2") + "hz");
+//                }
+
+//                if (_trackerPlugin != null && _trackerPlugin.IsTrackingRunning())
+//                {
+//                    // Texture image and resolution
+//                    if (_currentTrackingMethod != null)
+//                    {
+//                        GUILayout.Label("Method: " + _currentTrackingMethod.Name);
+//                        _currentTrackingMethod.DebugGUI(_debugGUIScale);
+//                    }
+//                }
+//            }
         }
 
         /// <summary>

@@ -13,6 +13,16 @@ public class SwitchUI : MonoBehaviour
         m_titleUI.SetActive(true);
     }
 
+    public void AppearUI(GameObject obj)
+    {
+        obj.SetActive(true);
+    }
+
+    public void DisappearUI(GameObject obj)
+    {
+        obj.SetActive(false);
+    }
+
     public void SelectStart(GameObject obj)
     {
         m_titleUI.SetActive(false);
