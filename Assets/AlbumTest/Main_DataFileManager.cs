@@ -71,7 +71,8 @@ public class Main_DataFileManager : MonoBehaviour {
         return directory.GetFiles("*.png", SearchOption.AllDirectories);
     }
 
-    public delegate void ImageCallBack(Texture texture);
+    //public delegate void ImageCallBack(Texture texture);
+    public delegate void ImageCallBack(ref byte[] bytes, int Width, int Height);
     public void InputTexture(FileInfo file, ImageCallBack callback, System.Action endcallback)
     {
         if (!file.Exists)
@@ -84,14 +85,55 @@ public class Main_DataFileManager : MonoBehaviour {
 
     IEnumerator Routine_LoadImage(string FilePath, ImageCallBack callback, System.Action endcallback)
     {
-        using (WWW www = new WWW("file:///" + FilePath))
+        //using (WWW www = new WWW("file:///" + FilePath))
+        //{
+        //    Debug.Log("LoadStart");
+        //    //読み込み完了まで待機
+        //    yield return www;
+        //    Debug.Log("LoadEnd");
+        //    callback(www.texture);
+        //}
+        //endcallback();
+        using (FileStream fileStream = new FileStream(FilePath, FileMode.Open, FileAccess.Read))
         {
-            //読み込み完了まで待機
-            yield return www;
+            BinaryReader bin = new BinaryReader(fileStream);
+            byte[] bytes = bin.ReadBytes((int)bin.BaseStream.Length);
+            bin.Close();
 
-            callback(www.texture);
+            yield return null;
+            Debug.Log("byte");
+
+            int pos = 16; // 16バイトから開始
+
+            int width = 0;
+            for (int i = 0; i < 4; i++)
+            {
+                width = width * 256 + bytes[pos++];
+            }
+
+            int height = 0;
+            for (int i = 0; i < 4; i++)
+            {
+                height = height * 256 + bytes[pos++];
+            }
+
+            Texture2D texture = new Texture2D(width, height);
+
+            yield return null;
+            Debug.Log("texture");
+            callback(ref bytes, width, height);
+
+            //texture.LoadImage(bytes);
+
+            //yield return null;
+            //Debug.Log("loadlimage");
+
+            //callback(texture);
         }
+        yield return null;
+        Debug.Log("LoadEnd");
         endcallback();
+        yield break;
     }
 
     public void CreateFile_AlbumDataList(FileInfo file)
