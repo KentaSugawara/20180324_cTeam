@@ -10,6 +10,8 @@ public class DebugGUI : MonoBehaviour
     GameObject m_markerlessObj = null;
     [SerializeField]
     EggSpawner m_eggSpawner = null;
+    [SerializeField]
+    EggSearcher m_eggSearcher = null;
 
     // onGUI()で呼び出す
     public void DisplayGUI(float debugGUIScale)
@@ -20,14 +22,15 @@ public class DebugGUI : MonoBehaviour
         GUI.matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, new Vector3(debugGUIScale, debugGUIScale, 1f));
         GUILayout.BeginVertical("box");
 
-        GUILayout.Label("CameraPosition: " + Camera.main.transform.position);
-        GUILayout.Label("CameraRotation: " + Camera.main.transform.rotation.eulerAngles);
+        GUILayout.Label("Status: " + (m_eggSearcher.IsSearching ? "Searching" : "Not Searching"));
         GUILayout.Label("MarkerlessObjPosition: " + m_markerlessObj.transform.position);
         GUILayout.Label("MarkerlessObjRotation: " + m_markerlessObj.transform.rotation.eulerAngles);
         GUILayout.Label("EggNum: " + eggList.Count + "/" + maxNum);
-        //foreach (var obj in eggList)
-        //{
-        //    GUILayout.Label("EggPos: " + obj.transform.position);
-        //}
+
+        if (eggList.Count > 0)
+            foreach (var obj in eggList)
+            {
+                GUILayout.Label("EggPos: " + obj.transform.position);
+            }
     }
 }

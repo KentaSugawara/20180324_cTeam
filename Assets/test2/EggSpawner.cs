@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EggSpawner : MonoBehaviour {
+public class EggSpawner : MonoBehaviour
+{
 
     List<GameObject> m_eggList = new List<GameObject>();
 
@@ -13,11 +14,15 @@ public class EggSpawner : MonoBehaviour {
     [SerializeField]
     int m_maxNum = 1;
 
-    void Start () {
-		
-	}
-	
-	void Update () {
+    float m_spawnDist = 0;
+
+    void Start()
+    {
+
+    }
+
+    void Update()
+    {
 
     }
 
@@ -26,27 +31,30 @@ public class EggSpawner : MonoBehaviour {
         if (m_eggList.Count < m_maxNum)
         {
             // 画面外にスポーンさせたい
-            var mt = m_markerlessObj.transform;
-            var spawnDist = mt.position.magnitude;
-            //var mt_vec = mt.position.normalized;
-            var random_pos = Quaternion.FromToRotation(Vector3.forward, new Vector3(0.5f, 0, 1)) * Camera.main.transform.forward * spawnDist;
+            var ml_t = m_markerlessObj.transform;
+            if (m_eggList.Count == 0) m_spawnDist = ml_t.position.magnitude;
 
-            var obj = Instantiate(m_eggObj, m_eggObj.transform.position, m_eggObj.transform.rotation, mt);
-            //obj.transform.SetParent(t, false); // don't destroy on load object 内には設定できない？
-            obj.transform.localPosition = new Vector3(random_pos.x, mt.position.x, random_pos.z);
+            var spawnPos = Quaternion.FromToRotation(Vector3.forward, new Vector3(0.5f, 0, 1)) * Camera.main.transform.forward * m_spawnDist;
+
+            var obj = Instantiate(m_eggObj, m_eggObj.transform.position, m_eggObj.transform.rotation, ml_t);
+            //obj.transform.SetParent(t, false); // don't destroy on load の オブジェクト内には設定できない？
+
+            obj.transform.localPosition = new Vector3(spawnPos.x, ml_t.position.y, spawnPos.z);
             obj.transform.localRotation = m_eggObj.transform.rotation;
             m_eggList.Add(obj);
-            Debug.Log("Spawn : " + obj);
         }
     }
 
     public void DestroyAllObjects()
     {
-        foreach (var obj in m_eggList)
+        if (m_eggList.Count > 0)
         {
-            if (obj) Destroy(obj);
+            foreach (var obj in m_eggList)
+            {
+                if (obj) Destroy(obj);
+            }
+            m_eggList.Clear();
         }
-        m_eggList = new List<GameObject>();
     }
 
     public List<GameObject> EggList { get { return m_eggList; } }

@@ -18,7 +18,7 @@ public class EggMove : MonoBehaviour {
     void Update ()
     {
         var angle = 1f;
-        transform.Rotate(Vector3.up, angle, Space.Self);
+        //transform.Rotate(Vector3.up, angle, Space.Self);
         if (m_animator.GetBool("isWalking"))
         {
             Debug.Log("eggForward : " + transform.forward);

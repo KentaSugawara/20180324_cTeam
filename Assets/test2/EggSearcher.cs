@@ -11,38 +11,37 @@ public class EggSearcher : MonoBehaviour
     [SerializeField]
     float m_spawnTime = 3;
 
-    static bool isSerching = false;
-    public static bool IsSearching { get { return isSerching; } }
+    bool isSerching = false;
+    public bool IsSearching { get { return isSerching; } }
 
     void Start()
     {
-        BackHome();
+        StartCoroutine(SearchCoroutine());
     }
 
     IEnumerator SearchCoroutine()
     {
         while (true)
         {
-            yield return new WaitForSeconds(m_spawnTime);
-            
-            m_eggSpawner.Spawn();
+            if (m_kudanTracker.ArbiTrackIsTracking() && isSerching)
+            {
+                yield return new WaitForSeconds(m_spawnTime);
 
+                m_eggSpawner.Spawn();
+            }
             yield return null;
         }
     }
 
     //
-    public void SearchingStart()
+    public void StartSearching()
     {
-        m_kudanTracker.StartTracking();
-        StartCoroutine(SearchCoroutine());
         isSerching = true;
     }
 
-    public void BackHome()
+    public void StopSearching()
     {
-        m_kudanTracker.StopTracking();
-        StopAllCoroutines();
         isSerching = false;
+        m_eggSpawner.DestroyAllObjects();
     }
 }

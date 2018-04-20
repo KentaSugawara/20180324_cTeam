@@ -412,28 +412,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 357727210}
-        m_MethodName: BackHome
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 357727211}
-        m_MethodName: DestroyAllObjects
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &109527299
@@ -821,7 +799,7 @@ GameObject:
   - component: {fileID: 357727210}
   - component: {fileID: 357727211}
   m_Layer: 0
-  m_Name: EggSearcher
+  m_Name: EggManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3111,7 +3089,7 @@ GameObject:
   - component: {fileID: 1598721875}
   - component: {fileID: 1598721874}
   m_Layer: 0
-  m_Name: alwaysTrackingStartButton
+  m_Name: StartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3134,7 +3112,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -600}
+  m_AnchoredPosition: {x: 30, y: -630}
   m_SizeDelta: {x: 1080, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1598721874
@@ -3191,17 +3169,6 @@ MonoBehaviour:
       - m_Target: {fileID: 1631900616}
         m_MethodName: SetActiveArbiTrack
         m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 357727210}
-        m_MethodName: SearchingStart
-        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3520,7 +3487,7 @@ GameObject:
   - component: {fileID: 1631900616}
   - component: {fileID: 1631900615}
   m_Layer: 5
-  m_Name: UI_AlwaysSearching
+  m_Name: UI_Searching
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3693,7 +3660,7 @@ GameObject:
   - component: {fileID: 1685767297}
   - component: {fileID: 1685767296}
   m_Layer: 0
-  m_Name: alwaysTrackingStartText
+  m_Name: startButtonText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3751,7 +3718,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u3053\u3073\u3068\u3092\u307F\u3064\u3051\u308B"
+  m_Text: "\u3053\u3073\u3068\u3092\u3055\u304C\u305D\u3046\uFF01"
 --- !u!222 &1685767297
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4190,6 +4157,7 @@ MonoBehaviour:
   m_kudanTracker: {fileID: 833783618}
   m_markerlessObj: {fileID: 998252339}
   m_eggSpawner: {fileID: 357727211}
+  m_eggSearcher: {fileID: 357727210}
 --- !u!1 &1818869538
 GameObject:
   m_ObjectHideFlags: 0

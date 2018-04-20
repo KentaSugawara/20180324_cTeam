@@ -487,7 +487,8 @@ namespace Kudan.AR
         /// </summary>
         public void ArbiTrackStop()
         {
-            _trackerPlugin.ArbiTrackStop();
+            if (_trackerPlugin != null) // ’Ç‰Á
+                _trackerPlugin.ArbiTrackStop();
         }
 
         /// <summary>
@@ -496,7 +497,7 @@ namespace Kudan.AR
         /// <returns><c>true<c>/c>, if ArbiTrack is running <c>false</c> if not.</returns>
         public bool ArbiTrackIsTracking()
         {
-            //if (_trackerPlugin == null) return false; //’Ç‰Á!
+            if (_trackerPlugin == null) return false; //’Ç‰Á!
             return _trackerPlugin.ArbiTrackIsTracking();
         }
 
@@ -752,52 +753,52 @@ namespace Kudan.AR
         {
             m_debugGUI.DisplayGUI(_debugGUIScale);
 
-//            // Display debug GUI with tracking information
-//            if (_displayDebugGUI)
-//            {
-//                GUI.matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, new Vector3(_debugGUIScale, _debugGUIScale, 1f));
-//                GUILayout.BeginVertical("box");
+            //            // Display debug GUI with tracking information
+            //            if (_displayDebugGUI)
+            //            {
+            //                GUI.matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, new Vector3(_debugGUIScale, _debugGUIScale, 1f));
+            //                GUILayout.BeginVertical("box");
 
-//#if UNITY_EDITOR
-//                GUILayout.Label("KUDAN AR", UnityEditor.EditorStyles.boldLabel);
-//#else
-//				GUILayout.Label("KUDAN AR");
-//#endif
+            //#if UNITY_EDITOR
+            //                GUILayout.Label("KUDAN AR", UnityEditor.EditorStyles.boldLabel);
+            //#else
+            //				GUILayout.Label("KUDAN AR");
+            //#endif
 
-//                // Tracking status
-//                if (_trackerPlugin != null && _trackerPlugin.IsTrackingRunning())
-//                {
-//                    GUI.color = Color.green;
-//                    GUILayout.Label("Tracker is running");
-//                }
-//                else
-//                {
-//                    GUI.color = Color.red;
-//                    GUILayout.Label("Tracker NOT running");
-//                }
-//                GUI.color = Color.white;
+            //                // Tracking status
+            //                if (_trackerPlugin != null && _trackerPlugin.IsTrackingRunning())
+            //                {
+            //                    GUI.color = Color.green;
+            //                    GUILayout.Label("Tracker is running");
+            //                }
+            //                else
+            //                {
+            //                    GUI.color = Color.red;
+            //                    GUILayout.Label("Tracker NOT running");
+            //                }
+            //                GUI.color = Color.white;
 
-//                // Screen resolution
-//                GUILayout.Label("Screen: " + Screen.width + "x" + Screen.height);
+            //                // Screen resolution
+            //                GUILayout.Label("Screen: " + Screen.width + "x" + Screen.height);
 
-//                // Frame rates
-//                if (_trackerPlugin != null)
-//                {
-//                    GUILayout.Label("Camera rate:  " + _trackerPlugin.CameraFrameRate.ToString("F2") + "hz");
-//                    GUILayout.Label("Tracker rate: " + _trackerPlugin.TrackerFrameRate.ToString("F2") + "hz");
-//                    GUILayout.Label("App rate: " + _trackerPlugin.AppFrameRate.ToString("F2") + "hz");
-//                }
+            //                // Frame rates
+            //                if (_trackerPlugin != null)
+            //                {
+            //                    GUILayout.Label("Camera rate:  " + _trackerPlugin.CameraFrameRate.ToString("F2") + "hz");
+            //                    GUILayout.Label("Tracker rate: " + _trackerPlugin.TrackerFrameRate.ToString("F2") + "hz");
+            //                    GUILayout.Label("App rate: " + _trackerPlugin.AppFrameRate.ToString("F2") + "hz");
+            //                }
 
-//                if (_trackerPlugin != null && _trackerPlugin.IsTrackingRunning())
-//                {
-//                    // Texture image and resolution
-//                    if (_currentTrackingMethod != null)
-//                    {
-//                        GUILayout.Label("Method: " + _currentTrackingMethod.Name);
-//                        _currentTrackingMethod.DebugGUI(_debugGUIScale);
-//                    }
-//                }
-//            }
+            //                if (_trackerPlugin != null && _trackerPlugin.IsTrackingRunning())
+            //                {
+            //                    // Texture image and resolution
+            //                    if (_currentTrackingMethod != null)
+            //                    {
+            //                        GUILayout.Label("Method: " + _currentTrackingMethod.Name);
+            //                        _currentTrackingMethod.DebugGUI(_debugGUIScale);
+            //                    }
+            //                }
+            //            }
         }
 
         /// <summary>
