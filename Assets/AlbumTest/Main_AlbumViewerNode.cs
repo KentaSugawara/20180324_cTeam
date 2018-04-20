@@ -10,29 +10,29 @@ public class Main_AlbumViewerNode : MonoBehaviour {
     [SerializeField]
     private RectTransform _RectTransform;
 
-    [SerializeField]
-    private float _png_Width;
+    //[SerializeField]
+    //private float _png_Width;
 
-    [SerializeField]
-    private float _png_Height;
+    //[SerializeField]
+    //private float _png_Height;
 
-    [SerializeField]
-    private float _png_BitDepth;
+    //[SerializeField]
+    //private float _png_BitDepth;
 
-    [SerializeField]
-    private float _png_ColorType;
+    //[SerializeField]
+    //private float _png_ColorType;
 
-    [SerializeField]
-    private float _png_CompressionMethod;
+    //[SerializeField]
+    //private float _png_CompressionMethod;
 
-    [SerializeField]
-    private float _png_FilterMethod;
+    //[SerializeField]
+    //private float _png_FilterMethod;
 
-    [SerializeField]
-    private float _png_InterlaceMethod;
+    //[SerializeField]
+    //private float _png_InterlaceMethod;
 
-    [SerializeField]
-    private float _png_CRC;
+    //[SerializeField]
+    //private float _png_CRC;
 
     private byte[] bytes;
     private int Width;
@@ -44,70 +44,78 @@ public class Main_AlbumViewerNode : MonoBehaviour {
     //private LayoutElement _LayoutElement;
 
     private Main_AlbumViewer _ParentComponent;
-
-    public void Init(Main_AlbumViewer parent)
+    private Json_Album_Data_Picture _myData;
+    public Json_Album_Data_Picture Data
     {
-        _ParentComponent = parent;
+        get { return _myData; }
     }
 
-    //public void ImageCallBack(Texture texture)
-    //{
-    //    //this.texture = texture;
-    //    //_Image.sprite = Sprite.Create((Texture2D)texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-    //    //_Image.material = new Material(_Image.material);
-    //    //_Image.material.mainTexture = texture;
-    //    //Debug.Log("width" + texture.width);
-    //    //Debug.Log("height" + texture.height);
-    //    //if (texture.width >= texture.height)
-    //    //{
-    //    //    _LayoutElement.preferredWidth = texture.width;
-    //    //    _LayoutElement.preferredHeight = texture.height;
-    //    //    if (texture.width > MaxSize)
-    //    //    {
-    //    //        _LayoutElement.preferredWidth = MaxSize;
-    //    //        float q = _LayoutElement.preferredWidth / texture.width;
-    //    //        _LayoutElement.preferredHeight = texture.height * q;
-    //    //    }
-    //    //}
-    //    //else
-    //    //{
-    //    //    _LayoutElement.preferredWidth = texture.width;
-    //    //    _LayoutElement.preferredHeight = texture.height;
-    //    //    if (texture.height > MaxSize)
-    //    //    {
-    //    //        _LayoutElement.preferredHeight = MaxSize;
-    //    //        float q = _LayoutElement.preferredHeight / texture.height;
-    //    //        _LayoutElement.preferredWidth = texture.width * q;
-    //    //    }
-    //    //}
-    //}
+    public void Init(Main_AlbumViewer parent, Json_Album_Data_Picture myData)
+    {
+        _ParentComponent = parent;
+        _myData = myData;
+        _Image_Check.SetActive(false);
+        _Image.color = Color.white;
+    }
+
+    public void ImageCallBack(Texture texture)
+    {
+        //this.texture = texture;
+        _Image.sprite = Sprite.Create((Texture2D)texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+        //_Image.material = new Material(_Image.material);
+        //_Image.material.mainTexture = texture;
+        //Debug.Log("width" + texture.width);
+        //Debug.Log("height" + texture.height);
+        //if (texture.width >= texture.height)
+        //{
+        //    _LayoutElement.preferredWidth = texture.width;
+        //    _LayoutElement.preferredHeight = texture.height;
+        //    if (texture.width > MaxSize)
+        //    {
+        //        _LayoutElement.preferredWidth = MaxSize;
+        //        float q = _LayoutElement.preferredWidth / texture.width;
+        //        _LayoutElement.preferredHeight = texture.height * q;
+        //    }
+        //}
+        //else
+        //{
+        //    _LayoutElement.preferredWidth = texture.width;
+        //    _LayoutElement.preferredHeight = texture.height;
+        //    if (texture.height > MaxSize)
+        //    {
+        //        _LayoutElement.preferredHeight = MaxSize;
+        //        float q = _LayoutElement.preferredHeight / texture.height;
+        //        _LayoutElement.preferredWidth = texture.width * q;
+        //    }
+        //}
+    }
 
     public void ImageCallBack(ref byte[] bytes, int Width, int Height)
     {
-        this.bytes = bytes;
-        this.Width = Width;
-        this.Height = Height;
+        //this.bytes = bytes;
+        //this.Width = Width;
+        //this.Height = Height;
 
-        Debug.Log("ChunkType : " + (char)bytes[12] + (char)bytes[13] + (char)bytes[14] + (char)bytes[15]);
-        _png_Width = bytes[19]
-            + bytes[18] * Mathf.Pow(2, 8)
-            + bytes[17] * Mathf.Pow(2, 16)
-            + bytes[16] * Mathf.Pow(2, 24);
-        _png_Height = bytes[23]
-            + bytes[22] * Mathf.Pow(2, 8)
-            + bytes[21] * Mathf.Pow(2, 16)
-            + bytes[20] * Mathf.Pow(2, 24);
+        //Debug.Log("ChunkType : " + (char)bytes[12] + (char)bytes[13] + (char)bytes[14] + (char)bytes[15]);
+        //_png_Width = bytes[19]
+        //    + bytes[18] * Mathf.Pow(2, 8)
+        //    + bytes[17] * Mathf.Pow(2, 16)
+        //    + bytes[16] * Mathf.Pow(2, 24);
+        //_png_Height = bytes[23]
+        //    + bytes[22] * Mathf.Pow(2, 8)
+        //    + bytes[21] * Mathf.Pow(2, 16)
+        //    + bytes[20] * Mathf.Pow(2, 24);
 
-        _png_BitDepth = bytes[24];
-        _png_ColorType = bytes[25];
-        _png_CompressionMethod = bytes[26];
-        _png_FilterMethod = bytes[27];
-        _png_InterlaceMethod = bytes[28];
-        //Debug.Log("CRC : " + (char)bytes[29] + (char)bytes[30] + (char)bytes[31] + (char)bytes[32]);
-        //StartCoroutine(Routine_bytes());
+        //_png_BitDepth = bytes[24];
+        //_png_ColorType = bytes[25];
+        //_png_CompressionMethod = bytes[26];
+        //_png_FilterMethod = bytes[27];
+        //_png_InterlaceMethod = bytes[28];
+        ////Debug.Log("CRC : " + (char)bytes[29] + (char)bytes[30] + (char)bytes[31] + (char)bytes[32]);
+        ////StartCoroutine(Routine_bytes());
 
-        Texture2D texture = new Texture2D(Width, Height);
-        texture.LoadImage(bytes);
+        //Texture2D texture = new Texture2D(Width, Height);
+        //texture.LoadImage(bytes);
         //_Image.material = texture;
         //Debug.Log("Length : " + bytes[36]);
         //Debug.Log("ChunkType : " + (char)bytes[37] + (char)bytes[38] + (char)bytes[39] + (char)bytes[40]);
@@ -147,8 +155,28 @@ public class Main_AlbumViewerNode : MonoBehaviour {
         }
     }
 
+    [SerializeField]
+    private GameObject _Image_Check;
+
+    public bool isGarbageBoxSelected
+    {
+        get { return _Image_Check.activeInHierarchy; }
+    }
+
+    public void GarbageBoxSelect()
+    {
+        _Image_Check.SetActive(true);
+        _Image.color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
+    }
+
+    public void GarbageBoxNonSelect()
+    {
+        _Image_Check.SetActive(false);
+        _Image.color = Color.white;
+    }
+
     public void OpenZoomPicture()
     {
-        _ParentComponent.OpenZoomPicture(_Image.material.mainTexture);
+        _ParentComponent.PictureButton(this);
     }
 }

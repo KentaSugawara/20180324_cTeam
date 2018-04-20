@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Main_PictureBookViewer : MonoBehaviour {
     [SerializeField]
@@ -10,7 +11,13 @@ public class Main_PictureBookViewer : MonoBehaviour {
     private GameObject _ScrollViewObject;
 
     [SerializeField]
+    private Scrollbar _ScrollViewVerticalBar;
+
+    [SerializeField]
     private Transform _ScrollViewContent;
+
+    [SerializeField]
+    private Text _Text_NumOfPictures;
 
     [SerializeField]
     private GameObject _Prefab_Node;
@@ -19,6 +26,7 @@ public class Main_PictureBookViewer : MonoBehaviour {
 
     public void Init()
     {
+        CloseViewWindow();
         ClearListInstance();
         ListUpTextures();
     }
@@ -30,7 +38,20 @@ public class Main_PictureBookViewer : MonoBehaviour {
 
     public void ListUpTextures()
     {
+        int NumOfCharacters = 0;
         var datalist = _DataFileManager.Load_PictureBookData();
+
+        //デバッグ用
+        {
+            var obj = Instantiate(_Prefab_Node);
+            obj.transform.SetParent(_ScrollViewContent, false);
+
+            var component = obj.GetComponent<Main_PictureBookViewerNode>();
+            //データを渡す(data = nullかもしれない)
+            component.Init(this, _DataFileManager.CharacterData.CharacterList[0], new Json_PictureBook_ListNode(0));
+            _ScrollViewNodes.Add(component);
+            ++NumOfCharacters;
+        }
 
         {
             Json_PictureBook_ListNode data = null;
@@ -45,16 +66,21 @@ public class Main_PictureBookViewer : MonoBehaviour {
                     if (d.CharacterCloseID == chara.CloseID)
                     {
                         data = d;
+                        ++NumOfCharacters;
                         break;
                     }
                 }
 
                 var component = obj.GetComponent<Main_PictureBookViewerNode>();
                 //データを渡す(data = nullかもしれない)
-                component.Init(chara, data);
+                component.Init(this, chara, data);
                 _ScrollViewNodes.Add(component);
             }
         }
+
+        _ScrollViewVerticalBar.value = 1.0f;
+
+        _Text_NumOfPictures.text = NumOfCharacters + "/" + _ScrollViewNodes.Count;
     }
 
     public void ClearListInstance()
@@ -64,5 +90,23 @@ public class Main_PictureBookViewer : MonoBehaviour {
             Destroy(node.gameObject);
         }
         _ScrollViewNodes.Clear();
+    }
+
+    [SerializeField]
+    private GameObject _ModelViewWindow;
+
+    [SerializeField]
+    private GameObject _ViewWindowModel;
+
+    public void SetViewWindow()
+    {
+        _ModelViewWindow.SetActive(true);
+        _ViewWindowModel.SetActive(true);
+    }
+
+    public void CloseViewWindow()
+    {
+        _ModelViewWindow.SetActive(false);
+        _ViewWindowModel.SetActive(false);
     }
 }

@@ -15,14 +15,15 @@ public class Main_DataFileManager : MonoBehaviour {
     public Json_PictureBook_DataList Load_PictureBookData()
     {
         string FilePath = getRootPath();
-        var file = new FileInfo(FilePath + "/PictureBookDataList.json");
+        var file = new FileInfo(getPictureBookDataListPath());
 
         //ファイルが存在しなかったら
         if (!file.Exists)
         {
             //新規作成
-            CreateFile_AlbumDataList(file);
-            file = new FileInfo(FilePath + "/PictureBookDataList.json");
+            CreateFile_PictureBookDataList();
+            return new Json_PictureBook_DataList();
+            //file = new FileInfo(FilePath + "/PictureBookDataList.json");
         }
 
         //アルバムリストのインスタンスを受け取る
@@ -55,6 +56,109 @@ public class Main_DataFileManager : MonoBehaviour {
         return album;
     }
 
+    public Json_Album_DataList Load_AlbumData()
+    {
+        string FilePath = getRootPath();
+        var file = new FileInfo(getAlbumDataListPath());
+
+        //ファイルが存在しなかったら
+        if (!file.Exists)
+        {
+            //新規作成
+            CreateFile_AlbumDataList();
+            return new Json_Album_DataList();
+            //file = new FileInfo(FilePath + "/PictureBookDataList.json");
+        }
+
+        //アルバムリストのインスタンスを受け取る
+        var album = getJsonClassInstance<Json_Album_DataList>(file);
+        //{
+        //    bool isExist = false;
+
+        //    //キャラクター用データがあるか精査する
+        //    foreach (var chara in _CharacterData.CharacterList)
+        //    {
+        //        isExist = false;
+        //        foreach (var node in album.Data)
+        //        {
+        //            if (node.CharacterCloseID == chara.CloseID)
+        //            {
+        //                isExist = true;
+        //                break;
+        //            }
+        //        }
+
+        //        if (!isExist)
+        //        {
+        //            //無かったらalubumに追加する
+        //            var data = new Json_PictureBook_ListNode(chara.CloseID/*, getAlubmDataPath(chara.CloseID)*/);
+        //            album.Data.Add(data);
+        //        }
+        //    }
+        //}
+
+        return album;
+    }
+
+    public void Save_AlbumData(Json_Album_DataList Album)
+    {
+        var file = new FileInfo(getAlbumDataListPath());
+
+        //ファイルが存在しなかったら
+        if (!file.Exists)
+        {
+            file.Create();
+        }
+
+        CreateJsonFile<Json_Album_DataList>(file, Album);
+    }
+
+    public void Save_NewAlbumPicture(Json_Album_Data_Picture Picture)
+    {
+        //アルバムデータリストに追加
+        var album = Load_AlbumData();
+        Debug.Log(album.Pictures.Count);
+        album.Pictures.Add(Picture);
+        Save_AlbumData(album);
+    }
+
+    public void Output_AlbumPicturePNG(Texture2D texture, Json_Album_Data_Picture Picture)
+    {
+        //本体PNG
+        {
+            var directory = new DirectoryInfo(getAlbumPicturesPath());
+            if (!directory.Exists)
+            {
+                directory.Create();
+            }
+
+            // テクスチャを PNG に変換
+            byte[] bytes = texture.EncodeToPNG();
+
+            // PNGデータをファイルとして保存
+            File.WriteAllBytes(directory.FullName + "/" + Picture.FileName, bytes);
+        }
+
+        //圧縮PNG
+        {
+            var directory = new DirectoryInfo(getAlbumSmallPicturesPath());
+            if (!directory.Exists)
+            {
+                directory.Create();
+            }
+
+            //圧縮
+            TextureScale.Bilinear(texture, (int)(texture.width * 0.1f), (int)(texture.height * 0.1f));
+
+            // テクスチャを PNG に変換
+            byte[] bytes = texture.EncodeToPNG();
+
+            // PNGデータをファイルとして保存
+            File.WriteAllBytes(directory.FullName + "/" + Picture.FileName_Small, bytes);
+        }
+    }
+
+
     /// <summary>
     /// ルート以下にある全てのpngファイルのFileInfoを受け取る
     /// </summary>
@@ -72,11 +176,25 @@ public class Main_DataFileManager : MonoBehaviour {
     }
 
     //public delegate void ImageCallBack(Texture texture);
-    public delegate void ImageCallBack(ref byte[] bytes, int Width, int Height);
-    public void InputTexture(FileInfo file, ImageCallBack callback, System.Action endcallback)
+    public delegate void ImageCallBack(Texture texture);
+    public void InputAlbumPicture(string LocalFileName, ImageCallBack callback, System.Action endcallback)
     {
+        var file = new FileInfo(getAlbumPicturesPath() + "/" + LocalFileName);
         if (!file.Exists)
         {
+            endcallback();
+            return;
+        }
+
+        StartCoroutine(Routine_LoadImage(file.FullName, callback, endcallback));
+    }
+
+    public void InputAlbumSmallPicture(string LocalFileName, ImageCallBack callback, System.Action endcallback)
+    {
+        var file = new FileInfo(getAlbumSmallPicturesPath() + "/" + LocalFileName);
+        if (!file.Exists)
+        {
+            endcallback();
             return;
         }
 
@@ -85,62 +203,85 @@ public class Main_DataFileManager : MonoBehaviour {
 
     IEnumerator Routine_LoadImage(string FilePath, ImageCallBack callback, System.Action endcallback)
     {
-        //using (WWW www = new WWW("file:///" + FilePath))
-        //{
-        //    Debug.Log("LoadStart");
-        //    //読み込み完了まで待機
-        //    yield return www;
-        //    Debug.Log("LoadEnd");
-        //    callback(www.texture);
-        //}
-        //endcallback();
-        using (FileStream fileStream = new FileStream(FilePath, FileMode.Open, FileAccess.Read))
+        using (WWW www = new WWW("file:///" + FilePath))
         {
-            BinaryReader bin = new BinaryReader(fileStream);
-            byte[] bytes = bin.ReadBytes((int)bin.BaseStream.Length);
-            bin.Close();
-
-            yield return null;
-            Debug.Log("byte");
-
-            int pos = 16; // 16バイトから開始
-
-            int width = 0;
-            for (int i = 0; i < 4; i++)
-            {
-                width = width * 256 + bytes[pos++];
-            }
-
-            int height = 0;
-            for (int i = 0; i < 4; i++)
-            {
-                height = height * 256 + bytes[pos++];
-            }
-
-            Texture2D texture = new Texture2D(width, height);
-
-            yield return null;
-            Debug.Log("texture");
-            callback(ref bytes, width, height);
-
-            //texture.LoadImage(bytes);
-
-            //yield return null;
-            //Debug.Log("loadlimage");
-
-            //callback(texture);
+            //読み込み完了まで待機
+            yield return www;
+            callback(www.texture);
         }
+        //using (FileStream fileStream = new FileStream(FilePath, FileMode.Open, FileAccess.Read))
+        //{
+        //    BinaryReader bin = new BinaryReader(fileStream);
+        //    byte[] bytes = bin.ReadBytes((int)bin.BaseStream.Length);
+        //    bin.Close();
+
+        //    yield return null;
+
+        //    int pos = 16; // 16バイトから開始
+
+        //    int width = 0;
+        //    for (int i = 0; i < 4; i++)
+        //    {
+        //        width = width * 256 + bytes[pos++];
+        //    }
+
+        //    int height = 0;
+        //    for (int i = 0; i < 4; i++)
+        //    {
+        //        height = height * 256 + bytes[pos++];
+        //    }
+
+        //    Texture2D texture = new Texture2D(width, height);
+
+        //    yield return null;
+        //    callback(ref bytes, width, height);
+
+        //    //texture.LoadImage(bytes);
+
+        //    //yield return null;
+        //    //Debug.Log("loadlimage");
+
+        //    //callback(texture);
+        //}
         yield return null;
-        Debug.Log("LoadEnd");
         endcallback();
         yield break;
     }
 
-    public void CreateFile_AlbumDataList(FileInfo file)
+    public void Delete_AlbumPicture(Json_Album_Data_Picture picture)
     {
+        {
+            var file = new FileInfo(getAlbumPicturesPath() + "/" + picture.FileName);
+            if (file.Exists)
+            {
+                file.Delete();
+            }
+        }
+
+        {
+            var file = new FileInfo(getAlbumSmallPicturesPath() + "/" + picture.FileName_Small);
+            if (file.Exists)
+            {
+                file.Delete();
+            }
+        }
+    }
+
+    public void CreateFile_PictureBookDataList()
+    {
+        var file = new FileInfo(getPictureBookDataListPath());
         using (StreamWriter sw = file.CreateText())
         {
             sw.WriteLine(JsonUtility.ToJson(new Json_PictureBook_DataList(), true));
+        }
+    }
+
+    public void CreateFile_AlbumDataList()
+    {
+        var file = new FileInfo(getAlbumDataListPath());
+        using (StreamWriter sw = file.CreateText())
+        {
+            sw.WriteLine(JsonUtility.ToJson(new Json_Album_DataList(), true));
         }
     }
 
@@ -170,6 +311,32 @@ public class Main_DataFileManager : MonoBehaviour {
         //CreateJsonFile(file,)
     }
 
+    public string getPictureBookDataListPath()
+    {
+        string FullPath = "";
+    #if UNITY_ANDROID
+        FullPath = Application.persistentDataPath + "/PictureBookDataList.json";
+    #endif
+
+    #if UNITY_EDITOR
+        FullPath = Application.persistentDataPath + "/PictureBookDataList.json";
+    #endif
+        return FullPath;
+    }
+
+    public string getAlbumDataListPath()
+    {
+        string FullPath = "";
+    #if UNITY_ANDROID
+        FullPath = Application.persistentDataPath + "/AlbumDataList.json";
+    #endif
+
+    #if UNITY_EDITOR
+        FullPath = Application.persistentDataPath + "/AlbumDataList.json";
+    #endif
+        return FullPath;
+    }
+
     /// <summary>
     /// 保存先のルートパスを受け取る
     /// </summary>
@@ -181,28 +348,44 @@ public class Main_DataFileManager : MonoBehaviour {
     #endif
 
     #if UNITY_EDITOR
-        FullPath = Application.streamingAssetsPath;
+        FullPath = Application.persistentDataPath;
     #endif
         return FullPath;
     }
 
     /// <summary>
-    /// アルバムの保存先パスを受け取る
+    /// アルバム写真の保存先パスを受け取る
     /// </summary>
-    public string getAlubmDataPath(int CloseID)
+    public string getAlbumPicturesPath()
     {
         string FullPath = "";
     #if UNITY_ANDROID
-        FullPath = getRootPath() + "/AlubmData/Chara_" + CloseID + ".json";
+        FullPath = getRootPath() + "/Pictures";
     #endif
 
     #if UNITY_EDITOR
-        FullPath = getRootPath() + "/AlubmData/Chara_" + CloseID + ".json";
+        FullPath = getRootPath() + "/Pictures";
     #endif
         return FullPath;
     }
 
-    public void SavePhoto(int CharacterCloseID, Json_Album_Data_Photo PhotoData)
+        /// <summary>
+    /// アルバム写真の保存先パスを受け取る
+    /// </summary>
+    public string getAlbumSmallPicturesPath()
+    {
+        string FullPath = "";
+    #if UNITY_ANDROID
+        FullPath = getRootPath() + "/SmallPictures";
+    #endif
+
+    #if UNITY_EDITOR
+        FullPath = getRootPath() + "/SmallPictures";
+    #endif
+        return FullPath;
+    }
+
+    public void SavePhoto(int CharacterCloseID, Json_Album_Data_Picture PhotoData)
     {
         string FullPath = "";
     #if UNITY_ANDROID
@@ -217,27 +400,37 @@ public class Main_DataFileManager : MonoBehaviour {
 }
 
 //アルバムの写真のデータ構造
-public class Json_Album_Data_Photo
+[System.Serializable]
+public class Json_Album_Data_Picture
 {
-    public string DirectoryPath; //保存フォルダ名
+
+    //public string DirectoryPath; //保存フォルダ名
+    //現在はRoot + Picturesフォルダ直下に格納
     public string FileName; //保存ファイル名
+    //現在はRoot + SmallPicturesフォルダ直下に格納
+    public string FileName_Small; // 簡易版画像のファイル名
 
     //以下保存時間
     public int Year;
     public int Month;
     public int Day;
-    public int Time;
-    public int Minutes;
-    public int Seconds;
+    public int Hour;
+    public int Minute;
+    public int Second;
+
+    //キャラクターデータ
+    public List<int> CharacterCloseIDs = new List<int>();
 }
 
 //アルバムのノードのデータ構造
-public class Json_Album_Data
+[System.Serializable]
+public class Json_Album_DataList
 {
-    public List<Json_Album_Data_Photo> Photos = new List<Json_Album_Data_Photo>(); //順不同です
+    public List<Json_Album_Data_Picture> Pictures = new List<Json_Album_Data_Picture>(); //順不同です
 }
 
 //図鑑のリストデータのノード(データ自体は別json)
+[System.Serializable]
 public class Json_PictureBook_ListNode
 {
     public int CharacterCloseID; //キャラの内部ID
@@ -252,6 +445,7 @@ public class Json_PictureBook_ListNode
 }
 
 //図鑑のリストデータ
+[System.Serializable]
 public class Json_PictureBook_DataList
 {
     public List<Json_PictureBook_ListNode> Data = new List<Json_PictureBook_ListNode>();
