@@ -7,6 +7,8 @@ using System.IO;
 public class Snapshot : MonoBehaviour
 {
     [SerializeField]
+    private Main_AlbumViewer _AlbumViewer;
+    [SerializeField]
     Camera m_camera = null;
     [SerializeField]
     RenderTexture m_snap = null;
@@ -48,6 +50,7 @@ public class Snapshot : MonoBehaviour
         // レンダリング
         m_camera.Render();
         // レンダリングされているものを m_tex2d に読み込む
+        Texture2D m_tex2d = new Texture2D(m_snap.width, m_snap.height);
         m_tex2d.ReadPixels(new Rect(0, 0, m_snap.width, m_snap.height), 0, 0);
 
         // テクスチャの上下反転
@@ -66,32 +69,36 @@ public class Snapshot : MonoBehaviour
         m_camera.targetTexture = null;
         m_camera.Render();
 
-        // テクスチャを PNG に変換
-        byte[] bytes = m_tex2d.EncodeToPNG();
+        _AlbumViewer.SnapShot(m_tex2d);
 
-        // 保存するファイル名
-        string fileName = "Image" + m_photoNum.ToString("D5");
-        
-        string filePath = Application.persistentDataPath;
+        //// テクスチャを PNG に変換
+        //byte[] bytes = m_tex2d.EncodeToPNG();
 
-        // ディレクトリ名を上の階層から順に格納
-        string[] ourDirList = {
-            "Pictures",
+        //// 保存するファイル名
+        //string fileName = "Image" + m_photoNum.ToString("D5");
 
-        };
+        //string filePath = Application.persistentDataPath;
 
-        // 階層ごとに検索し、ディレクトリが存在しないときはその都度作成
-        foreach (var str in ourDirList)
-        {
-            var directory = new DirectoryInfo(filePath);
-            if (!directory.Exists) directory.Create();
-            filePath += "/" + str;
-        }
+        //// ディレクトリ名を上の階層から順に格納
+        //string[] ourDirList = {
+        //    "Pictures",
+        //    ""
+        //};
 
-        // PNGデータをファイルとして保存
-        File.WriteAllBytes(Path.Combine(filePath, fileName) + ".png", bytes);
+        //// 階層ごとに検索し、ディレクトリが存在しないときはその都度作成
+        //foreach (var str in ourDirList)
+        //{
+        //    var directory = new DirectoryInfo(filePath);
+        //    if (!directory.Exists) directory.Create();
+        //    filePath += "/" + str;
+        //}
 
-        m_photoNum++;
+        //Debug.Log("Save " + filePath);
+
+        //// PNGデータをファイルとして保存
+        //File.WriteAllBytes(Path.Combine(filePath, fileName) + ".png", bytes);
+
+        //m_photoNum++;
 #endif
         yield break;
     }

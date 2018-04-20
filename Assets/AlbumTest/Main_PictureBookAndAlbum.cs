@@ -5,6 +5,15 @@ using UnityEngine.UI;
 
 public class Main_PictureBookAndAlbum : MonoBehaviour {
     [SerializeField]
+    private GameObject _MainCamera;
+
+    [SerializeField]
+    private GameObject _UICamera;
+
+    [SerializeField]
+    private List<GameObject> _OtherUIObjects;
+
+    [SerializeField]
     private RectTransform _SelectImage;
 
     [SerializeField]
@@ -30,6 +39,13 @@ public class Main_PictureBookAndAlbum : MonoBehaviour {
 
     public void Open()
     {
+        foreach (var obj in _OtherUIObjects)
+        {
+            obj.SetActive(false);
+        }
+
+        _MainCamera.SetActive(false);
+        _UICamera.SetActive(true);
         gameObject.SetActive(true);
         _PictureBookViewer.Init();
         _AlbumViewer.Init();
@@ -38,6 +54,13 @@ public class Main_PictureBookAndAlbum : MonoBehaviour {
 
     public void Close()
     {
+        foreach (var obj in _OtherUIObjects)
+        {
+            obj.SetActive(true);
+        }
+
+        _MainCamera.SetActive(true);
+        _UICamera.SetActive(false);
         gameObject.SetActive(false);
     }
 
