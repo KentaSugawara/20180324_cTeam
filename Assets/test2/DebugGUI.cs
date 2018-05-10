@@ -23,6 +23,11 @@ public class DebugGUI : MonoBehaviour
         GUILayout.BeginVertical("box");
 
         GUILayout.Label("Status: " + (m_eggSearcher.IsSearching ? "Searching" : "Not Searching"));
+
+        GUILayout.Label("cross: " + Vector3.Cross(Camera.main.transform.forward, m_markerlessObj.transform.position));
+        GUILayout.Label("CameraDirection: " + Camera.main.transform.forward);
+        GUILayout.Label("MarkerlessVec: " + m_markerlessObj.transform.position.normalized);
+        
         GUILayout.Label("MarkerlessObjPosition: " + m_markerlessObj.transform.position);
         GUILayout.Label("MarkerlessObjRotation: " + m_markerlessObj.transform.rotation.eulerAngles);
         GUILayout.Label("EggNum: " + eggList.Count + "/" + maxNum);
@@ -30,7 +35,7 @@ public class DebugGUI : MonoBehaviour
         if (eggList.Count > 0)
             foreach (var obj in eggList)
             {
-                GUILayout.Label("EggPos: " + obj.transform.position);
+                GUILayout.Label("EggLocalPos: " + obj.transform.localPosition);
             }
     }
 }

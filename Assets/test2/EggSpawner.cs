@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class EggSpawner : MonoBehaviour
 {
-
-    List<GameObject> m_eggList = new List<GameObject>();
+    List<GameObject> _eggList = new List<GameObject>();
+    [SerializeField]
+    Camera _camera;
 
     [SerializeField]
-    GameObject m_eggObj = null;
+    GameObject _eggObj = null;
     [SerializeField]
-    GameObject m_markerlessObj = null;
+    GameObject _markerlessObj = null;
     [SerializeField]
-    int m_maxNum = 1;
+    int _maxNum = 1;
 
-    float m_spawnDist = 0;
+    float _spawnDist = 0;
 
     void Start()
     {
@@ -23,40 +24,59 @@ public class EggSpawner : MonoBehaviour
 
     void Update()
     {
+        foreach(var egg in _eggList)
+        {
 
+        }
     }
 
     public void Spawn()
     {
-        if (m_eggList.Count < m_maxNum)
+        if (_eggList.Count < _maxNum)
         {
             // 画面外にスポーンさせたい
-            var ml_t = m_markerlessObj.transform;
-            if (m_eggList.Count == 0) m_spawnDist = ml_t.position.magnitude;
+            var ml_t = _markerlessObj.transform;
+            if (_eggList.Count == 0) _spawnDist = ml_t.position.z;
 
-            var spawnPos = Quaternion.FromToRotation(Vector3.forward, new Vector3(0.5f, 0, 1)) * Camera.main.transform.forward * m_spawnDist;
+            var spawnPos = new Vector3(1, 0, 1) * _spawnDist;
 
-            var obj = Instantiate(m_eggObj, m_eggObj.transform.position, m_eggObj.transform.rotation, ml_t);
-            //obj.transform.SetParent(t, false); // don't destroy on load の オブジェクト内には設定できない？
+            var obj = Instantiate(_eggObj, _eggObj.transform.position, _eggObj.transform.rotation, ml_t);
+            obj.GetComponent<EggBehaviour>()._camera = _camera;
+            //obj.transform.SetParent(t, false); // don't destroy on load の オブジェクトには設定できない？
 
-            obj.transform.localPosition = new Vector3(spawnPos.x, ml_t.position.y, spawnPos.z);
-            obj.transform.localRotation = m_eggObj.transform.rotation;
-            m_eggList.Add(obj);
+            obj.transform.localPosition = new Vector3(spawnPos.x, 0, spawnPos.z);
+            obj.transform.localRotation = _eggObj.transform.rotation;
+            _eggList.Add(obj);
         }
     }
 
     public void DestroyAllObjects()
     {
-        if (m_eggList.Count > 0)
+        if (_eggList.Count > 0)
         {
-            foreach (var obj in m_eggList)
+            foreach (var obj in _eggList)
             {
                 if (obj) Destroy(obj);
             }
-            m_eggList.Clear();
+            _eggList.Clear();
         }
     }
 
-    public List<GameObject> EggList { get { return m_eggList; } }
-    public int MaxNum { get { return m_maxNum; } }
+    public void CheckEggsInCamera()
+    {
+        foreach(var egg in _eggList)
+        {
+            if (!egg)
+            {
+                _eggList.Remove(egg);
+                continue;
+            }
+            var eggBehaviour = egg.GetComponent<EggBehaviour>();
+            if (eggBehaviour.IsInCamera) eggBehaviour._isTaken = true;
+            Debug.Log(eggBehaviour._isTaken);
+        }
+    }
+
+    public List<GameObject> EggList { get { return _eggList; } }
+    public int MaxNum { get { return _maxNum; } }
 }
