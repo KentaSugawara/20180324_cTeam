@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Main_ChallengeViewer : MonoBehaviour {
+public class Main_ItemViewer : MonoBehaviour {
 
     [SerializeField]
     private RectTransform _BackGround;
@@ -48,16 +48,16 @@ public class Main_ChallengeViewer : MonoBehaviour {
 
     private IEnumerator Routine_Open()
     {
-        _BackGround.anchoredPosition = new Vector3(-_BackGround.sizeDelta.x * 0.6f, _ViewPosition.y, _ViewPosition.z);
+        _BackGround.anchoredPosition = new Vector3(_BackGround.sizeDelta.x * 0.6f, _ViewPosition.y, _ViewPosition.z);
         yield return null;
         var deltaSize = Vector2.Scale(_BackGround.sizeDelta, new Vector2(_BackGround.lossyScale.x, _BackGround.lossyScale.y));
-        var HidePosition = new Vector3(-deltaSize.x * 0.6f, _ViewPosition.y, _ViewPosition.z);
+        var HidePosition = new Vector3(deltaSize.x * 0.6f, _ViewPosition.y, _ViewPosition.z);
         Vector3 b1;
 
         _isMoving = true;
         _BackGround.anchoredPosition = HidePosition;
 
-        
+
         yield return null;
         _ContentSizeFitter.SetLayoutVertical();
         _ScrollView.verticalNormalizedPosition = 1.0f;
@@ -77,7 +77,7 @@ public class Main_ChallengeViewer : MonoBehaviour {
     private IEnumerator Routine_Close()
     {
         var deltaSize = Vector2.Scale(_BackGround.sizeDelta, new Vector2(_BackGround.lossyScale.x, _BackGround.lossyScale.y));
-        var HidePosition = new Vector3(-deltaSize.x * 0.6f, _ViewPosition.y, _ViewPosition.z);
+        var HidePosition = new Vector3(deltaSize.x * 0.6f, _ViewPosition.y, _ViewPosition.z);
         Vector3 b1;
 
         _isMoving = true;

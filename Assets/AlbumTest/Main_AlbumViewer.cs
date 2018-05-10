@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class Main_AlbumViewer : MonoBehaviour {
     [SerializeField]
@@ -14,6 +15,12 @@ public class Main_AlbumViewer : MonoBehaviour {
     private Transform _ScrollViewContent;
 
     [SerializeField]
+    private ContentSizeFitter _ContentSizeFitter;
+
+    [SerializeField]
+    private ScrollRect _ScrollView;
+
+    [SerializeField]
     private Text _Text_NumOfPictures;
 
     [SerializeField]
@@ -24,6 +31,9 @@ public class Main_AlbumViewer : MonoBehaviour {
 
     [Space(5), SerializeField]
     private Image _Image_GarbageBox;
+
+    [SerializeField]
+    private Button _Button_GarbageBox;
 
     [SerializeField]
     private Sprite _Sprite_GarbageBox_Open;
@@ -85,6 +95,9 @@ public class Main_AlbumViewer : MonoBehaviour {
                 component.ImageCallBack,
                 () => {--NumOfLoding; ++LoadingCompleted; _Text_NumOfPictures.text = LoadingCompleted + "枚"; });
         }
+
+        _ContentSizeFitter.SetLayoutVertical();
+        _ScrollView.verticalNormalizedPosition = 1.0f;
     }
 
     public void ClearListInstance()
@@ -181,6 +194,8 @@ public class Main_AlbumViewer : MonoBehaviour {
         //ゴミ箱開く
         GarbageBoxActive = true;
         _Image_GarbageBox.sprite = _Sprite_GarbageBox_Open;
+        EventSystem.current.SetSelectedGameObject(gameObject);
+        
     }
 
     public void GarbageBoxClose()
@@ -195,6 +210,7 @@ public class Main_AlbumViewer : MonoBehaviour {
         }
 
         GarbageBoxSelectList.Clear();
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     public void GarbageBoxDelete()

@@ -11,7 +11,10 @@ public class Main_PictureBookViewer : MonoBehaviour {
     private GameObject _ScrollViewObject;
 
     [SerializeField]
-    private Scrollbar _ScrollViewVerticalBar;
+    private ContentSizeFitter _ContentSizeFitter;
+
+    [SerializeField]
+    private ScrollRect _ScrollView;
 
     [SerializeField]
     private Transform _ScrollViewContent;
@@ -26,7 +29,9 @@ public class Main_PictureBookViewer : MonoBehaviour {
 
     public void Init()
     {
-        CloseViewWindow();
+        _ViewPosition = _BackGround.anchoredPosition;
+        _ModelViewWindow.SetActive(false);
+        _ViewWindowModel.SetActive(false);
         ClearListInstance();
         ListUpTextures();
     }
@@ -47,7 +52,7 @@ public class Main_PictureBookViewer : MonoBehaviour {
             obj.transform.SetParent(_ScrollViewContent, false);
 
             var component = obj.GetComponent<Main_PictureBookViewerNode>();
-            //データを渡す(data = nullかもしれない)
+            //データを渡す(data == nullかもしれない)
             component.Init(this, _DataFileManager.CharacterData.CharacterList[0], new Json_PictureBook_ListNode(0));
             _ScrollViewNodes.Add(component);
             ++NumOfCharacters;
@@ -78,7 +83,9 @@ public class Main_PictureBookViewer : MonoBehaviour {
             }
         }
 
-        _ScrollViewVerticalBar.value = 1.0f;
+        //_ScrollViewVerticalBar.value = 1.0f;
+        _ContentSizeFitter.SetLayoutVertical();
+        _ScrollView.verticalNormalizedPosition = 1.0f;
 
         _Text_NumOfPictures.text = NumOfCharacters + "/" + _ScrollViewNodes.Count;
     }
@@ -96,17 +103,85 @@ public class Main_PictureBookViewer : MonoBehaviour {
     private GameObject _ModelViewWindow;
 
     [SerializeField]
+    private RectTransform _BackGround;
+
+    [SerializeField]
     private GameObject _ViewWindowModel;
+
+    [SerializeField]
+    private float _ToOpenNeedSeconds;
+
+    private Vector3 _ViewPosition;
+
+    private bool _isMoving = false;
 
     public void SetViewWindow()
     {
-        _ModelViewWindow.SetActive(true);
-        _ViewWindowModel.SetActive(true);
+        if (!_isMoving)
+        {
+            _ModelViewWindow.SetActive(true);
+            StopAllCoroutines();
+            StartCoroutine(Routine_OpenWindow());
+        }
     }
 
     public void CloseViewWindow()
     {
+        if (!_isMoving)
+        {
+            _ViewWindowModel.SetActive(false);
+            StopAllCoroutines();
+            StartCoroutine(Routine_CloseWindow());
+        }
+    }
+
+    private IEnumerator Routine_OpenWindow()
+    {
+        _BackGround.anchoredPosition = new Vector3(_ViewPosition.x,-_BackGround.sizeDelta.y * 0.6f, _ViewPosition.z);
+        yield return null;
+        var deltaSize = Vector2.Scale(_BackGround.sizeDelta, new Vector2(_BackGround.lossyScale.x, _BackGround.lossyScale.y));
+        var HidePosition = new Vector3(_ViewPosition.x, -_BackGround.sizeDelta.y * 0.6f, _ViewPosition.z);
+        Vector3 b1;
+
+        _isMoving = true;
+        _BackGround.anchoredPosition = HidePosition;
+
+
+        yield return null;
+        _ContentSizeFitter.SetLayoutVertical();
+        _ScrollView.verticalNormalizedPosition = 1.0f;
+
+        for (float t = 0.0f; t < _ToOpenNeedSeconds; t += Time.deltaTime)
+        {
+            float e = t / _ToOpenNeedSeconds;
+            b1 = Vector3.Lerp(HidePosition, _ViewPosition, e);
+            _BackGround.anchoredPosition = Vector3.Lerp(b1, _ViewPosition, e);
+
+            yield return null;
+        }
+        _BackGround.anchoredPosition = _ViewPosition;
+        _isMoving = false;
+        _ViewWindowModel.SetActive(true);
+    }
+
+    private IEnumerator Routine_CloseWindow()
+    {
+        var deltaSize = Vector2.Scale(_BackGround.sizeDelta, new Vector2(_BackGround.lossyScale.x, _BackGround.lossyScale.y));
+        var HidePosition = new Vector3(_ViewPosition.x, -_BackGround.sizeDelta.y * 0.6f, _ViewPosition.z);
+        Vector3 b1;
+
+        _isMoving = true;
+        for (float t = 0.0f; t < _ToOpenNeedSeconds; t += Time.deltaTime)
+        {
+            float e = t / _ToOpenNeedSeconds;
+            b1 = Vector3.Lerp(_ViewPosition, HidePosition, e);
+            _BackGround.anchoredPosition = Vector3.Lerp(_ViewPosition, b1, e);
+
+            yield return null;
+        }
+        _BackGround.anchoredPosition = HidePosition;
         _ModelViewWindow.SetActive(false);
-        _ViewWindowModel.SetActive(false);
+        
+        _isMoving = false;
     }
 }
