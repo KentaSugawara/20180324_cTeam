@@ -14,6 +14,13 @@ public class Main_PictureBookViewer : MonoBehaviour {
     private ContentSizeFitter _ContentSizeFitter;
 
     [SerializeField]
+    private GameObject _Obj_New;
+    public void SetNew(bool value)
+    {
+        _Obj_New.SetActive(value);
+    }
+
+    [SerializeField]
     private ScrollRect _ScrollView;
 
     [SerializeField]
@@ -44,40 +51,35 @@ public class Main_PictureBookViewer : MonoBehaviour {
     public void ListUpTextures()
     {
         int NumOfCharacters = 0;
-        var datalist = _DataFileManager.Load_PictureBookData();
+        //var datalist = _DataFileManager.Load_PictureBookData();
 
-        //デバッグ用
+        ////デバッグ用
+        //{
+        //    var obj = Instantiate(_Prefab_Node);
+        //    obj.transform.SetParent(_ScrollViewContent, false);
+
+        //    var component = obj.GetComponent<Main_PictureBookViewerNode>();
+        //    //データを渡す(data == nullかもしれない)
+        //    component.Init(this, _DataFileManager.CharacterData.CharacterList[0], new Json_PictureBook_ListNode(0));
+        //    _ScrollViewNodes.Add(component);
+        //    ++NumOfCharacters;
+        //}
+
         {
-            var obj = Instantiate(_Prefab_Node);
-            obj.transform.SetParent(_ScrollViewContent, false);
-
-            var component = obj.GetComponent<Main_PictureBookViewerNode>();
-            //データを渡す(data == nullかもしれない)
-            component.Init(this, _DataFileManager.CharacterData.CharacterList[0], new Json_PictureBook_ListNode(0));
-            _ScrollViewNodes.Add(component);
-            ++NumOfCharacters;
-        }
-
-        {
-            Json_PictureBook_ListNode data = null;
-            foreach (var chara in _DataFileManager.CharacterData.CharacterList)
+            var datalist = Main_PictureBookManager.CharacterList.CharacterList;
+            var savedatalist = Main_PictureBookManager.CharacterSaveData.Data;
+            foreach (var chara in datalist)
             {
                 var obj = Instantiate(_Prefab_Node);
                 obj.transform.SetParent(_ScrollViewContent, false);
-
                 //キャラのデータが存在するか検索
-                foreach(var d in datalist.Data)
+                var data = savedatalist.Find(c => c.CloseID == chara.CloseID);
+                if (data.NumOfPhotos > 0)
                 {
-                    if (d.CharacterCloseID == chara.CloseID)
-                    {
-                        data = d;
-                        ++NumOfCharacters;
-                        break;
-                    }
+                    ++NumOfCharacters;
                 }
 
                 var component = obj.GetComponent<Main_PictureBookViewerNode>();
-                //データを渡す(data = nullかもしれない)
                 component.Init(this, chara, data);
                 _ScrollViewNodes.Add(component);
             }
@@ -111,15 +113,30 @@ public class Main_PictureBookViewer : MonoBehaviour {
     [SerializeField]
     private float _ToOpenNeedSeconds;
 
+    [SerializeField]
+    private Text _Text_ViewName;
+
+    [SerializeField]
+    private Text _Text_Info;
+
     private Vector3 _ViewPosition;
 
     private bool _isMoving = false;
 
-    public void SetViewWindow()
+    private GameObject _CurrentModel;
+
+    public void SetViewWindow(GameObject Prefab, CharacterData chara)
     {
         if (!_isMoving)
         {
             _ModelViewWindow.SetActive(true);
+            if (_CurrentModel != null) Destroy(_CurrentModel);
+            if (Prefab != null) _CurrentModel = Instantiate(Prefab);
+            Debug.Log(_CurrentModel);
+            _CurrentModel.transform.SetParent(_ModelViewWindow.transform, false);
+            _Text_ViewName.text = chara.ViewName;
+            _Text_Info.text = chara.Text;
+
             StopAllCoroutines();
             StartCoroutine(Routine_OpenWindow());
         }

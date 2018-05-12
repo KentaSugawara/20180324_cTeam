@@ -6,7 +6,23 @@ using UnityEngine.UI;
 public class Main_ItemViewer : MonoBehaviour {
 
     [SerializeField]
+    private GameObject _Prefab_Node;
+
+    [SerializeField]
+    private Assets_ItemList _Asset_ItemList;
+
+    [SerializeField]
     private RectTransform _BackGround;
+
+    [SerializeField]
+    private GameObject _Obj_New;
+    public void SetNew(bool value)
+    {
+        _Obj_New.SetActive(value);
+    }
+
+    [SerializeField]
+    private Text _Text_NumOf;
 
     [SerializeField]
     private ScrollRect _ScrollView;
@@ -21,9 +37,38 @@ public class Main_ItemViewer : MonoBehaviour {
 
     private bool _isMoving = false;
 
+    private List<Main_ItemViewerNode> _ScrollViewNodes = new List<Main_ItemViewerNode>();
+
     private void Awake()
     {
         _ViewPosition = _BackGround.anchoredPosition;
+    }
+
+    public void ListUpItems()
+    {
+        for (int i = 0; i < _ScrollViewNodes.Count; ++i)
+        {
+            Destroy(_ScrollViewNodes[i].gameObject);
+        }
+        _ScrollViewNodes.Clear();
+
+        int NumOfActive = 0;
+        var list = _Asset_ItemList.ItemList;
+        for (int i = 0, size = list.Count; i < size; ++i)
+        {
+            //所持していたならば
+            var obj = Instantiate(_Prefab_Node);
+            obj.transform.SetParent(_ContentSizeFitter.transform, false);
+            var node = obj.GetComponent<Main_ItemViewerNode>();
+            var SaveData = Main_ItemManager.ItemSaveData.Data.Find(c => c.CloseID == list[i].CloseID);
+            node.Init(this, SaveData, list[i]);
+            if (SaveData.isActive) ++NumOfActive;
+            _ScrollViewNodes.Add(node);
+        }
+
+        //_Text_NumOf.text = NumOfActive + "/" + _ScrollViewNodes.Count;
+
+        _Text_NumOf.text = "1/1";
     }
 
     public void Open()
@@ -31,7 +76,7 @@ public class Main_ItemViewer : MonoBehaviour {
         if (!_isMoving)
         {
             gameObject.SetActive(true);
-
+            ListUpItems();
             StopAllCoroutines();
             StartCoroutine(Routine_Open());
         }

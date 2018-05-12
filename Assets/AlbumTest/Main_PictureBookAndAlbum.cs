@@ -22,6 +22,9 @@ public class Main_PictureBookAndAlbum : MonoBehaviour {
     [SerializeField]
     private float _SelectImageMoveNeedSeconds;
 
+    [SerializeField]
+    private float _OpenDelaySeconds;
+
     [Space(5)]
     [SerializeField]
     private Main_PictureBookViewer _PictureBookViewer;
@@ -37,8 +40,22 @@ public class Main_PictureBookAndAlbum : MonoBehaviour {
         _SelectImage.localPosition = _SelectImagePositions[0];
     }
 
+    bool isOpening;
+
     public void Open()
     {
+        if (!isOpening)
+        {
+            gameObject.SetActive(true);
+            StartCoroutine(Routine_Open());
+        }
+    }
+
+    private IEnumerator Routine_Open()
+    {
+        isOpening = true;
+        yield return new WaitForSeconds(_OpenDelaySeconds);
+
         foreach (var obj in _OtherUIObjects)
         {
             obj.SetActive(false);
@@ -46,10 +63,10 @@ public class Main_PictureBookAndAlbum : MonoBehaviour {
 
         _MainCamera.SetActive(false);
         _UICamera.SetActive(true);
-        gameObject.SetActive(true);
         _PictureBookViewer.Init();
         _AlbumViewer.Init();
         UpdateView(_SelectTabIndex);
+        isOpening = false;
     }
 
     public void Close()
