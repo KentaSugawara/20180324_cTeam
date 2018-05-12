@@ -122,6 +122,72 @@ public class Main_DataFileManager : MonoBehaviour {
         Save_AlbumData(album);
     }
 
+    public Json_Challenge_DataList Load_ChallengeData()
+    {
+        string FilePath = getRootPath();
+        var file = new FileInfo(getChallengeDataListPath());
+
+        //ファイルが存在しなかったら
+        if (!file.Exists)
+        {
+            //新規作成
+            CreateFile_ChallengeDataList();
+            return new Json_Challenge_DataList();
+            //file = new FileInfo(FilePath + "/PictureBookDataList.json");
+        }
+
+        //アルバムリストのインスタンスを受け取る
+        var challenge = getJsonClassInstance<Json_Challenge_DataList>(file);
+
+        return challenge;
+    }
+
+    public void Save_ChallengeData(Json_Challenge_DataList challenge)
+    {
+        var file = new FileInfo(getChallengeDataListPath());
+
+        //ファイルが存在しなかったら
+        if (!file.Exists)
+        {
+            file.Create();
+        }
+
+        CreateJsonFile<Json_Challenge_DataList>(file, challenge);
+    }
+
+    public Json_Item_DataList Load_ItemData()
+    {
+        string FilePath = getRootPath();
+        var file = new FileInfo(getItemDataListPath());
+
+        //ファイルが存在しなかったら
+        if (!file.Exists)
+        {
+            //新規作成
+            CreateFile_ChallengeDataList();
+            return new Json_Item_DataList();
+            //file = new FileInfo(FilePath + "/PictureBookDataList.json");
+        }
+
+        //アルバムリストのインスタンスを受け取る
+        var itemlist = getJsonClassInstance<Json_Item_DataList>(file);
+
+        return itemlist;
+    }
+
+    public void Save_ItemData(Json_Item_DataList itemlist)
+    {
+        var file = new FileInfo(getItemDataListPath());
+
+        //ファイルが存在しなかったら
+        if (!file.Exists)
+        {
+            file.Create();
+        }
+
+        CreateJsonFile<Json_Item_DataList>(file, itemlist);
+    }
+
     public void Output_AlbumPicturePNG(Texture2D texture, Json_Album_Data_Picture Picture)
     {
         //本体PNG
@@ -285,6 +351,24 @@ public class Main_DataFileManager : MonoBehaviour {
         }
     }
 
+    public void CreateFile_ChallengeDataList()
+    {
+        var file = new FileInfo(getChallengeDataListPath());
+        using (StreamWriter sw = file.CreateText())
+        {
+            sw.WriteLine(JsonUtility.ToJson(new Json_Challenge_DataList(), true));
+        }
+    }
+
+    public void CreateFile_ItemDataList()
+    {
+        var file = new FileInfo(getItemDataListPath());
+        using (StreamWriter sw = file.CreateText())
+        {
+            sw.WriteLine(JsonUtility.ToJson(new Json_Item_DataList(), true));
+        }
+    }
+
     public void CreateJsonFile<T>(FileInfo file, T Instance)
     {
         using (StreamWriter sw = file.CreateText())
@@ -333,6 +417,32 @@ public class Main_DataFileManager : MonoBehaviour {
 
     #if UNITY_EDITOR
         FullPath = Application.persistentDataPath + "/AlbumDataList.json";
+    #endif
+        return FullPath;
+    }
+
+    public string getChallengeDataListPath()
+    {
+        string FullPath = "";
+    #if UNITY_ANDROID
+        FullPath = Application.persistentDataPath + "/ChallengeDataList.json";
+    #endif
+
+    #if UNITY_EDITOR
+        FullPath = Application.persistentDataPath + "/ChallengeDataList.json";
+    #endif
+        return FullPath;
+    }
+
+    public string getItemDataListPath()
+    {
+        string FullPath = "";
+    #if UNITY_ANDROID
+        FullPath = Application.persistentDataPath + "/ItemDataList.json";
+    #endif
+
+    #if UNITY_EDITOR
+        FullPath = Application.persistentDataPath + "/ItemDataList.json";
     #endif
         return FullPath;
     }
@@ -433,13 +543,14 @@ public class Json_Album_DataList
 [System.Serializable]
 public class Json_PictureBook_ListNode
 {
-    public int CharacterCloseID; //キャラの内部ID
+    public int CloseID; //キャラの内部ID
     //public string DataPath; //このキャラクターの写真リストを保存しているJsonの絶対パス
     public int NumOfPhotos = 0; // 今までに撮った写真の数
+    public bool isNew = false; 
 
     public Json_PictureBook_ListNode(int CharacterCloseID/*, string DataPath*/)
     {
-        this.CharacterCloseID = CharacterCloseID;
+        this.CloseID = CharacterCloseID;
         //this.DataPath = DataPath;
     }
 }
@@ -449,4 +560,34 @@ public class Json_PictureBook_ListNode
 public class Json_PictureBook_DataList
 {
     public List<Json_PictureBook_ListNode> Data = new List<Json_PictureBook_ListNode>();
+}
+
+//チャレンジの保存データ
+[System.Serializable]
+public class Json_Challenge_ListNode
+{
+    public int CloseID = -1;
+    public bool isCleard = false;
+    public bool isNewCleard = false;
+}
+
+[System.Serializable]
+public class Json_Challenge_DataList
+{
+    public List<Json_Challenge_ListNode> Data = new List<Json_Challenge_ListNode>();
+}
+
+//アイテムの保存データ
+[System.Serializable]
+public class Json_Item_ListNode
+{
+    public int CloseID = -1;
+    public bool isActive = false;
+    public bool isNewActive = false;
+}
+
+[System.Serializable]
+public class Json_Item_DataList
+{
+    public List<Json_Item_ListNode> Data = new List<Json_Item_ListNode>();
 }

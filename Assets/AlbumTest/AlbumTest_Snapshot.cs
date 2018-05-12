@@ -25,11 +25,6 @@ public class AlbumTest_Snapshot : MonoBehaviour
         m_tex2d = new Texture2D(m_snap.width, m_snap.height, TextureFormat.RGB24, false);
     }
 
-    private void Update()
-    {
-
-    }
-
     public void ClickSaveButton() { StartCoroutine(SaveCamImage()); }
 
     IEnumerator SaveCamImage()
