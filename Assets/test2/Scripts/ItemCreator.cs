@@ -11,6 +11,8 @@ public class ItemCreator : MonoBehaviour {
     [SerializeField]
     EggSpawner _eggSpawner;
 
+    GameObject _activeObject;
+
 	void Start () {
 	}
 
@@ -18,10 +20,16 @@ public class ItemCreator : MonoBehaviour {
     {
         var m_transform = _markerlessObj.transform;
         var obj = Instantiate(_items[0], m_transform);
+        _activeObject = obj;
 
-        foreach(var egg in _eggSpawner.EggList)
+        foreach (var egg in _eggSpawner.EggList)
         {
-            egg.GetComponent<EggBehaviour>().targetItem = this.gameObject;
+            egg.GetComponent<EggBehaviour>().targetItem = obj;
         }
+    }
+
+    public void Destroy()
+    {
+        Destroy(_activeObject);
     }
 }

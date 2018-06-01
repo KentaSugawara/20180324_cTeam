@@ -12,6 +12,8 @@ public class Snapshot : MonoBehaviour
     Camera m_camera = null;
     [SerializeField]
     RenderTexture m_snap = null;
+    [SerializeField]
+    EggSpawner m_eggSpawner = null;
 
 #if true//UNITY_ANDROID && !UNITY_EDITOR
     Texture2D m_tex2d;
@@ -40,6 +42,16 @@ public class Snapshot : MonoBehaviour
 
     IEnumerator SaveCamImage()
     {
+        var int_list = new List<int>();
+
+        foreach (var egg in m_eggSpawner.EggList)
+        {
+            if(egg.GetComponent<EggBehaviour>().isInCamera)
+                int_list.Add(egg.GetComponent<EggData>()._closeID);
+        }
+
+        Main_PictureBookManager.CheckNewCharacters(int_list);
+
 #if true//UNITY_ANDROID && !UNITY_EDITOR
         // アクティブなレンダーテクスチャを一時保管
         var curRT = RenderTexture.active;

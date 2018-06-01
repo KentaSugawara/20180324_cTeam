@@ -11,11 +11,11 @@ public class MarkerlessTracking : MonoBehaviour
 {
     public KudanTracker _kudanTracker;  // The tracker to be referenced in the inspector. This is the Kudan Camera object.
     [SerializeField]
-    EggSpawner m_eggSpawner = null;
+    EggSpawner _eggSpawner = null;
     [SerializeField]
-    EggSearcher m_eggSearcher = null;
+    EggSearcher _eggSearcher = null;
     [SerializeField]
-    GameObject m_markerlessObj = null;
+    GameObject _markerlessObj = null;
 
     private void OnEnable()
     {
@@ -24,7 +24,7 @@ public class MarkerlessTracking : MonoBehaviour
 
     private void Update()
     {
-        if (!_kudanTracker.ArbiTrackIsTracking() && m_eggSearcher.IsSearching)
+        if (!_kudanTracker.ArbiTrackIsTracking() && _eggSearcher.IsSearching)
         {
             SetActiveArbiTrack(false);
             SetActiveArbiTrack(true);
@@ -41,12 +41,12 @@ public class MarkerlessTracking : MonoBehaviour
 
             _kudanTracker.FloorPlaceGetPose(out floorPosition, out floorOrientation);   // Gets the position and orientation of the floor and assigns the referenced Vector3 and Quaternion those values
             _kudanTracker.ArbiTrackStart(floorPosition, floorOrientation);              // Starts markerless tracking based upon the given floor position and orientations
-            m_eggSearcher.StartSearching();
+            _eggSearcher.StartSearching();
         }
         else
         {
             _kudanTracker.ArbiTrackStop();
-            m_eggSearcher.StopSearching();
+            _eggSearcher.StopSearching();
         }
     }
 }

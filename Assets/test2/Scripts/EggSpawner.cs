@@ -9,9 +9,9 @@ public class EggSpawner : MonoBehaviour
     Camera _camera;
 
     [SerializeField]
-    GameObject _eggObj = null;
+    GameObject[] _eggObjs = null;
     [SerializeField]
-    GameObject _markerlessObj = null;
+    GameObject _eggsParentTransform = null;
     [SerializeField]
     int _maxNum = 1;
 
@@ -41,17 +41,22 @@ public class EggSpawner : MonoBehaviour
     {
         if (_eggList.Count < _maxNum)
         {
-            var ml_t = _markerlessObj.transform;
-            if (_eggList.Count == 0) _spawnDist = ml_t.position.z;
+            var t_ml = _eggsParentTransform.transform;
+            if (_eggList.Count == 0) _spawnDist = t_ml.position.z;
 
-            var spawnPos = new Vector3(1, 0, 1) * _spawnDist;
+            var rand_value = Random.Range(0.8f, 1.5f);
+            if (Random.Range(0, 100) < 50) rand_value *= -1;
 
-            var obj = Instantiate(_eggObj, _eggObj.transform.position, _eggObj.transform.rotation, ml_t);
+            var spawnVec = new Vector3(rand_value, 0, 1);
+            var spawnPos = spawnVec * _spawnDist;
+
+            var randomEggObj = _eggObjs[Random.Range(0, _eggObjs.Length)];
+            var obj = Instantiate(randomEggObj, t_ml);
             obj.GetComponent<EggBehaviour>()._camera = _camera;
             //obj.transform.SetParent(t, false); // don't destroy on load の オブジェクトには設定できない？
 
-            obj.transform.localPosition = new Vector3(spawnPos.x, 0, spawnPos.z);
-            obj.transform.localRotation = _eggObj.transform.rotation;
+            obj.transform.localPosition = new Vector3(spawnPos.x, 0, Random.Range(-100, 100));
+            obj.transform.localRotation = randomEggObj.transform.localRotation;
             _eggList.Add(obj);
         }
     }

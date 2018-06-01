@@ -1,17 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GoogleARCore;
 
 public class EggBehaviour : MonoBehaviour
 {
-
     [SerializeField]
     Vector3 _tuneParams;
+
     [SerializeField]
     float _speed = 1f;
+
     [SerializeField]
     bool _isMovable = false;
-    [Space, SerializeField]
+
+    [SerializeField]
+    Transform _bodyTransform;
+
     GameObject _item;
 
     [System.NonSerialized]
@@ -22,110 +27,166 @@ public class EggBehaviour : MonoBehaviour
     Animator _animator;
     Rigidbody _rigidbody;
 
-    enum Status
+    enum EggState
     {
         Idle, Walk, Run, Jump, Play,
     }
     //Status _status = Status.Play;
-    string[] stateNames = {
-        Status.Idle.ToString(),
-        Status.Walk.ToString(),
-        Status.Run.ToString(),
-        Status.Jump.ToString(),
-        Status.Play.ToString(),
-    };
+    //string[] stateNames = {
+    //    Status.Idle.ToString(),
+    //    Status.Walk.ToString(),
+    //    Status.Run.ToString(),
+    //    Status.Jump.ToString(),
+    //    Status.Play.ToString(),
+    //};
 
     [Space, SerializeField]
     float stateChangeTime = 3;
     float elapsedTime = 10;
 
     //
-    // method
+    // methods
     //
-    void Start()
+    void Awake()
     {
         _animator = GetComponent<Animator>();
+    }
+
+    void OnEnable()
+    {
         if (_isMovable)
         {
-            //var angle = 1f;
-            //transform.Rotate(Vector3.up, angle, Space.Self);
-
+            // 行動開始
             StartCoroutine(Move());
         }
     }
 
+
     IEnumerator Move()
     {
-        while (_isMovable)
+        while (true)
         {
-            var stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
             elapsedTime += Time.deltaTime;
 
-            Debug.Log(elapsedTime);
+            //Debug.Log(elapsedTime);
 
-            if (stateInfo.IsName("Play"))
-            {
-                elapsedTime = 0;
-            }
-            else
-            {
-                if (stateInfo.IsName("Idle"))
-                {
-                    if (stateInfo.normalizedTime >= 2)
-                        _animator.SetTrigger("Walk");
-                }
-                else if (stateInfo.IsName("Walk"))
-                {
-                    transform.Translate(Vector3.forward * _speed, Space.Self);
-
-                    if (stateInfo.normalizedTime >= 5)
-                        _animator.SetTrigger("Run");
-                }
-                else if (stateInfo.IsName("Run"))
-                {
-                    transform.Translate(Vector3.forward * _speed * 2f, Space.Self);
-
-                    if (stateInfo.normalizedTime >= 3)
-                        _animator.SetTrigger("Jump");
-                }
-                else if (stateInfo.IsName("Jump"))
-                {
-                    transform.Rotate(new Vector3(0, 1, 0));
-
-                    if (stateInfo.normalizedTime >= 3)
-                        _animator.SetTrigger("Idle");
-                }
-
-                //if(elapsedTime > stateChangeTime)
-                //{
-                //    _animator.SetTrigger(stateNames[Random.Range(0, 5)]);
-                //    stateChangeTime += 3;
-                //}
-
-                if (_item && elapsedTime > 10)
-                {
-                    var t = transform;
-                    var rot1 = t.rotation;
-                    t.LookAt(_item.transform);
-                    var rot2 = t.rotation;
-                    t.rotation = Quaternion.Lerp(rot1, rot2, Time.deltaTime);
-                }
-                
-            }
+            MoveInAnimation();
 
             yield return null;
         }
-        yield break;
     }
 
-    void OnTriggerEnter(Collider other)
+    // アニメーションに合わせた移動
+    void MoveInAnimation()
+    {
+        var stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+
+        // Play
+        if (stateInfo.IsName(EggState.Play.ToString()) && targetItem)
+        {
+            elapsedTime = 0;
+        }
+        else
+        {
+            // Idle
+            if (stateInfo.IsName(EggState.Idle.ToString()))
+            {
+            }
+            // Jump
+            else if (stateInfo.IsName(EggState.Jump.ToString()))
+            {
+                transform.Rotate(new Vector3(0, 1, 0));
+            }
+            else
+            {
+                // 前方に床があるか判定
+                if (CheckForward())
+                {
+                    // Walk
+                    if (stateInfo.IsName(EggState.Walk.ToString()))
+                    {
+                        transform.Translate(Vector3.forward * _speed, Space.Self);
+                    }
+                    // Run
+                    else if (stateInfo.IsName(EggState.Run.ToString()))
+                    {
+                        transform.Translate(Vector3.forward * _speed * 2f, Space.Self);
+                    }
+                }
+                else
+                {
+                    ChangeState(EggState.Jump, true);
+                }
+            }
+
+            var randomState = (EggState)Random.Range(0, 4);
+            ChangeState(randomState);
+
+            // アイテムの方向を向く
+            if (_item && elapsedTime > 10)
+            {
+                var rot1 = transform.rotation;
+
+                transform.LookAt(_item.GetComponent<ItemInfo>()._targetTransform.position, transform.up);
+                var rot2 = transform.rotation;
+
+                transform.rotation = Quaternion.Lerp(rot1, rot2, Time.deltaTime);
+            }
+        }
+
+    }
+
+    bool CheckForward()
+    {
+        List<DetectedPlane> planeList = new List<DetectedPlane>();
+        Session.GetTrackables<DetectedPlane>(planeList);
+
+        RaycastHit hit;
+        Vector3 originPos = _bodyTransform.position;
+        Vector3 vec = transform.TransformDirection(new Vector3(0, -1, 1));
+
+        if (Physics.Raycast(originPos, vec, out hit))
+        {
+            Debug.Log(hit);
+            Debug.DrawRay(originPos, vec, Color.yellow);
+            return true;
+        }
+
+        Debug.DrawRay(originPos, vec, Color.red);
+        return false;
+    }
+
+    // 状態を変更
+    void ChangeState(EggState state, bool constrain = false)
+    {
+        if (constrain)
+        {
+            elapsedTime = stateChangeTime;
+            stateChangeTime += 1;
+        }
+        else
+        {
+            if (elapsedTime > stateChangeTime)
+                stateChangeTime += Random.Range(3f, 4f);
+            else
+                return;
+        }
+        _animator.SetTrigger(state.ToString());
+    }
+
+    // 子の OnTrigerEnter で呼び出す
+    public void OnTriggerEnterOnChild(Collider other)
     {
         if (other.tag == "Item")
         {
-            transform.position = other.transform.position;
-            transform.rotation = other.transform.rotation;
-            _animator.SetTrigger("Play");
-            elapsedTime = 0;
+            if (!_animator.GetCurrentAnimatorStateInfo(0).IsName("Play"))
+            {
+                transform.position = other.transform.position;
+                transform.rotation = other.transform.rotation;
+                _animator.SetTrigger("Play");
+                elapsedTime = 0;
+                stateChangeTime = 0;
+            }
         }
     }
 
@@ -160,10 +221,12 @@ public class EggBehaviour : MonoBehaviour
         }
     }
 
-    public GameObject targetItem {
+    public GameObject targetItem
+    {
         get { return _item; }
 
-        set {
+        set
+        {
             _item = value;
             elapsedTime += 10;
         }

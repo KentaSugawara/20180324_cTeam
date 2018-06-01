@@ -25,9 +25,9 @@ public class EggSearcher : MonoBehaviour
         {
             if (m_kudanTracker.ArbiTrackIsTracking() && isSerching)
             {
-                yield return new WaitForSeconds(m_spawnTime);
-
                 m_eggSpawner.Spawn();
+
+                yield return new WaitForSeconds(m_spawnTime);
             }
             yield return null;
         }
