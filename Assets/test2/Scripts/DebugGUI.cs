@@ -15,6 +15,7 @@ public class DebugGUI : MonoBehaviour
     [SerializeField]
     EggSearcher _eggSearcher = null;
 
+
     // onGUI()で呼び出す
     public void DisplayGUI(float debugGUIScale)
     {
