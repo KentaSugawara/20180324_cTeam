@@ -3794,7 +3794,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &627916102
 Transform:
   m_ObjectHideFlags: 0
@@ -3814,7 +3814,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 627916101}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 26074b15f9c13404d858bfedb8b8c00c, type: 3}
   m_Name: 
@@ -4615,6 +4615,7 @@ MonoBehaviour:
   m_camera: {fileID: 896679035}
   m_snap: {fileID: 8400000, guid: 822c797aeab0f514387ad3569e336c57, type: 2}
   m_eggSpawner: {fileID: 0}
+  m_eggSpawnerAR: {fileID: 1135678163}
 --- !u!1 &767227890
 GameObject:
   m_ObjectHideFlags: 0
@@ -5965,7 +5966,7 @@ MonoBehaviour:
   - {fileID: 1165780290382438, guid: 3014395eed1be4a4a9f154e72814091d, type: 2}
   - {fileID: 1904356886014690, guid: 28465337367e334439dbb5bc7d046512, type: 2}
   _MaxSpawnNum: 10
-  _EggSpawnInterval: 1
+  _EggSpawnInterval: 3
 --- !u!1 &1181186669
 GameObject:
   m_ObjectHideFlags: 0

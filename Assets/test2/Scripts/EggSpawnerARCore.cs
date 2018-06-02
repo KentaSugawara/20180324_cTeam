@@ -25,20 +25,20 @@ public class EggSpawnerARCore : MonoBehaviour {
 
     void Start()
     {
-
+        StartCoroutine(Routine_Spawn());
     }
 
     void Update()
     {
-        foreach (var egg in _EggList)
-        {
-            var eggBehavour = egg.GetComponent<EggBehaviour>();
-            if (eggBehavour._isTaken && !eggBehavour.isInCamera)
-            {
-                _EggList.Remove(egg);
-                Destroy(egg);
-            }
-        }
+        //foreach (var egg in _EggList)
+        //{
+        //    var eggBehavour = egg.GetComponent<EggBehaviour>();
+        //    if (eggBehavour._isTaken && !eggBehavour.isInCamera)
+        //    {
+        //        _EggList.Remove(egg);
+        //        Destroy(egg);
+        //    }
+        //}
     }
 
     private IEnumerator Routine_Spawn()
@@ -47,9 +47,73 @@ public class EggSpawnerARCore : MonoBehaviour {
         {
             while (_EggList.Count >= _MaxSpawnNum) yield return null;
 
-            Spawn();
+            Session.GetTrackables<DetectedPlane>(_AllPlaneList);
 
-            yield return new WaitForSeconds(0.5f);
+            var TrackingPlanes = new List<DetectedPlane>();
+
+            //Trackingのものだけ集める
+            foreach (var plane in _AllPlaneList)
+            {
+                if (plane != null && plane.TrackingState == TrackingState.Tracking)
+                {
+                    TrackingPlanes.Add(plane);
+                }
+                //Debug.Log(p.TrackingState.ToString());
+            }
+
+            if (TrackingPlanes.Count <= 0)
+            {
+                yield return null;
+                continue;
+            }
+            else
+            {
+                //デバッグ表示
+                {
+                    string str = "";
+                    foreach (var p in TrackingPlanes)
+                    {
+                        str += p.ToString() + "\n";
+                    }
+                    //Debug.Log(str);
+                }
+            }
+
+            //ランダムに一つ決める
+            var TargetPlane = TrackingPlanes[Random.Range(0, TrackingPlanes.Count)];
+            Debug.Log(TargetPlane.ToString());
+            Debug.Log(TargetPlane.CenterPose.position);
+            Debug.Log(TargetPlane.ExtentX);
+            Debug.Log(TargetPlane.ExtentZ);
+
+            RaycastHit hit;
+            Ray ray = new Ray(
+                new Vector3(
+                    TargetPlane.CenterPose.position.x + Random.Range(-TargetPlane.ExtentX * 0.4f, TargetPlane.ExtentX * 0.4f),
+                    100.0f,
+                    TargetPlane.CenterPose.position.z + Random.Range(-TargetPlane.ExtentZ * 0.4f, TargetPlane.ExtentZ * 0.4f)
+                    ),
+                Vector3.down);
+
+            if (Physics.Raycast(ray, out hit, 1000.0f, 1 << 12))
+            {
+                //画面外かどうか
+                if (/*CheckScreenOut(hit.point)*/true)
+                {
+                    var pose = new Pose(hit.point, Quaternion.FromToRotation(Vector3.forward, hit.normal));
+                    //すぽーん
+                    var obj = Instantiate(_EggPrefabs[Random.Range(0, _EggPrefabs.Length)], pose.position, pose.rotation);
+
+                    var anchor = TargetPlane.CreateAnchor(pose);
+
+                    // Make Andy model a child of the anchor.
+                    obj.transform.parent = anchor.transform;
+
+                    _EggList.Add(obj);
+                }
+            }
+
+            yield return new WaitForSeconds(_EggSpawnInterval);
         }
     }
 
@@ -102,7 +166,7 @@ public class EggSpawnerARCore : MonoBehaviour {
                 ),
             Vector3.down);
 
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit, 1000.0f, 1<<12))
         {
             //画面外かどうか
             if (CheckScreenOut(hit.point))
