@@ -33,24 +33,20 @@ public class Snapshot : MonoBehaviour
 #endif
     }
 
-    private void Update()
-    {
-
-    }
-
     public void ClickSaveButton() { StartCoroutine(SaveCamImage()); }
 
     IEnumerator SaveCamImage()
     {
         var int_list = new List<int>();
 
-        foreach (var egg in m_eggSpawner.EggList)
-        {
-            if(egg.GetComponent<EggBehaviour>().isInCamera)
-                int_list.Add(egg.GetComponent<EggData>()._closeID);
-        }
+        //一時的に削除
+        //foreach (var egg in m_eggSpawner.EggList)
+        //{
+        //    if(egg.GetComponent<EggBehaviour>().isInCamera)
+        //        int_list.Add(egg.GetComponent<EggData>()._closeID);
+        //}
 
-        Main_PictureBookManager.CheckNewCharacters(int_list);
+        //Main_PictureBookManager.CheckNewCharacters(int_list);
 
 #if true//UNITY_ANDROID && !UNITY_EDITOR
         // アクティブなレンダーテクスチャを一時保管
