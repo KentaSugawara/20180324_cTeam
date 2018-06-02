@@ -15,6 +15,8 @@ namespace Kudan.AR
     {
         static KudanTracker kudanTracker;
 
+        public bool kudanIsActive = false;
+
         /// <summary>
         /// Default width component of the camera resolution, in pixels.
         /// </summary>
@@ -213,6 +215,7 @@ namespace Kudan.AR
                 gameObject.SetActive(false);
                 Destroy(gameObject);
             }
+            if (!kudanIsActive) gameObject.SetActive(false);
         }
 
         /// <summary>
