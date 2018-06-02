@@ -5,8 +5,6 @@ using UnityEngine;
 public class EggSearcher : MonoBehaviour
 {
     [SerializeField]
-    Kudan.AR.KudanTracker m_kudanTracker = null;
-    [SerializeField]
     EggSpawner m_eggSpawner = null;
     [SerializeField]
     float m_spawnTime = 3;
@@ -23,7 +21,7 @@ public class EggSearcher : MonoBehaviour
     {
         while (true)
         {
-            if (m_kudanTracker.ArbiTrackIsTracking() && isSerching)
+            if (isSerching)
             {
                 m_eggSpawner.Spawn();
 

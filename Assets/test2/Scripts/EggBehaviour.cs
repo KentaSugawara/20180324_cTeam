@@ -14,9 +14,6 @@ public class EggBehaviour : MonoBehaviour
     [SerializeField]
     bool _isMovable = false;
 
-    [SerializeField]
-    Transform _bodyTransform;
-
     GameObject _item;
 
     [System.NonSerialized]
@@ -61,14 +58,11 @@ public class EggBehaviour : MonoBehaviour
         }
     }
 
-
     IEnumerator Move()
     {
         while (true)
         {
             elapsedTime += Time.deltaTime;
-
-            //Debug.Log(elapsedTime);
 
             MoveInAnimation();
 
@@ -95,7 +89,7 @@ public class EggBehaviour : MonoBehaviour
             // Jump
             else if (stateInfo.IsName(EggState.Jump.ToString()))
             {
-                transform.Rotate(new Vector3(0, 1, 0));
+                transform.Rotate(Vector3.up);
             }
             else
             {
@@ -142,7 +136,7 @@ public class EggBehaviour : MonoBehaviour
         Session.GetTrackables<DetectedPlane>(planeList);
 
         RaycastHit hit;
-        Vector3 originPos = _bodyTransform.position;
+        Vector3 originPos = transform.position + Vector3.up * 0.2f;
         Vector3 vec = transform.TransformDirection(new Vector3(0, -1, 1));
 
         if (Physics.Raycast(originPos, vec, out hit))

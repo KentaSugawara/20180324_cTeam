@@ -5,7 +5,7 @@ using GoogleARCore;
 
 public class DetectedPlanes : Singleton {
 
-    public List<DetectedPlane> detectedPlaneList = new List<DetectedPlane>();
+    public static List<DetectedPlane> detectedPlaneList = new List<DetectedPlane>();
     
 	
 	void Update () {

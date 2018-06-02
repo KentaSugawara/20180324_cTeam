@@ -28,7 +28,12 @@ namespace Kudan.AR
 		/// </summary>
 		public GameObject target;
 
-		void Update()
+        private void Awake()
+        {
+            if (!tracker.kudanIsActive) gameObject.SetActive(false);
+        }
+
+        void Update()
 		{
 			Vector3 pos;
 			Quaternion rot;
