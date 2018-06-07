@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using GoogleARCore;
 
 public class Main_ItemViewer : MonoBehaviour {
 
@@ -32,6 +33,9 @@ public class Main_ItemViewer : MonoBehaviour {
 
     [SerializeField]
     private float _ToOpenNeedSeconds;
+
+    [SerializeField]
+    private List<GameObject> _Prefab_Items;
 
     private Vector3 _ViewPosition;
 
@@ -137,5 +141,32 @@ public class Main_ItemViewer : MonoBehaviour {
         _BackGround.anchoredPosition = HidePosition;
         gameObject.SetActive(false);
         _isMoving = false;
+    }
+
+    private List<DetectedPlane> _AllPlaneList = new List<DetectedPlane>();
+
+    public void SpawnItem(int Index)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width * 0.5f, Screen.height * 0.5f));
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, 1000.0f, 1 << 12))
+        {
+            var pose = new Pose(hit.point, Quaternion.FromToRotation(Vector3.forward, hit.normal));
+
+            var obj = Instantiate(_Prefab_Items[Index], pose.position, pose.rotation);
+
+            var plane = hit.collider.gameObject.GetComponent<DetectedPlane>();
+
+            if (plane != null)
+            {
+                var anchor = plane.CreateAnchor(pose);
+
+                // Make Andy model a child of the anchor.
+                obj.transform.parent = anchor.transform;
+
+                Debug.Log("ItemSpawn");
+            }
+        }
     }
 }
