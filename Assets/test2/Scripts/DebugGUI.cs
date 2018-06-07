@@ -17,7 +17,7 @@ public class DebugGUI : MonoBehaviour
 
 
     // onGUI()で呼び出す
-    public void DisplayGUI(float debugGUIScale)
+    public void DisplayGUIKudan(float debugGUIScale)
     {
         var eggList = _eggSpawner.EggList;
         var maxNum = _eggSpawner.MaxNum;
@@ -46,5 +46,10 @@ public class DebugGUI : MonoBehaviour
                     //GUILayout.Label("targetItemLocalPos: " + obj.GetComponent<EggBehaviour>().targetItem.transform.localPosition);
                 }
             }
+    }
+
+    public void DisplayGUIARCore()
+    {
+
     }
 }

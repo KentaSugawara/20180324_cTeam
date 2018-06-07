@@ -97,12 +97,22 @@ public class EggSpawnerARCore : MonoBehaviour {
 
             if (Physics.Raycast(ray, out hit, 1000.0f, 1 << 12))
             {
+                Debug.DrawRay(
+                new Vector3(
+                    TargetPlane.CenterPose.position.x + Random.Range(-TargetPlane.ExtentX * 0.4f, TargetPlane.ExtentX * 0.4f),
+                    100.0f,
+                    TargetPlane.CenterPose.position.z + Random.Range(-TargetPlane.ExtentZ * 0.4f, TargetPlane.ExtentZ * 0.4f)
+                    ),
+                Vector3.down);
                 //画面外かどうか
-                if (/*CheckScreenOut(hit.point)*/true)
+                if (CheckScreenOut(hit.point))
                 {
                     var pose = new Pose(hit.point, Quaternion.FromToRotation(Vector3.forward, hit.normal));
                     //すぽーん
-                    var obj = Instantiate(_EggPrefabs[Random.Range(0, _EggPrefabs.Length)], pose.position, pose.rotation);
+                    var randEgg = _EggPrefabs[Random.Range(0, _EggPrefabs.Length)];
+                    var obj = Instantiate(randEgg, pose.position, pose.rotation);
+
+                    obj.transform.localRotation = randEgg.transform.localRotation;
 
                     var anchor = TargetPlane.CreateAnchor(pose);
 

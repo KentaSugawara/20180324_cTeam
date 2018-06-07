@@ -754,7 +754,7 @@ namespace Kudan.AR
         /// </summary>
         void OnGUI()
         {
-            m_debugGUI.DisplayGUI(_debugGUIScale);
+            m_debugGUI.DisplayGUIKudan(_debugGUIScale);
 
             //            // Display debug GUI with tracking information
             //            if (_displayDebugGUI)
