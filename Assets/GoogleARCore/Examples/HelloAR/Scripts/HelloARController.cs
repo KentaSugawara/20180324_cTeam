@@ -90,7 +90,7 @@ namespace GoogleARCore.Examples.HelloAR
                 }
             }
 
-            //SearchingForPlaneUI.SetActive(showSearchingUI);
+            SearchingForPlaneUI.SetActive(showSearchingUI);
 
             // If the player has not touched the screen, we are done with this update.
             //Touch touch;
@@ -204,6 +204,11 @@ namespace GoogleARCore.Examples.HelloAR
                     toastObject.Call("show");
                 }));
             }
+        }
+
+        private void OnGUI()
+        {
+            
         }
     }
 }
