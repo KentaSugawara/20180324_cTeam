@@ -229,7 +229,8 @@ public class Main_DataFileManager : MonoBehaviour {
     /// ルート以下にある全てのpngファイルのFileInfoを受け取る
     /// </summary>
     /// <returns></returns>
-    public FileInfo[] GetAllTexturePath_png()
+    public FileInfo[] 
+        TexturePath_png()
     {
         //Stagesフォルダ
         var directory = new DirectoryInfo(getRootPath());

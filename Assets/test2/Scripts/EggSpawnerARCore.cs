@@ -48,9 +48,9 @@ public class EggSpawnerARCore : MonoBehaviour {
             while (_EggList.Count >= _MaxSpawnNum) yield return null;
 
             Session.GetTrackables<DetectedPlane>(_AllPlaneList);
-
+            Trackable a;
+            
             var TrackingPlanes = new List<DetectedPlane>();
-
             //Trackingのものだけ集める
             foreach (var plane in _AllPlaneList)
             {

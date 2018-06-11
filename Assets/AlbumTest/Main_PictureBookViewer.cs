@@ -38,6 +38,7 @@ public class Main_PictureBookViewer : MonoBehaviour {
     {
         _ViewPosition = _BackGround.anchoredPosition;
         _ModelViewWindow.SetActive(false);
+
         _ViewWindowModel.SetActive(false);
         ClearListInstance();
         ListUpTextures();
