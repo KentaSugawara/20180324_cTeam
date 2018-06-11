@@ -20,7 +20,7 @@ public class EggSpawnerARCore : MonoBehaviour {
     [SerializeField]
     private float _EggSpawnInterval = 1;
 
-    private List<GameObject> _EggList = new List<GameObject>();
+    private static List<GameObject> _EggList = new List<GameObject>();
     private List<DetectedPlane> _AllPlaneList = new List<DetectedPlane>();
 
     void Start()
@@ -237,6 +237,6 @@ public class EggSpawnerARCore : MonoBehaviour {
         }
     }
 
-    public List<GameObject> EggList { get { return _EggList; } }
+    public static List<GameObject> EggList { get { return _EggList; } }
     public int MaxNum { get { return _MaxSpawnNum; } }
 }

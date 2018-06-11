@@ -14,8 +14,6 @@ public class Snapshot : MonoBehaviour
     RenderTexture m_snap = null;
     [SerializeField]
     EggSpawner m_eggSpawner = null;
-    [SerializeField]
-    EggSpawnerARCore m_eggSpawnerAR = null;
 
 #if true//UNITY_ANDROID && !UNITY_EDITOR
     Texture2D m_tex2d;
@@ -42,7 +40,7 @@ public class Snapshot : MonoBehaviour
         var int_list = new List<int>();
 
         //一時的に削除
-        foreach (var egg in m_eggSpawnerAR.EggList)
+        foreach (var egg in EggSpawnerARCore.EggList)
         {
             if (egg.GetComponent<EggBehaviour>().isInCamera)
                 int_list.Add(egg.GetComponent<EggData>()._closeID);

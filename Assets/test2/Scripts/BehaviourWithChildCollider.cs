@@ -13,6 +13,6 @@ public class BehaviourWithChildCollider : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        _parentScript.OnTriggerEnterOnChild(other);
+        _parentScript.OnTriggerEnter(other);
     }
 }

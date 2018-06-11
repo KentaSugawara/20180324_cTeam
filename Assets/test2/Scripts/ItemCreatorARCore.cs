@@ -12,9 +12,6 @@ public class ItemCreatorARCore : MonoBehaviour
     [SerializeField]
     GameObject[] _items;
 
-    [SerializeField]
-    EggSpawnerARCore _EggSpawner;
-
     GameObject _ActiveItem;
 
     void Start()
@@ -58,8 +55,7 @@ public class ItemCreatorARCore : MonoBehaviour
             if (Frame.Raycast(pos.x, pos.y, raycastFilter, out hit))
             {
                 if ((hit.Trackable is DetectedPlane) &&
-                    Vector3.Dot(Camera.main.transform.position - hit.Pose.position,
-                        hit.Pose.rotation * Vector3.up) < 0)
+                    Vector3.Dot(Camera.main.transform.position - hit.Pose.position, hit.Pose.rotation * Vector3.up) < 0)
                 {
                     Debug.Log("Hit at back of the current DetectedPlane");
                 }
@@ -79,7 +75,7 @@ public class ItemCreatorARCore : MonoBehaviour
             yield return null;
         }
 
-        foreach (var egg in _EggSpawner.EggList)
+        foreach (var egg in EggSpawnerARCore.EggList)
         {
             egg.GetComponent<EggBehaviour>().targetItem = itemObj;
         }

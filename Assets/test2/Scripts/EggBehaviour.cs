@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using GoogleARCore;
 
-public class EggBehaviour : MonoBehaviour
-{
+public class EggBehaviour : MonoBehaviour {
     [SerializeField]
     Vector3 _tuneParams;
 
@@ -14,18 +13,18 @@ public class EggBehaviour : MonoBehaviour
     [SerializeField]
     bool _isMovable = false;
 
+    [SerializeField]
+    Transform _rigTransform;
+
     GameObject _item;
 
-    [System.NonSerialized]
-    public Camera _camera;
-    [System.NonSerialized]
-    public bool _isTaken = false;
+    public Camera _camera { get; set; }
+    public bool _isTaken { get; set; }
 
-    Animator _animator;
+    public Animator _animator { get; private set; }
     Rigidbody _rigidbody;
 
-    enum EggState
-    {
+    public enum EggState {
         Idle, Walk, Run, Jump, Play,
     }
     //Status _status = Status.Play;
@@ -44,71 +43,67 @@ public class EggBehaviour : MonoBehaviour
     //
     // methods
     //
-    void Awake()
-    {
+    void Awake() {
+        _isTaken = false;
         _animator = GetComponent<Animator>();
     }
 
-    void OnEnable()
-    {
-        if (_isMovable)
-        {
+    void OnEnable() {
+        if (_isMovable) {
             // 行動開始
             StartCoroutine(Move());
         }
     }
 
-    IEnumerator Move()
-    {
-        while (true)
-        {
+    private void Update() {
+
+        Debug.Log(name + " : " + _animator.GetCurrentAnimatorStateInfo(0).nameHash);
+    }
+
+    IEnumerator Move() {
+        while (true) {
             elapsedTime += Time.deltaTime;
 
-            MoveInAnimation();
+            // 確認用
+            {
+                if (!_animator.GetBool("Play"))
+                    transform.position += transform.forward * _speed;
+            }
+            //MoveInAnimation();
 
             yield return null;
         }
     }
 
     // アニメーションに合わせた移動
-    void MoveInAnimation()
-    {
+    void MoveInAnimation() {
         var stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
 
         // Play
-        if (stateInfo.IsName(EggState.Play.ToString()) && targetItem)
-        {
+        if (stateInfo.IsName(EggState.Play.ToString()) && targetItem) {
             elapsedTime = 0;
         }
-        else
-        {
+        else {
             // Idle
-            if (stateInfo.IsName(EggState.Idle.ToString()))
-            {
+            if (stateInfo.IsName(EggState.Idle.ToString())) {
             }
             // Jump
-            else if (stateInfo.IsName(EggState.Jump.ToString()))
-            {
+            else if (stateInfo.IsName(EggState.Jump.ToString())) {
                 transform.Rotate(Vector3.up);
             }
-            else
-            {
+            else {
                 // 前方に床があるか判定
-                if (CheckForward())
-                {
+                if (CheckForward()) {
                     // Walk
-                    if (stateInfo.IsName(EggState.Walk.ToString()))
-                    {
+                    if (stateInfo.IsName(EggState.Walk.ToString())) {
                         transform.Translate(Vector3.forward * _speed, Space.Self);
                     }
                     // Run
-                    else if (stateInfo.IsName(EggState.Run.ToString()))
-                    {
+                    else if (stateInfo.IsName(EggState.Run.ToString())) {
                         transform.Translate(Vector3.forward * _speed * 2f, Space.Self);
                     }
                 }
-                else
-                {
+                else {
                     ChangeState(EggState.Jump, true);
                 }
             }
@@ -117,8 +112,7 @@ public class EggBehaviour : MonoBehaviour
             ChangeState(randomState);
 
             // アイテムの方向を向く
-            if (_item && elapsedTime > 10)
-            {
+            if (_item && elapsedTime > 10) {
                 var rot1 = transform.rotation;
 
                 transform.LookAt(_item.GetComponent<ItemInfo>()._targetTransform.position, transform.up);
@@ -130,8 +124,7 @@ public class EggBehaviour : MonoBehaviour
 
     }
 
-    bool CheckForward()
-    {
+    bool CheckForward() {
         List<DetectedPlane> planeList = new List<DetectedPlane>();
         Session.GetTrackables<DetectedPlane>(planeList);
 
@@ -139,8 +132,7 @@ public class EggBehaviour : MonoBehaviour
         Vector3 originPos = transform.position + Vector3.up * 0.2f;
         Vector3 vec = transform.TransformDirection(new Vector3(0, -1, 1));
 
-        if (Physics.Raycast(originPos, vec, out hit))
-        {
+        if (Physics.Raycast(originPos, vec, out hit)) {
             Debug.Log(hit);
             Debug.DrawRay(originPos, vec, Color.yellow);
             return true;
@@ -151,15 +143,12 @@ public class EggBehaviour : MonoBehaviour
     }
 
     // 状態を変更
-    void ChangeState(EggState state, bool constrain = false)
-    {
-        if (constrain)
-        {
+    void ChangeState(EggState state, bool constrain = false) {
+        if (constrain) {
             elapsedTime = stateChangeTime;
             stateChangeTime += 1;
         }
-        else
-        {
+        else {
             if (elapsedTime > stateChangeTime)
                 stateChangeTime += Random.Range(3f, 4f);
             else
@@ -168,13 +157,9 @@ public class EggBehaviour : MonoBehaviour
         _animator.SetTrigger(state.ToString());
     }
 
-    // 子の OnTrigerEnter で呼び出す
-    public void OnTriggerEnterOnChild(Collider other)
-    {
-        if (other.tag == "Item")
-        {
-            if (!_animator.GetCurrentAnimatorStateInfo(0).IsName("Play"))
-            {
+    public void OnTriggerEnter(Collider other) {
+        if (other.tag == "Item") {
+            if (!_animator.GetCurrentAnimatorStateInfo(0).IsName("Play")) {
                 transform.position = other.transform.position;
                 transform.rotation = other.transform.rotation;
                 _animator.SetTrigger("Play");
@@ -184,13 +169,39 @@ public class EggBehaviour : MonoBehaviour
         }
     }
 
+    public void PlayItem(string trigger) {
+        _animator.SetTrigger(trigger);
+    }
+
+    public void SetItemTransform(Transform item_t) {
+        transform.position = item_t.transform.position;
+        transform.rotation = item_t.transform.rotation;
+    }
+
+    Vector3 pos;
+    public void GetBodyPosition() {
+        pos = _rigTransform.position;
+    }
+
+    public void SetBodyPosition() {
+        transform.position = pos;
+    }
+
+    public void KillSelf() {
+        foreach (var egg in EggSpawnerARCore.EggList) {
+            if (egg == gameObject) {
+                EggSpawnerARCore.EggList.Remove(egg);
+                break;
+            }
+        }
+        Destroy(gameObject);
+    }
+
     //
     // property
     //
-    public bool isInCamera
-    {
-        get
-        {
+    public bool isInCamera {
+        get {
             var M_V = _camera.worldToCameraMatrix;
             var M_P = _camera.projectionMatrix;
             var M_VP = M_P * M_V;
@@ -215,12 +226,10 @@ public class EggBehaviour : MonoBehaviour
         }
     }
 
-    public GameObject targetItem
-    {
+    public GameObject targetItem {
         get { return _item; }
 
-        set
-        {
+        set {
             _item = value;
             elapsedTime += 10;
         }
