@@ -140,6 +140,18 @@ public class NavMeshCharacter : MonoBehaviour {
         StartCoroutine(Routine_OnGround());
     }
 
+    public void Play() {
+        StartCoroutine(Routine_Main());
+        StartCoroutine(Routine_OnGround());
+        GetComponent<Collider>().enabled = true;
+    }
+
+    public void Stop() {
+        StopAllCoroutines();
+        _Agent.isStopped = true;
+        GetComponent<Collider>().enabled = false;
+    }
+
     private IEnumerator Routine_Main()
     {
         while (!CalcNextPoint())
@@ -268,7 +280,7 @@ public class NavMeshCharacter : MonoBehaviour {
             transform.position + 
             new Vector3(
                 (Random.Range(0, 2) == 0 ? Random.Range(0.2f, 0.4f) : Random.Range(-0.4f, -0.2f)) * _NavMeshBuilder.m_Size.x,
-                transform.position.y + 1.0f,
+                1.0f,
                 (Random.Range(0, 2) == 0 ? Random.Range(0.2f, 0.4f) : Random.Range(-0.4f, -0.2f)) * _NavMeshBuilder.m_Size.z
                 ),
             Vector3.down
