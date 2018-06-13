@@ -1,239 +1,157 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using GoogleARCore;
 
 public class EggBehaviour : MonoBehaviour {
-    [SerializeField]
-    Vector3 _tuneParams;
+	[SerializeField]
+	Vector3 _tuneParams;
 
-    [SerializeField]
-    float _speed = 1f;
+	public Camera _camera { get; set; }
 
-    [SerializeField]
-    bool _isMovable = false;
+	public bool _isTaken { get; set; }
 
-    [SerializeField]
-    Transform _rigTransform;
+	[SerializeField]
+	Transform _rigTransform;
 
-    GameObject _item;
+	Vector3 _rigPos = Vector3.zero;
 
-    public Camera _camera { get; set; }
-    public bool _isTaken { get; set; }
+	GameObject _item;
 
-    public Animator _animator { get; private set; }
-    Rigidbody _rigidbody;
+	public Animator _animator { get; private set; }
 
-    public enum EggState {
-        Idle, Walk, Run, Jump, Play,
-    }
-    //Status _status = Status.Play;
-    //string[] stateNames = {
-    //    Status.Idle.ToString(),
-    //    Status.Walk.ToString(),
-    //    Status.Run.ToString(),
-    //    Status.Jump.ToString(),
-    //    Status.Play.ToString(),
-    //};
+	public enum EggState {
+		// move state
+		Idle, Walk, Run, Jump,
 
-    [Space, SerializeField]
-    float stateChangeTime = 3;
-    float elapsedTime = 10;
+		// item animation state
+		Playing, Waiting,
+		CampFireA, CampFireB, CampFireC,
+		SeeSawA, SeeSawB,
+		Slide,
+		Trampoline,
+		Wheel,
+		WoodBlockA,
+	}
 
-    //
-    // methods
-    //
-    void Awake() {
-        _isTaken = false;
-        _animator = GetComponent<Animator>();
-    }
+	static Dictionary<EggState, string> triggers = new Dictionary<EggState, string>(){
+		{ EggState.Idle,        "Idle" },
+		{ EggState.Walk,		"Walk" },
+		{ EggState.Run,			"Run" },
+		{ EggState.Jump,		"Jump" },
+		{ EggState.CampFireA,   "Play_CampFire_A" },
+		{ EggState.CampFireB,   "Play_CampFire_B" },
+		{ EggState.CampFireC,   "Play_CampFire_C" },
+		{ EggState.SeeSawA,     "Play_SeeSaw_A"	  },
+		{ EggState.SeeSawB,     "Play_SeeSaw_B"	  },
+		{ EggState.Slide,       "Play_Slide"	  },
+		{ EggState.Trampoline,  "Play_Trampoline" },
+		{ EggState.Wheel,       "Play_Wheel"	  },
+		{ EggState.WoodBlockA,  "Play_WoodBlock_A"  },
+	};
 
-    void OnEnable() {
-        if (_isMovable) {
-            // 行動開始
-            StartCoroutine(Move());
-        }
-    }
+	//
+	// methods
+	//
+	void Awake() {
+		_isTaken = false;
+		_animator = GetComponent<Animator>();
+	}
 
-    private void Update() {
+	bool CheckForward() {
+		List<DetectedPlane> planeList = new List<DetectedPlane>();
+		Session.GetTrackables<DetectedPlane>(planeList);
 
-        Debug.Log(name + " : " + _animator.GetCurrentAnimatorStateInfo(0).nameHash);
-    }
+		RaycastHit hit;
+		Vector3 originPos = transform.position + Vector3.up * 0.2f;
+		Vector3 vec = transform.TransformDirection(new Vector3(0, -1, 1));
 
-    IEnumerator Move() {
-        while (true) {
-            elapsedTime += Time.deltaTime;
+		if (Physics.Raycast(originPos, vec, out hit)) {
+			Debug.Log(hit);
+			Debug.DrawRay(originPos, vec, Color.yellow);
+			return true;
+		}
 
-            // 確認用
-            {
-                if (!_animator.GetBool("Play"))
-                    transform.position += transform.forward * _speed;
-            }
-            //MoveInAnimation();
+		Debug.DrawRay(originPos, vec, Color.red);
+		return false;
+	}
 
-            yield return null;
-        }
-    }
 
-    // アニメーションに合わせた移動
-    void MoveInAnimation() {
-        var stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+	public void OnTriggerEnter(Collider other) {
+		if (other.tag == "Item") {
+			_item = other.gameObject;
+		}
+	}
 
-        // Play
-        if (stateInfo.IsName(EggState.Play.ToString()) && targetItem) {
-            elapsedTime = 0;
-        }
-        else {
-            // Idle
-            if (stateInfo.IsName(EggState.Idle.ToString())) {
-            }
-            // Jump
-            else if (stateInfo.IsName(EggState.Jump.ToString())) {
-                transform.Rotate(Vector3.up);
-            }
-            else {
-                // 前方に床があるか判定
-                if (CheckForward()) {
-                    // Walk
-                    if (stateInfo.IsName(EggState.Walk.ToString())) {
-                        transform.Translate(Vector3.forward * _speed, Space.Self);
-                    }
-                    // Run
-                    else if (stateInfo.IsName(EggState.Run.ToString())) {
-                        transform.Translate(Vector3.forward * _speed * 2f, Space.Self);
-                    }
-                }
-                else {
-                    ChangeState(EggState.Jump, true);
-                }
-            }
+	public void SetTrigger(EggState state) {
+		_animator.SetTrigger(triggers[state]);
+	}
 
-            var randomState = (EggState)Random.Range(0, 4);
-            ChangeState(randomState);
+	public void SetTransformFromItem() {
+		transform.position = _item.transform.parent.transform.position;
+		transform.localRotation = _item.transform.parent.transform.localRotation;
+	}
 
-            // アイテムの方向を向く
-            if (_item && elapsedTime > 10) {
-                var rot1 = transform.rotation;
+	public void GetBodyPosition() {
+		_rigPos = _rigTransform.position;
+	}
 
-                transform.LookAt(_item.GetComponent<ItemInfo>()._targetTransform.position, transform.up);
-                var rot2 = transform.rotation;
+	public void SetBodyPosition() {
+		transform.position = _rigPos;
+	}
 
-                transform.rotation = Quaternion.Lerp(rot1, rot2, Time.deltaTime);
-            }
-        }
+	public void KillSelf() {
+		foreach (var egg in EggSpawnerARCore.EggList) {
+			if (egg == gameObject) {
+				EggSpawnerARCore.EggList.Remove(egg);
+				break;
+			}
+		}
+		Destroy(gameObject);
+	}
 
-    }
+	public void PlayAgent() {
+		GetComponent<NavMeshAgent>().enabled = true;
+		GetComponent<NavMeshCharacter>().Play();
+	}
+	public void StopAgent() {
+		GetComponent<NavMeshCharacter>().Stop();
+		GetComponent<NavMeshAgent>().enabled = false;
+	}
 
-    bool CheckForward() {
-        List<DetectedPlane> planeList = new List<DetectedPlane>();
-        Session.GetTrackables<DetectedPlane>(planeList);
+	//
+	// property
+	//
+	public bool isInCamera {
+		get {
+			var M_V = _camera.worldToCameraMatrix;
+			var M_P = _camera.projectionMatrix;
+			var M_VP = M_P * M_V;
 
-        RaycastHit hit;
-        Vector3 originPos = transform.position + Vector3.up * 0.2f;
-        Vector3 vec = transform.TransformDirection(new Vector3(0, -1, 1));
+			var pos = transform.position;
+			var p = M_VP * new Vector4(pos.x, pos.y, pos.z, 1.0f);
 
-        if (Physics.Raycast(originPos, vec, out hit)) {
-            Debug.Log(hit);
-            Debug.DrawRay(originPos, vec, Color.yellow);
-            return true;
-        }
+			if (p.w == 0) return true;
 
-        Debug.DrawRay(originPos, vec, Color.red);
-        return false;
-    }
+			var x = p.x / p.w;
+			var y = p.y / p.w;
+			var z = p.z / p.w;
 
-    // 状態を変更
-    void ChangeState(EggState state, bool constrain = false) {
-        if (constrain) {
-            elapsedTime = stateChangeTime;
-            stateChangeTime += 1;
-        }
-        else {
-            if (elapsedTime > stateChangeTime)
-                stateChangeTime += Random.Range(3f, 4f);
-            else
-                return;
-        }
-        _animator.SetTrigger(state.ToString());
-    }
+			if (x < -_tuneParams.x) return false;
+			if (x > _tuneParams.x) return false;
+			if (y < -_tuneParams.y) return false;
+			if (y > _tuneParams.y) return false;
+			if (z < -_tuneParams.z) return false;
+			if (z > _tuneParams.z) return false;
 
-    public void OnTriggerEnter(Collider other) {
-        if (other.tag == "Item") {
-            if (!_animator.GetCurrentAnimatorStateInfo(0).IsName("Play")) {
-                transform.position = other.transform.position;
-                transform.rotation = other.transform.rotation;
-                _animator.SetTrigger("Play");
-                elapsedTime = 0;
-                stateChangeTime = 0;
-            }
-        }
-    }
+			return true;
+		}
+	}
 
-    public void PlayItem(string trigger) {
-        _animator.SetTrigger(trigger);
-    }
+	public GameObject targetItem {
+		get { return _item; }
+	}
 
-    public void SetItemTransform(Transform item_t) {
-        transform.position = item_t.transform.position;
-        transform.rotation = item_t.transform.rotation;
-    }
-
-    Vector3 pos;
-    public void GetBodyPosition() {
-        pos = _rigTransform.position;
-    }
-
-    public void SetBodyPosition() {
-        transform.position = pos;
-    }
-
-    public void KillSelf() {
-        foreach (var egg in EggSpawnerARCore.EggList) {
-            if (egg == gameObject) {
-                EggSpawnerARCore.EggList.Remove(egg);
-                break;
-            }
-        }
-        Destroy(gameObject);
-    }
-
-    //
-    // property
-    //
-    public bool isInCamera {
-        get {
-            var M_V = _camera.worldToCameraMatrix;
-            var M_P = _camera.projectionMatrix;
-            var M_VP = M_P * M_V;
-
-            var pos = transform.position;
-            var p = M_VP * new Vector4(pos.x, pos.y, pos.z, 1.0f);
-
-            if (p.w == 0) return true;
-
-            var x = p.x / p.w;
-            var y = p.y / p.w;
-            var z = p.z / p.w;
-
-            if (x < -_tuneParams.x) return false;
-            if (x > _tuneParams.x) return false;
-            if (y < -_tuneParams.y) return false;
-            if (y > _tuneParams.y) return false;
-            if (z < -_tuneParams.z) return false;
-            if (z > _tuneParams.z) return false;
-
-            return true;
-        }
-    }
-
-    public GameObject targetItem {
-        get { return _item; }
-
-        set {
-            _item = value;
-            elapsedTime += 10;
-        }
-    }
-
-    void CheckTrigger(string name) { _animator.SetTrigger(name); }
+	void CheckTrigger(string name) { _animator.SetTrigger(name); }
 }

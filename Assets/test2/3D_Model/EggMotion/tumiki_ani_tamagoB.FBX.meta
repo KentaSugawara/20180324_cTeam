@@ -3,7 +3,7 @@ guid: 9d12288a88587e24596bb3b4d8cda348
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: body001
+    100000: body
     100002: CTL_rig_footL
     100004: CTL_rig_footR
     100006: CTL_rig_root
@@ -14,8 +14,8 @@ ModelImporter:
     100016: HP_IKchain_legL
     100018: IK Chain001
     100020: IK Chain002
-    100022: leg_L001
-    100024: leg_R001
+    100022: leg_L
+    100024: leg_R
     100026: ribbon
     100028: RIG_body
     100030: RIG_footL
@@ -27,7 +27,7 @@ ModelImporter:
     100042: RIG_legLb(mirrored)
     100044: RIG_legRa
     100046: //RootNode
-    400000: body001
+    400000: body
     400002: CTL_rig_footL
     400004: CTL_rig_footR
     400006: CTL_rig_root
@@ -38,8 +38,8 @@ ModelImporter:
     400016: HP_IKchain_legL
     400018: IK Chain001
     400020: IK Chain002
-    400022: leg_L001
-    400024: leg_R001
+    400022: leg_L
+    400024: leg_R
     400026: ribbon
     400028: RIG_body
     400030: RIG_footL
@@ -64,16 +64,17 @@ ModelImporter:
     4300002: eye_cover003
     4300004: hat
     4300006: ribbon
-    4300008: body001
-    4300010: leg_L001
-    4300012: leg_R001
+    4300008: body
+    4300010: leg_L
+    4300012: leg_R
     7400000: Take 001
+    7400002: Take 001 (1)
     9500000: //RootNode
-    13700000: body001
+    13700000: body
     13700002: eye
     13700004: eye_cover003
-    13700006: leg_L001
-    13700008: leg_R001
+    13700006: leg_L
+    13700008: leg_R
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -101,7 +102,63 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      firstFrame: 91
+      lastFrame: 121
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Take 001 (1)
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 500
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []
