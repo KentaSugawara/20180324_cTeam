@@ -75,11 +75,6 @@ public class ItemCreatorARCore : MonoBehaviour
             yield return null;
         }
 
-        foreach (var egg in EggSpawnerARCore.EggList)
-        {
-            egg.GetComponent<EggBehaviour>().targetItem = itemObj;
-        }
-
         _ActiveItem = itemObj;
 
         yield break;

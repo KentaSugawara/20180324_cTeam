@@ -21,11 +21,6 @@ public class ItemCreator : MonoBehaviour {
         var m_transform = _markerlessObj.transform;
         var obj = Instantiate(_items[0], m_transform);
         _activeObject = obj;
-
-        foreach (var egg in _eggSpawner.EggList)
-        {
-            egg.GetComponent<EggBehaviour>().targetItem = obj;
-        }
     }
 
     public void Destroy()
