@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CharaFieldOfVision : MonoBehaviour {
-    public static void Create(Transform parent, NavMeshCharacter component, Vector3 VisionScale)
+    public static CharaFieldOfVision Create(Transform parent, NavMeshCharacter component, Vector3 VisionScale)
     {
         var obj_first = new GameObject();
         obj_first.transform.SetParent(parent, false);
@@ -19,12 +19,18 @@ public class CharaFieldOfVision : MonoBehaviour {
         col.center = new Vector3(0.0f, 0.5f, 0.0f);
         col.isTrigger = true;
         var vision = obj_second.AddComponent<CharaFieldOfVision>();
+        vision._myCollider = col;
 
         vision.Init(component);
+
+        return vision;
     }
 
     [SerializeField]
     private NavMeshCharacter _myComponent;
+
+    [SerializeField]
+    private Collider _myCollider;
 
     private void Init(NavMeshCharacter component)
     {
@@ -34,9 +40,19 @@ public class CharaFieldOfVision : MonoBehaviour {
     private void OnTriggerEnter(Collider other)
     {
         var target = other.GetComponent<NavMeshTargetPoint>();
-        if (target != null)
+        if (target != null && _myCollider.enabled)
         {
             _myComponent.SetTargetPoint(target);
         }
+    }
+
+    public void Stop()
+    {
+        _myCollider.enabled = false;
+    }
+
+    public void Play()
+    {
+        _myCollider.enabled = true;
     }
 }
