@@ -225,6 +225,10 @@ public class EggSpawnerARCore : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// 指定のEggを消す
+    /// </summary>
+    /// <param name="target"></param>
     public void DestroyEgg(GameObject target)
     {
         if (_EggList.Contains(target)) _EggList.Remove(target);
