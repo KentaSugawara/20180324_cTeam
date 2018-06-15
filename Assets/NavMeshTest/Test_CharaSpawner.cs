@@ -28,14 +28,6 @@ public class Test_CharaSpawner : MonoBehaviour {
         get { return _Instances; }
     }
 
-    [SerializeField]
-    private NavMeshCharacter.AnimationStrings AnimStrings;
-
-    private void Awake()
-    {
-        NavMeshCharacter.Init(AnimStrings);
-    }
-
     // Use this for initialization
     void Start () {
         StartCoroutine(Routine_Spawn());
