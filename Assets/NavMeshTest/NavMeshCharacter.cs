@@ -249,12 +249,26 @@ public class NavMeshCharacter : MonoBehaviour {
             _Agent.Move(transform.forward * _Agent.speed * 0.75f * Time.deltaTime);
 
             //到着まで移動
-            if (Vector3.SqrMagnitude(Vector3.Scale(_MoveTargetPosition, new Vector3(1, 0, 1)) - Vector3.Scale(transform.position, new Vector3(1, 0, 1))) < 0.1f)
+            if (_MoveTargetPoint != null && _MoveTargetPoint.gameObject.activeInHierarchy)
             {
-                _LastMoveTargetPoint = _MoveTargetPoint;
-                _MoveTargetPoint = null;
-                break;
+                if (Vector3.SqrMagnitude(Vector3.Scale(_MoveTargetPosition, new Vector3(1, 0, 1)) - Vector3.Scale(transform.position, new Vector3(1, 0, 1))) < 0.01f)
+                {
+                    _LastMoveTargetPoint = _MoveTargetPoint;
+                    _MoveTargetPoint = null;
+                    break;
+                }
             }
+            else
+            {
+                if (Vector3.SqrMagnitude(Vector3.Scale(_MoveTargetPosition, new Vector3(1, 0, 1)) - Vector3.Scale(transform.position, new Vector3(1, 0, 1))) < 0.1f)
+                {
+                    _LastMoveTargetPoint = _MoveTargetPoint;
+                    _MoveTargetPoint = null;
+                    break;
+                }
+            }
+
+
             yield return null;
         }
 
