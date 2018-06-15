@@ -15,7 +15,11 @@ public class NavMeshCharacter : MonoBehaviour {
         isWaiting,
         isWalking,
         isRunning,
-        inSpecialMotion,
+        inUnique,
+        inHappy,
+        inAngry,
+        inSad,
+        inFunny
     }
 
     [SerializeField]
@@ -30,39 +34,6 @@ public class NavMeshCharacter : MonoBehaviour {
 
     [SerializeField]
     private float _CharaHight;
-
-    [System.Serializable]
-    public class AnimationStrings
-    {
-        public string Idle;
-        public string Jump;
-        public string Walk;
-        public string Run;
-    }
-
-    public class AnimationIDs
-    {
-        public int Idle;
-        public int Jump;
-        public int Walk;
-        public int Run;
-
-        public void Init(AnimationStrings AnimStrings)
-        {
-            Idle = Animator.StringToHash(AnimStrings.Idle);
-            Jump = Animator.StringToHash(AnimStrings.Jump);
-            Walk = Animator.StringToHash(AnimStrings.Walk);
-            Run = Animator.StringToHash(AnimStrings.Run);
-        }
-    }
-
-    public static AnimationIDs AnimIDs { get; private set; }
-
-    public static void Init(AnimationStrings AnimStrings)
-    {
-        AnimIDs = new AnimationIDs();
-        AnimIDs.Init(AnimStrings);
-    }
 
     [Space(10)]
 
@@ -102,19 +73,41 @@ public class NavMeshCharacter : MonoBehaviour {
     [SerializeField]
     private float _IntervalPossibility = 100.0f;
 
-    [Header("待機時に特殊モーションをする可能性(%)")]
-    [SerializeField, Range(0.0f, 100.0f)]
-    private float _SpecialMotionPossibility;
+    [Space(5)]
+    [Header("待機モーションをする割合")]
+    [SerializeField, Range(0, 100)]
+    private int _Rate_Idle;
 
-    [Header("特殊モーションが次に可能になるまでの待機回数")]
-    [SerializeField]
-    private int _SpecialMotionInterval;
+    [Header("特殊モーションをする割合")]
+    [SerializeField, Range(0, 100)]
+    private int _Rate_Unique;
+
+    [Header("喜モーションをする割合")]
+    [SerializeField, Range(0, 100)]
+    private int _Rate_Happy;
+
+    [Header("怒モーションをする割合")]
+    [SerializeField, Range(0, 100)]
+    private int _Rate_Angry;
+
+    [Header("哀モーションをする割合)")]
+    [SerializeField, Range(0, 100)]
+    private int _Rate_Sad;
+
+    [Header("楽モーションをする割合")]
+    [SerializeField, Range(0, 100)]
+    private int _Rate_Funny;
 
     [SerializeField]
     private eMoveState _MoveState = eMoveState.inIntarval;
 
     [SerializeField]
     private eCharaState _CharaState = eCharaState.isWaiting;
+
+    [Space(5)]
+    [Header("鳴き声")]
+    [SerializeField]
+    private CharacterAudio _CharaAudio;
 
     private void Awake()
     {
@@ -134,6 +127,22 @@ public class NavMeshCharacter : MonoBehaviour {
     private NavMeshTargetPoint _MoveTargetPoint;
     private NavMeshTargetPoint _LastMoveTargetPoint;
     private CharaFieldOfVision _CharaFieldOfVision;
+
+    private static int _ID_Idle = Animator.StringToHash("Idle");
+    private static int _ID_Jump = Animator.StringToHash("Jump");
+    private static int _ID_Walk = Animator.StringToHash("Walk");
+    private static int _ID_Run = Animator.StringToHash("Run");
+    private static int _ID_Unique = Animator.StringToHash("Unique");
+    private static int _ID_Happy = Animator.StringToHash("Happy");
+    private static int _ID_Angry = Animator.StringToHash("Angry");
+    private static int _ID_Sad = Animator.StringToHash("Sad");
+    private static int _ID_Funny = Animator.StringToHash("Funny");
+
+    private int _ID_UniqueState = Animator.StringToHash("Base Layer.Unique");
+    private int _ID_HappyState = Animator.StringToHash("Base Layer.Happy");
+    private int _ID_AngryState = Animator.StringToHash("Base Layer.Angry");
+    private int _ID_SadState = Animator.StringToHash("Base Layer.Sad");
+    private int _ID_FunnyState = Animator.StringToHash("Base Layer.Funny");
 
     private void Start()
     {
@@ -192,29 +201,28 @@ public class NavMeshCharacter : MonoBehaviour {
         }
     }
 
-    private int _ID_Unique = Animator.StringToHash("Unique");
-    private int _ID_UniqueState = Animator.StringToHash("Base Layer.Unique");
-
     private IEnumerator Routine_Intarval()
     {
         _Agent.isStopped = true;
 
-        if (Random.Range(0.0f, 100.0f) <= _SpecialMotionPossibility)
+        //ランダムに次のモーションを設定
         {
-            //特殊モーション
-            _CharaState = eCharaState.inSpecialMotion;
-            _Animator.SetTrigger(_ID_Unique);
+            List<eCharaState> table = new List<eCharaState>();
+            for (int i = 0; i < _Rate_Idle; ++i) table.Add(eCharaState.isWaiting);
+            for (int i = 0; i < _Rate_Unique; ++i) table.Add(eCharaState.inUnique);
+            for (int i = 0; i < _Rate_Happy; ++i) table.Add(eCharaState.inHappy);
+            for (int i = 0; i < _Rate_Angry; ++i) table.Add(eCharaState.inAngry);
+            for (int i = 0; i < _Rate_Sad; ++i) table.Add(eCharaState.inSad);
+            for (int i = 0; i < _Rate_Funny; ++i) table.Add(eCharaState.inFunny);
 
-            //変わるまで待機
-            while (_Animator.GetCurrentAnimatorStateInfo(0).fullPathHash != _ID_UniqueState) yield return null;
-            //終わるまで待機
-            while (_Animator.GetCurrentAnimatorStateInfo(0).fullPathHash == _ID_UniqueState) yield return null;
+            if (table.Count > 0) _CharaState = table[Random.Range(0, table.Count)];
+            else _CharaState = eCharaState.isWaiting;
         }
-        else
+
+        if (_CharaState == eCharaState.isWaiting)
         {
             //待機中
-            _CharaState = eCharaState.isWaiting;
-            _Animator.SetTrigger(AnimIDs.Idle);
+            _Animator.SetTrigger(_ID_Idle);
 
             float ElapsedSeconds = Random.Range(_MinMoveInterval, _MaxMoveInterval);
             while (ElapsedSeconds > 0.0f)
@@ -223,6 +231,72 @@ public class NavMeshCharacter : MonoBehaviour {
                 yield return null;
             }
         }
+        else if (_CharaState == eCharaState.inUnique)
+        {
+            //特殊モーション
+            _Animator.SetTrigger(_ID_Unique);
+
+            //変わるまで待機
+            while (_Animator.GetCurrentAnimatorStateInfo(0).fullPathHash != _ID_UniqueState) yield return null;
+
+            _CharaAudio.Play(CharacterAudio.eAudioType.Unique);
+
+            //終わるまで待機
+            while (_Animator.GetCurrentAnimatorStateInfo(0).fullPathHash == _ID_UniqueState) yield return null;
+        }
+        else if (_CharaState == eCharaState.inHappy)
+        {
+            //喜モーション
+            _Animator.SetTrigger(_ID_Happy);
+
+            //変わるまで待機
+            while (_Animator.GetCurrentAnimatorStateInfo(0).fullPathHash != _ID_HappyState) yield return null;
+
+            _CharaAudio.Play(CharacterAudio.eAudioType.Happy);
+
+            //終わるまで待機
+            while (_Animator.GetCurrentAnimatorStateInfo(0).fullPathHash == _ID_HappyState) yield return null;
+        }
+        else if (_CharaState == eCharaState.inAngry)
+        {
+            //怒モーション
+            _Animator.SetTrigger(_ID_Angry);
+
+            //変わるまで待機
+            while (_Animator.GetCurrentAnimatorStateInfo(0).fullPathHash != _ID_AngryState) yield return null;
+
+            _CharaAudio.Play(CharacterAudio.eAudioType.Angry);
+
+            //終わるまで待機
+            while (_Animator.GetCurrentAnimatorStateInfo(0).fullPathHash == _ID_AngryState) yield return null;
+        }
+        else if (_CharaState == eCharaState.inSad)
+        {
+            //哀モーション
+            _Animator.SetTrigger(_ID_Sad);
+
+            //変わるまで待機
+            while (_Animator.GetCurrentAnimatorStateInfo(0).fullPathHash != _ID_SadState) yield return null;
+
+            _CharaAudio.Play(CharacterAudio.eAudioType.Sad);
+
+            //終わるまで待機
+            while (_Animator.GetCurrentAnimatorStateInfo(0).fullPathHash == _ID_SadState) yield return null;
+        }
+        else if (_CharaState == eCharaState.inHappy)
+        {
+            //楽モーション
+            _Animator.SetTrigger(_ID_Funny);
+
+            //変わるまで待機
+            while (_Animator.GetCurrentAnimatorStateInfo(0).fullPathHash != _ID_FunnyState) yield return null;
+
+            _CharaAudio.Play(CharacterAudio.eAudioType.Happy);
+
+            //終わるまで待機
+            while (_Animator.GetCurrentAnimatorStateInfo(0).fullPathHash == _ID_FunnyState) yield return null;
+        }
+
 
         _MoveState = eMoveState.isMoving;
     }
@@ -235,14 +309,14 @@ public class NavMeshCharacter : MonoBehaviour {
         {
             //走り
             _CharaState = eCharaState.isRunning;
-            _Animator.SetTrigger(AnimIDs.Run);
+            _Animator.SetTrigger(_ID_Run);
             _Agent.speed = _RunSpeed;
         }
         else
         {
             //歩き
             _CharaState = eCharaState.isWalking;
-            _Animator.SetTrigger(AnimIDs.Walk);
+            _Animator.SetTrigger(_ID_Walk);
             _Agent.speed = _WalkSpeed;
         }
 
