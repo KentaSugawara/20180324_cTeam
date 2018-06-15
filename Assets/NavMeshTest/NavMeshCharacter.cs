@@ -133,6 +133,7 @@ public class NavMeshCharacter : MonoBehaviour {
 
     private NavMeshTargetPoint _MoveTargetPoint;
     private NavMeshTargetPoint _LastMoveTargetPoint;
+    private CharaFieldOfVision _CharaFieldOfVision;
 
     private void Start()
     {
@@ -149,12 +150,14 @@ public class NavMeshCharacter : MonoBehaviour {
     }
 
     public void Play() {
+        _CharaFieldOfVision.Play();
         StartCoroutine(Routine_Main());
         StartCoroutine(Routine_OnGround());
         GetComponent<Collider>().enabled = true;
     }
 
     public void Stop() {
+        _CharaFieldOfVision.Stop();
         StopAllCoroutines();
         _Agent.isStopped = true;
         GetComponent<Collider>().enabled = false;
