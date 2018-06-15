@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 114424335096356132}
   - component: {fileID: 114210450235767786}
   - component: {fileID: 114757205782535388}
-  - component: {fileID: 95594377981548356}
+  - component: {fileID: 114830220713292558}
   m_Layer: 0
   m_Name: PictureBookNode
   m_TagString: Untagged
@@ -48,23 +48,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!95 &95594377981548356
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1965473661221724}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e299af84d33d2dc4ca0a8a79f911a268, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114210450235767786
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -82,7 +65,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 3
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -189,6 +172,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _Image: {fileID: 114424335096356132}
+--- !u!114 &114830220713292558
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1965473661221724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 925b2f1c23232c641b8eff60f93af4ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _EndScale: {x: 0.9, y: 0.9, z: 0.9}
+  _HalfTime: 0.1
 --- !u!222 &222444845932537904
 CanvasRenderer:
   m_ObjectHideFlags: 1

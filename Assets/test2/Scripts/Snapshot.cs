@@ -15,6 +15,48 @@ public class Snapshot : MonoBehaviour
     [SerializeField]
     EggSpawner m_eggSpawner = null;
 
+    [SerializeField]
+    private GameObject m_BackGround;
+
+    [SerializeField]
+    private RectTransform m_SnapShotBackGround;
+
+    [SerializeField]
+    private Image m_SnapShotImage;
+
+    [SerializeField]
+    private float m_ReductionNeedSeconds;
+
+    [SerializeField]
+    private Image m_EggNameImage;
+
+    [SerializeField]
+    private GameObject m_Prefab_New;
+
+    [SerializeField]
+    private float m_New_EnlargementNeedSeconds;
+
+    //[SerializeField]
+    //private float m_NameImage_EnlargementNeedSeconds;
+
+    [SerializeField]
+    private float m_New_ViewSeconds;
+
+    [SerializeField]
+    private float m_New_ReductionNeedSeconds;
+
+    [SerializeField]
+    private float m_New_IntervalSeconds;
+
+    [SerializeField]
+    private RectTransform m_PictureBookButton;
+
+    [SerializeField]
+    private float m_SnapShot_StoreNeedSeconds;
+
+    [SerializeField]
+    private List<GameObject> Test_EggList;
+
 #if true//UNITY_ANDROID && !UNITY_EDITOR
     Texture2D m_tex2d;
     int m_photoNum = 0;
@@ -23,6 +65,7 @@ public class Snapshot : MonoBehaviour
     private void Awake()
     {
         m_camera.targetTexture = null;
+        m_BackGround.SetActive(false);
     }
 
     private void Start()
@@ -37,16 +80,23 @@ public class Snapshot : MonoBehaviour
 
     IEnumerator SaveCamImage()
     {
-        var int_list = new List<int>();
+        var EggObjlist = new List<KeyValuePair<GameObject, int>>();
 
-        //一時的に削除
-        foreach (var egg in EggSpawnerARCore.EggList)
+        //foreach (var egg in EggSpawnerARCore.EggList)
+        //{
+        //    if (egg.GetComponent<EggBehaviour>().isInCamera)
+        //        int_list.Add(egg.GetComponent<EggData>()._closeID);
+        //}
+
+        //******************要修正**********************//
+        foreach (var egg in Test_EggList)
         {
             if (egg.GetComponent<EggBehaviour>().isInCamera)
-                int_list.Add(egg.GetComponent<EggData>()._closeID);
+                EggObjlist.Add(new KeyValuePair<GameObject, int>(egg, egg.GetComponent<EggData>()._closeID));
         }
+        //*********************************************//
 
-        Main_PictureBookManager.CheckNewCharacters(int_list);
+        var NewEggList = Main_PictureBookManager.GetNewCharacters(EggObjlist);
 
 #if true//UNITY_ANDROID && !UNITY_EDITOR
         // アクティブなレンダーテクスチャを一時保管
@@ -76,7 +126,74 @@ public class Snapshot : MonoBehaviour
         RenderTexture.active = curRT;
         m_camera.targetTexture = null;
         m_camera.Render();
+        
+        //初期化
+        {
+            m_EggNameImage.gameObject.SetActive(false);
+            m_SnapShotBackGround.transform.position = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0.0f);
+            m_SnapShotBackGround.transform.localScale = Vector3.one;
+            m_SnapShotBackGround.transform.rotation = Quaternion.identity;
+        }
 
+        List<GameObject> NewImageList = new List<GameObject>();
+        //新しいEggがいたらNewを生成しておく
+        foreach (var Egg in NewEggList)
+        {
+            var obj = Instantiate(m_Prefab_New);
+            obj.transform.SetParent(m_SnapShotBackGround.transform);
+
+            var renderer = Egg.Key.GetComponent<NavMeshCharacter>().BodyRenderer;
+
+            Vector3 BottomPos = Camera.main.WorldToScreenPoint(Egg.Key.transform.position);
+            Vector3 RightPos = Camera.main.WorldToScreenPoint(Egg.Key.transform.position + renderer.bounds.extents);
+            Vector3 InScreenHalfSize = RightPos - BottomPos;
+            InScreenHalfSize.z = 0.0f;
+            Vector3 CenterPos = BottomPos + Vector3.up * InScreenHalfSize.y;
+
+            Vector3 ViewPos = CenterPos;
+
+            //どこに表示するか
+            if (CenterPos.x < Screen.width * 0.5f) ViewPos.x += InScreenHalfSize.x + 80.0f;
+            else ViewPos.x -= InScreenHalfSize.x + 80.0f;
+
+            if (CenterPos.y < Screen.height * 0.5f) ViewPos.y += InScreenHalfSize.y + 80.0f;
+            else ViewPos.y -= InScreenHalfSize.y + 80.0f;
+
+            obj.transform.position = ViewPos;
+            obj.SetActive(false);
+
+            NewImageList.Add(obj);
+        }
+
+        //写真を表示
+        {
+            m_BackGround.SetActive(true);
+            m_SnapShotImage.material.mainTexture = m_tex2d;
+
+            yield return StartCoroutine(Routine_ImageReduction());
+        }
+
+        //新しいEggがいたら表示
+        if (NewImageList.Count > 0) {
+            yield return StartCoroutine(Routine_NewEgg(NewImageList, NewEggList));
+        }
+        else
+        {
+            yield return new WaitForSeconds(1.0f);
+        }
+
+        //写真を格納
+        {
+            yield return StartCoroutine(Routine_StoreImage());
+        }
+
+        //終了
+        {
+            m_BackGround.SetActive(false);
+        }
+
+        //アルバムを更新
+        Main_PictureBookManager.UpdateAlbum(EggObjlist);
         _AlbumViewer.SnapShot(m_tex2d);
 
         //// テクスチャを PNG に変換
@@ -109,5 +226,101 @@ public class Snapshot : MonoBehaviour
         //m_photoNum++;
 #endif
         yield break;
+    }
+
+    private IEnumerator Routine_ImageReduction()
+    {
+        m_SnapShotBackGround.localScale = Vector3.one;
+        Vector3 b;
+        for (float t = 0.0f; t < m_ReductionNeedSeconds; t += Time.deltaTime)
+        {
+            float e = t / m_ReductionNeedSeconds;
+            b = Vector3.Lerp(Vector3.one, Vector3.one * 0.6f, e);
+            m_SnapShotBackGround.localScale = Vector3.Lerp(b, Vector3.one * 0.6f, e);
+            yield return null;
+        }
+        m_SnapShotBackGround.localScale = Vector3.one * 0.6f;
+    }
+
+    private IEnumerator Routine_NewEgg(List<GameObject> NewImageList, List<KeyValuePair<GameObject, Sprite>> NewEggList)
+    {
+        m_EggNameImage.gameObject.SetActive(true);
+        m_EggNameImage.transform.localScale = Vector3.zero;
+
+        Vector3 b;
+        float e;
+
+        //今は一つだけ
+        for (int i = 0; i < NewImageList.Count; ++i)
+        {
+            m_EggNameImage.sprite = NewEggList[i].Value;
+            //拡大
+            NewImageList[i].gameObject.SetActive(true);
+            for (float t = 0.0f; t < m_New_EnlargementNeedSeconds; t += Time.deltaTime)
+            {
+                e = t / m_New_EnlargementNeedSeconds;
+                b = Vector3.Lerp(Vector3.zero, Vector3.one, e);
+                NewImageList[i].transform.localScale = Vector3.Lerp(b, Vector3.one, e);
+                m_EggNameImage.transform.localScale = Vector3.Lerp(b, Vector3.one, e);
+                yield return null;
+            }
+            NewImageList[i].transform.localScale = Vector3.one;
+
+            //for (float t = 0.0f; t < m_NameImage_EnlargementNeedSeconds; t += Time.deltaTime)
+            //{
+            //    e = t / m_NameImage_EnlargementNeedSeconds;
+            //    b = Vector3.Lerp(Vector3.zero, Vector3.one, e);
+            //    m_EggNameImage.transform.localScale = Vector3.Lerp(b, Vector3.one, e);
+            //    yield return null;
+            //}
+            m_EggNameImage.transform.localScale = Vector3.one;
+
+            yield return new WaitForSeconds(m_New_ViewSeconds);
+
+            //縮小
+            for (float t = 0.0f; t < m_New_ReductionNeedSeconds; t += Time.deltaTime)
+            {
+                e = t / m_ReductionNeedSeconds;
+                b = Vector3.Lerp(Vector3.one, Vector3.zero, e);
+                NewImageList[i].transform.localScale = Vector3.Lerp(b, Vector3.zero, e);
+                m_EggNameImage.transform.localScale = NewImageList[i].transform.localScale;
+                yield return null;
+            }
+            m_EggNameImage.transform.localScale = Vector3.zero;
+            NewImageList[i].gameObject.SetActive(false);
+
+            yield return new WaitForSeconds(m_New_IntervalSeconds);
+        }
+
+
+        m_EggNameImage.gameObject.SetActive(false);
+    }
+
+    private IEnumerator Routine_StoreImage()
+    {
+        Vector3 StartPos = m_SnapShotBackGround.transform.position;
+        Vector3 EndPos = m_PictureBookButton.position;
+        Vector3 StartScale = m_SnapShotBackGround.transform.localScale;
+        Quaternion StartRotation = m_SnapShotBackGround.transform.rotation;
+        var vec = (StartPos - EndPos).normalized;
+        Quaternion EndRotation = Quaternion.FromToRotation(Vector3.up, vec);
+
+        Vector3 b;
+        Quaternion q;
+        float e;
+        for (float t = 0.0f; t < m_SnapShot_StoreNeedSeconds; t += Time.deltaTime)
+        {
+            e = t / m_New_EnlargementNeedSeconds;
+            b = Vector3.Lerp(StartPos, EndPos, e);
+            m_SnapShotBackGround.transform.position = Vector3.Lerp(b, EndPos, e);
+
+            b = Vector3.Lerp(StartScale, Vector3.zero, e);
+            m_SnapShotBackGround.transform.localScale = Vector3.Lerp(b, Vector3.zero, e);
+
+            q = Quaternion.Lerp(StartRotation, EndRotation, e);
+            m_SnapShotBackGround.transform.rotation = Quaternion.Lerp(q, EndRotation, e);
+
+            yield return null;
+        }
     }
 }

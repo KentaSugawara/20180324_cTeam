@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 public class Main_Tutorial : MonoBehaviour {
     public enum eTamago
@@ -54,7 +55,6 @@ public class Main_Tutorial : MonoBehaviour {
 
     void Start () {
         _Scale_Fukidashi = _Fukidashi.localScale;
-
         _HoleView.material.SetFloat("_ScreenW", Screen.width);
         _HoleView.material.SetFloat("_ScreenH", Screen.height);
 

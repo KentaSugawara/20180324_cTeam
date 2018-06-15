@@ -18,7 +18,16 @@ public class Main_ChallengeViewerNode : MonoBehaviour {
 
     private Main_ChallengeViewer _ParentComponent;
     private Json_Challenge_ListNode _mySaveData;
+    public Json_Challenge_ListNode SaveData
+    {
+        get { return _mySaveData; }
+    }
+
     private ChallengeData _myData;
+    public ChallengeData Data
+    {
+        get { return _myData; }
+    }
 
     public void Init(Main_ChallengeViewer parent, Json_Challenge_ListNode mySaveData, ChallengeData myData)
     {

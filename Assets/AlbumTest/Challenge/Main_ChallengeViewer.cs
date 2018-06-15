@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class Main_ChallengeViewer : MonoBehaviour {
 
@@ -18,7 +19,7 @@ public class Main_ChallengeViewer : MonoBehaviour {
     private GameObject _Obj_New;
     public void SetNew(bool value)
     {
-        _Obj_New.SetActive(value);
+        if (_Obj_New != null) _Obj_New.SetActive(value);
     }
 
     [SerializeField]
@@ -65,7 +66,49 @@ public class Main_ChallengeViewer : MonoBehaviour {
             _ScrollViewNodes.Add(node);
         }
 
+        SortChallengesInstance();
+
         _Text_NumOf.text = NumOfClear + "/" + _ScrollViewNodes.Count;
+    }
+
+    public void SortChallengesInstance()
+    {
+        Debug.Log("Sort");
+        //_ScrollViewNodes.OrderByDescending(x => x.name);//.ThenBy(x => x.SaveData.isCleard ? 0 : 1).ThenBy(x => x.SaveData.isNewCleard ? 0 : 1)
+        _ScrollViewNodes.Sort((a, b) => a.Data.CloseID - b.Data.CloseID);
+        for (int i = _ScrollViewNodes.Count - 1; i >= 0; --i)
+        {
+            if (_ScrollViewNodes[i].SaveData.isNewCleard)
+            {
+                //先頭に代入
+                var target = _ScrollViewNodes[i];
+                _ScrollViewNodes.RemoveAt(i);
+                _ScrollViewNodes.Insert(0, target);
+            }
+        }
+
+        for (int i = 0; i < _ScrollViewNodes.Count; ++i)
+        {
+            if (_ScrollViewNodes[i].SaveData.isCleard && !_ScrollViewNodes[i].SaveData.isNewCleard)
+            {
+                //最後尾に代入
+                var target = _ScrollViewNodes[i];
+                _ScrollViewNodes.RemoveAt(i);
+                _ScrollViewNodes.Add(target);
+            }
+        }
+        //_ScrollViewNodes.Sort((a, b) => (b.SaveData.isCleard ? 0 : 1) - (a.SaveData.isCleard ? 0 : 1));
+        //_ScrollViewNodes.Sort((a, b) => a.SaveData.isNewCleard ? 1 : 0/*(a.SaveData.isNewCleard ? 0 : 1) - (b.SaveData.isNewCleard ? 0 : 1)*/);
+        for (int i = 0; i < _ScrollViewNodes.Count; ++i)
+        {
+            _ScrollViewNodes[i].transform.SetSiblingIndex(0);
+        }
+
+        for (int i = 0; i < _ScrollViewNodes.Count; ++i)
+        {
+            _ScrollViewNodes[i].transform.SetSiblingIndex(i);
+            _ScrollViewNodes[i].SaveData.isNewCleard = false;
+        }
     }
 
     public void Open()

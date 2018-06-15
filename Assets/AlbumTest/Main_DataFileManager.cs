@@ -117,7 +117,6 @@ public class Main_DataFileManager : MonoBehaviour {
     {
         //アルバムデータリストに追加
         var album = Load_AlbumData();
-        Debug.Log(album.Pictures.Count);
         album.Pictures.Add(Picture);
         Save_AlbumData(album);
     }
