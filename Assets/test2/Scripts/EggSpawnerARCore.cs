@@ -113,6 +113,7 @@ public class EggSpawnerARCore : MonoBehaviour {
                     var obj = Instantiate(randEgg, pose.position, pose.rotation);
 
                     obj.transform.localRotation = randEgg.transform.localRotation;
+					obj.transform.localScale /= 10;
 
                     var anchor = TargetPlane.CreateAnchor(pose);
 

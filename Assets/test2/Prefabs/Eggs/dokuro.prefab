@@ -238,6 +238,8 @@ GameObject:
   - component: {fileID: 136843619333028374}
   - component: {fileID: 114232504100387132}
   - component: {fileID: 114734080111718918}
+  - component: {fileID: 195909856524250948}
+  - component: {fileID: 114431997698130534}
   m_Layer: 0
   m_Name: dokuro
   m_TagString: Untagged
@@ -843,7 +845,7 @@ Animator:
   m_GameObject: {fileID: 1517518436026874}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: d96f9c0eb4a58f640bff2d3884c422fd, type: 3}
-  m_Controller: {fileID: 9100000, guid: 393d2057a5a734c43864e8ee89953e33, type: 2}
+  m_Controller: {fileID: 22100000, guid: 4b822fd5538ba5a4e9e741ecfe4b9c74, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -865,6 +867,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tuneParams: {x: 1.45, y: 1.1, z: 1}
   _rigTransform: {fileID: 4084855748040168}
+--- !u!114 &114431997698130534
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1517518436026874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1150d55ca01676d48b5a55ac6b24e3f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _BodyRenderer: {fileID: 0}
+  _CharaHight: 0
+  _AutoMove: 1
+  _EnableRun: 1
+  _FieldOfVisionScale: {x: 0, y: 0, z: 0}
+  _WalkSpeed: 0
+  _RunSpeed: 0
+  _RunPossibility: 0
+  _MinMoveInterval: 0
+  _MaxMoveInterval: 0
+  _IntervalPossibility: 100
+  _Rate_Idle: 0
+  _Rate_Unique: 0
+  _Rate_Happy: 0
+  _Rate_Angry: 0
+  _Rate_Sad: 0
+  _Rate_Funny: 0
+  _MoveState: 0
+  _CharaState: 0
+  _CharaAudio: {fileID: 0}
 --- !u!114 &114734080111718918
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1040,3 +1073,24 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.061203066, y: -0.0036004, z: 0.000017866492}
     m_Extent: {x: 0.060956415, y: 0.018247085, z: 0.010701186}
   m_DirtyAABB: 0
+--- !u!195 &195909856524250948
+NavMeshAgent:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1517518436026874}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4

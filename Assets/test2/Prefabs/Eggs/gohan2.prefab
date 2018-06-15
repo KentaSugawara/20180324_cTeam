@@ -192,6 +192,8 @@ GameObject:
   - component: {fileID: 136570721337104542}
   - component: {fileID: 114375143540978404}
   - component: {fileID: 114672061001244390}
+  - component: {fileID: 195046008917655988}
+  - component: {fileID: 114926201816748474}
   m_Layer: 0
   m_Name: gohan2
   m_TagString: Untagged
@@ -841,7 +843,7 @@ Animator:
   m_GameObject: {fileID: 1358472545605844}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 4c684adf12ae04e4f9953970ff0a0b4f, type: 3}
-  m_Controller: {fileID: 9100000, guid: 393d2057a5a734c43864e8ee89953e33, type: 2}
+  m_Controller: {fileID: 22100000, guid: 29b896de681e05248b08b7be0c17eb53, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -875,6 +877,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _closeID: 11
+--- !u!114 &114926201816748474
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1358472545605844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1150d55ca01676d48b5a55ac6b24e3f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _BodyRenderer: {fileID: 0}
+  _CharaHight: 0
+  _AutoMove: 1
+  _EnableRun: 1
+  _FieldOfVisionScale: {x: 0, y: 0, z: 0}
+  _WalkSpeed: 0
+  _RunSpeed: 0
+  _RunPossibility: 0
+  _MinMoveInterval: 0
+  _MaxMoveInterval: 0
+  _IntervalPossibility: 100
+  _Rate_Idle: 0
+  _Rate_Unique: 0
+  _Rate_Happy: 0
+  _Rate_Angry: 0
+  _Rate_Sad: 0
+  _Rate_Funny: 0
+  _MoveState: 0
+  _CharaState: 0
+  _CharaAudio: {fileID: 0}
 --- !u!136 &136570721337104542
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -1038,3 +1071,24 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.06120311, y: 0.0036003995, z: -0.00011958089}
     m_Extent: {x: 0.060956415, y: 0.01824708, z: 0.010701185}
   m_DirtyAABB: 0
+--- !u!195 &195046008917655988
+NavMeshAgent:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1358472545605844}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4

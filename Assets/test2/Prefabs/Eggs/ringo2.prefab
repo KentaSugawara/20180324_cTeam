@@ -69,6 +69,8 @@ GameObject:
   - component: {fileID: 136469762764062094}
   - component: {fileID: 114939970339527928}
   - component: {fileID: 114522333920497312}
+  - component: {fileID: 195613536155705292}
+  - component: {fileID: 114026908627757380}
   m_Layer: 0
   m_Name: ringo2
   m_TagString: Untagged
@@ -768,7 +770,7 @@ Animator:
   m_GameObject: {fileID: 1125984710549144}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: c07d6c276b94bb641931c2d9193c19d7, type: 3}
-  m_Controller: {fileID: 9100000, guid: 393d2057a5a734c43864e8ee89953e33, type: 2}
+  m_Controller: {fileID: 22100000, guid: 57fb3fb3fd798c54eb74a5010401bb0e, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -777,6 +779,37 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114026908627757380
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1125984710549144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1150d55ca01676d48b5a55ac6b24e3f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _BodyRenderer: {fileID: 0}
+  _CharaHight: 0
+  _AutoMove: 1
+  _EnableRun: 1
+  _FieldOfVisionScale: {x: 0, y: 0, z: 0}
+  _WalkSpeed: 0
+  _RunSpeed: 0
+  _RunPossibility: 0
+  _MinMoveInterval: 0
+  _MaxMoveInterval: 0
+  _IntervalPossibility: 100
+  _Rate_Idle: 0
+  _Rate_Unique: 0
+  _Rate_Happy: 0
+  _Rate_Angry: 0
+  _Rate_Sad: 0
+  _Rate_Funny: 0
+  _MoveState: 0
+  _CharaState: 0
+  _CharaAudio: {fileID: 0}
 --- !u!114 &114522333920497312
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -965,3 +998,24 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.06120311, y: 0.0036003995, z: -0.00011958089}
     m_Extent: {x: 0.060956415, y: 0.01824708, z: 0.010701185}
   m_DirtyAABB: 0
+--- !u!195 &195613536155705292
+NavMeshAgent:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1125984710549144}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4

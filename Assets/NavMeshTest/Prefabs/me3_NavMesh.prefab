@@ -1346,7 +1346,7 @@ Animator:
   m_GameObject: {fileID: 1986606108472878}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 71d9a20db794af04783cd44f5276d5b0, type: 3}
-  m_Controller: {fileID: 9100000, guid: 393d2057a5a734c43864e8ee89953e33, type: 2}
+  m_Controller: {fileID: 22100000, guid: 5525ec02077b6544694e7b536a9b64d6, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -1379,10 +1379,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tuneParams: {x: 1.45, y: 1.1, z: 1}
-  _speed: 1
-  _isMovable: 0
   _rigTransform: {fileID: 0}
-  stateChangeTime: 3
 --- !u!114 &114329498935106668
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1411,7 +1408,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Tracked: {fileID: 0}
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 0.1, y: 0.1, z: 0.1}
 --- !u!114 &114487067038275794
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1427,19 +1424,19 @@ MonoBehaviour:
   _CharaHight: 10
   _AutoMove: 1
   _EnableRun: 1
-  _FieldOfVisionScale: {x: 1, y: 1, z: 3}
+  _FieldOfVisionScale: {x: 0.1, y: 1, z: 0.1}
   _WalkSpeed: 0.5
   _RunSpeed: 1
   _RunPossibility: 50
   _MinMoveInterval: 1
   _MaxMoveInterval: 2
   _IntervalPossibility: 100
-  _Rate_Idle: 0
-  _Rate_Unique: 0
-  _Rate_Happy: 0
-  _Rate_Angry: 0
-  _Rate_Sad: 0
-  _Rate_Funny: 0
+  _Rate_Idle: 1
+  _Rate_Unique: 1
+  _Rate_Happy: 1
+  _Rate_Angry: 1
+  _Rate_Sad: 1
+  _Rate_Funny: 1
   _MoveState: 0
   _CharaState: 0
   _CharaAudio: {fileID: 114329498935106668}
@@ -1708,16 +1705,16 @@ NavMeshAgent:
   m_GameObject: {fileID: 1986606108472878}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.1
-  m_Speed: 0.5
+  m_Radius: 0.01
+  m_Speed: 0.05
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0.1
+  m_StoppingDistance: 0.01
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1
-  m_Height: 0.3
+  m_Height: 0.03
   m_BaseOffset: -0.0825
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4

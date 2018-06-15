@@ -239,7 +239,8 @@ public class NavMeshCharacter : MonoBehaviour {
             //変わるまで待機
             while (_Animator.GetCurrentAnimatorStateInfo(0).fullPathHash != _ID_UniqueState) yield return null;
 
-            _CharaAudio.Play(CharacterAudio.eAudioType.Unique);
+			if (_CharaAudio)
+				_CharaAudio.Play(CharacterAudio.eAudioType.Unique);
 
             //終わるまで待機
             while (_Animator.GetCurrentAnimatorStateInfo(0).fullPathHash == _ID_UniqueState) yield return null;
@@ -252,7 +253,8 @@ public class NavMeshCharacter : MonoBehaviour {
             //変わるまで待機
             while (_Animator.GetCurrentAnimatorStateInfo(0).fullPathHash != _ID_HappyState) yield return null;
 
-            _CharaAudio.Play(CharacterAudio.eAudioType.Happy);
+			if(_CharaAudio)
+				_CharaAudio.Play(CharacterAudio.eAudioType.Happy);
 
             //終わるまで待機
             while (_Animator.GetCurrentAnimatorStateInfo(0).fullPathHash == _ID_HappyState) yield return null;
@@ -265,7 +267,8 @@ public class NavMeshCharacter : MonoBehaviour {
             //変わるまで待機
             while (_Animator.GetCurrentAnimatorStateInfo(0).fullPathHash != _ID_AngryState) yield return null;
 
-            _CharaAudio.Play(CharacterAudio.eAudioType.Angry);
+			if (_CharaAudio)
+				_CharaAudio.Play(CharacterAudio.eAudioType.Angry);
 
             //終わるまで待機
             while (_Animator.GetCurrentAnimatorStateInfo(0).fullPathHash == _ID_AngryState) yield return null;
@@ -278,7 +281,8 @@ public class NavMeshCharacter : MonoBehaviour {
             //変わるまで待機
             while (_Animator.GetCurrentAnimatorStateInfo(0).fullPathHash != _ID_SadState) yield return null;
 
-            _CharaAudio.Play(CharacterAudio.eAudioType.Sad);
+			if (_CharaAudio)
+				_CharaAudio.Play(CharacterAudio.eAudioType.Sad);
 
             //終わるまで待機
             while (_Animator.GetCurrentAnimatorStateInfo(0).fullPathHash == _ID_SadState) yield return null;
@@ -291,7 +295,8 @@ public class NavMeshCharacter : MonoBehaviour {
             //変わるまで待機
             while (_Animator.GetCurrentAnimatorStateInfo(0).fullPathHash != _ID_FunnyState) yield return null;
 
-            _CharaAudio.Play(CharacterAudio.eAudioType.Happy);
+			if (_CharaAudio)
+				_CharaAudio.Play(CharacterAudio.eAudioType.Happy);
 
             //終わるまで待機
             while (_Animator.GetCurrentAnimatorStateInfo(0).fullPathHash == _ID_FunnyState) yield return null;
