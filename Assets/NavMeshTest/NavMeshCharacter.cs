@@ -192,6 +192,9 @@ public class NavMeshCharacter : MonoBehaviour {
         }
     }
 
+    private int _ID_Unique = Animator.StringToHash("Unique");
+    private int _ID_UniqueState = Animator.StringToHash("Base Layer.Unique");
+
     private IEnumerator Routine_Intarval()
     {
         _Agent.isStopped = true;
@@ -200,6 +203,12 @@ public class NavMeshCharacter : MonoBehaviour {
         {
             //特殊モーション
             _CharaState = eCharaState.inSpecialMotion;
+            _Animator.SetTrigger(_ID_Unique);
+
+            //変わるまで待機
+            while (_Animator.GetCurrentAnimatorStateInfo(0).fullPathHash != _ID_UniqueState) yield return null;
+            //終わるまで待機
+            while (_Animator.GetCurrentAnimatorStateInfo(0).fullPathHash == _ID_UniqueState) yield return null;
         }
         else
         {
