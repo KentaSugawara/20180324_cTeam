@@ -298,7 +298,7 @@ public class NavMeshCharacter : MonoBehaviour {
             );
 
         NavMeshHit nvhit;
-        if (NavMesh.Raycast(ray.origin, ray.origin + ray.direction, out nvhit, NavMesh.AllAreas) == false) return false;
+        if (NavMesh.Raycast(ray.origin, ray.origin + ray.direction * 100.0f, out nvhit, NavMesh.AllAreas) == false) return false;
 
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 100.0f, 1 << 12))
