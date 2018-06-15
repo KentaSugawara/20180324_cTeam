@@ -46,6 +46,7 @@ public class TitleViewer : MonoBehaviour {
     private void Start()
     {
         _Audio_BGM.Play();
+        StartCoroutine(Routine_BGM_In());
     }
 
     private bool _isMoving = false;
@@ -148,11 +149,36 @@ public class TitleViewer : MonoBehaviour {
         _StartButton.SetActive(true);
     }
 
+    IEnumerator BGMRoutine;
+
+    public void BGM_In()
+    {
+        if (BGMRoutine != null) StopCoroutine(BGMRoutine);
+        BGMRoutine = Routine_BGM_In();
+        StartCoroutine(BGMRoutine);
+    }
+
+    public void BGM_Out()
+    {
+        if (BGMRoutine != null) StopCoroutine(BGMRoutine);
+        BGMRoutine = Routine_BGM_Out();
+        StartCoroutine(Routine_BGM_Out());
+    }
+
     private IEnumerator Routine_BGM_In()
     {
         for (float t = 0.0f; t < 2.0f; t+= Time.deltaTime)
         {
             _Audio_BGM.volume = Mathf.Lerp(0.0f, 1.0f, t / 2.0f);
+            yield return null;
+        }
+    }
+
+    private IEnumerator Routine_BGM_Out()
+    {
+        for (float t = 0.0f; t < 2.0f; t += Time.deltaTime)
+        {
+            _Audio_BGM.volume = Mathf.Lerp(1.0f, 0.0f, t / 2.0f);
             yield return null;
         }
     }

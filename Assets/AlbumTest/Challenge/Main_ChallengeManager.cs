@@ -7,7 +7,7 @@ public static class Main_ChallengeManager {
     private static Main_DataFileManager DatafileManager;
     private static Assets_ChallengeList ChallengeList;
     private static Main_ChallengeViewer ChallengeViewer;
-    private static Main_NoticeViewer NoticeViewer;
+    public static Main_NoticeViewer NoticeViewer { get; private set; }
     public static Json_Challenge_DataList ChallengeSaveData { get; private set; }
     
     public static void Init(Main_DataFileManager DatafileManager, Main_ChallengeViewer Viewer, Assets_ChallengeList Asset, Main_NoticeViewer NoticeViewer)
@@ -72,7 +72,7 @@ public static class Main_ChallengeManager {
                     //Main_ItemManager.ItemSaveData
 
                     //ここで通知に流す
-                    NoticeViewer.AddNotice("「" + challenge.Text +　"」くりあ！");
+                    NoticeViewer.AddNotice("「" + challenge.Text +　"」くりあ！", Main_NoticeViewer.eNoticeType.Challenge);
                 }
             }
         }

@@ -89,6 +89,11 @@ public class Main_ItemManager : MonoBehaviour {
                     //達成されていたら
                     if(!savedata.isActive)
                     {
+                        if (!savedata.isNewActive)
+                        {
+                            //ここで通知に流す
+                            Main_ChallengeManager.NoticeViewer.AddNotice("「" + node.ViewName + "」げっと！", Main_NoticeViewer.eNoticeType.Item);
+                        }
                         savedata.isActive = true;
                         savedata.isNewActive = true;
                     }
