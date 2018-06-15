@@ -137,8 +137,8 @@ public class NavMeshCharacter : MonoBehaviour {
 
     private void Start()
     {
-        //今はここで初期化
-        CharaFieldOfVision.Create(transform, this, _FieldOfVisionScale);
+		//今はここで初期化
+		_CharaFieldOfVision = CharaFieldOfVision.Create(transform, this, _FieldOfVisionScale);
         {
             var w = _FieldOfVisionScale.x < _FieldOfVisionScale.z ? _FieldOfVisionScale.z : _FieldOfVisionScale.x;
             _NavMeshBuilder.m_Size = new Vector3(w, _NavMeshBuilder.m_Size.y, w);
