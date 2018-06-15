@@ -119,9 +119,9 @@ GameObject:
   - component: {fileID: 195047961710986196}
   - component: {fileID: 114010226385576176}
   - component: {fileID: 114548595932488076}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: kabotya2_NavMesh
-  m_TagString: Untagged
+  m_TagString: Egg
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -720,7 +720,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1434065401024616}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1362,7 +1362,7 @@ Animator:
   m_Controller: {fileID: 22100000, guid: ffb95848193b57e4bad68315bb52c2c4, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -1452,7 +1452,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tuneParams: {x: 1.45, y: 1.1, z: 1}
-  _rigTransform: {fileID: 0}
+  _rigTransform: {fileID: 4500457191547448}
 --- !u!136 &136274883215675802
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -1461,7 +1461,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 1434065401024616}
   m_Material: {fileID: 13400000, guid: 5905e0195a458e34da899e4e6c86c4b9, type: 2}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   m_Radius: 0.15
   m_Height: 0.3
   m_Direction: 1

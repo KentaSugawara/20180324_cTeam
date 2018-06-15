@@ -271,6 +271,7 @@ GameObject:
   - component: {fileID: 114063895315083950}
   - component: {fileID: 114393777468418358}
   - component: {fileID: 195158105798538468}
+  - component: {fileID: 114014225626038886}
   - component: {fileID: 114960245563998886}
   m_Layer: 0
   m_Name: neko
@@ -1144,6 +1145,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114014225626038886
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1652673749590434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 115dfe7b0938447cbbf9507076f54049, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Tracked: {fileID: 4898260793900996}
+  m_Size: {x: 0.1, y: 0.1, z: 0.1}
 --- !u!114 &114063895315083950
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1180,23 +1194,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1150d55ca01676d48b5a55ac6b24e3f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _BodyRenderer: {fileID: 0}
-  _CharaHight: 0
+  _BodyRenderer: {fileID: 137719213862982852}
+  _CharaHight: 10
   _AutoMove: 1
   _EnableRun: 1
-  _FieldOfVisionScale: {x: 0, y: 0, z: 0}
-  _WalkSpeed: 0
-  _RunSpeed: 0
-  _RunPossibility: 0
-  _MinMoveInterval: 0
-  _MaxMoveInterval: 0
+  _FieldOfVisionScale: {x: 0.1, y: 0.1, z: 0.1}
+  _WalkSpeed: 0.5
+  _RunSpeed: 1
+  _RunPossibility: 50
+  _MinMoveInterval: 1
+  _MaxMoveInterval: 2
   _IntervalPossibility: 100
-  _Rate_Idle: 0
-  _Rate_Unique: 0
-  _Rate_Happy: 0
-  _Rate_Angry: 0
-  _Rate_Sad: 0
-  _Rate_Funny: 0
+  _Rate_Idle: 1
+  _Rate_Unique: 1
+  _Rate_Happy: 1
+  _Rate_Angry: 1
+  _Rate_Sad: 1
+  _Rate_Funny: 1
   _MoveState: 0
   _CharaState: 0
   _CharaAudio: {fileID: 0}
@@ -1371,16 +1385,16 @@ NavMeshAgent:
   m_GameObject: {fileID: 1652673749590434}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
+  m_Radius: 0.01
+  m_Speed: 0.05
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 0.01
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
+  m_Height: 0.03
+  m_BaseOffset: -0.0825
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
