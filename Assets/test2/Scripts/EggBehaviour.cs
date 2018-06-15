@@ -138,12 +138,12 @@ public class EggBehaviour : MonoBehaviour {
 			var y = p.y / p.w;
 			var z = p.z / p.w;
 
-			if (x < -_tuneParams.x) return false;
-			if (x > _tuneParams.x) return false;
-			if (y < -_tuneParams.y) return false;
-			if (y > _tuneParams.y) return false;
-			if (z < -_tuneParams.z) return false;
-			if (z > _tuneParams.z) return false;
+			if (x <= -_tuneParams.x) return false;
+			if (x >= _tuneParams.x) return false;
+			if (y <= -_tuneParams.y) return false;
+			if (y >= _tuneParams.y) return false;
+			if (z <= -_tuneParams.z) return false;
+			if (z >= _tuneParams.z) return false;
 
 			return true;
 		}

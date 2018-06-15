@@ -1,37 +1,60 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 /// <summary>
 /// たまごが衝突すると たまごのステートを変更し このオブジェクトを非アクティブ化する
 /// </summary>
 public class TargetCollider : MonoBehaviour {
 
+	[Header("初期のコライダーのオンオフ")]
+	[SerializeField]
+	bool _initActive;
+
 	[Header("たまごが移行するステート")]
 	[SerializeField]
 	EggBehaviour.EggState _playingState;
 
 	[Header("全員揃ってアニメーションを開始するとき")]
-	[Header("最後に到着するコライダーか")]
+	[Header("・最後に到着するコライダーか")]
 	[Space(1)]
 	[SerializeField]
 	bool _lastCollider;
-	
-	[Header("アイテムを待機状態にするか")]
-	[Space(1)]
-	[SerializeField]
-	bool _setItemToWaiting;
 
 	[Header("アイテムのアニメーションを開始するか")]
 	[SerializeField]
 	bool _itemAnimStart;
 
-	[Header("次にアクティブ化するオブジェクト")]
+	[Header("次にアクティブ化するコライダーのオブジェクト")]
 	[SerializeField]
 	GameObject _nextTargetObject;
 
+	[Header("アクティブ化するまでの時間(秒)")]
+	[SerializeField]
+	float _delaySeconds;
+
+	private void Awake() {
+		SetActiveTarget(_initActive);
+	}
+
+	IEnumerator DelayMethod_Cor(float delaySeconds, Action action) {
+
+		yield return new WaitForSeconds(delaySeconds);
+
+		action();
+	}
+
+	void SetActiveTarget(GameObject obj, bool b) {
+		obj.GetComponent<Collider>().enabled = b;
+		obj.transform.GetChild(0).gameObject.SetActive(b);
+	}
+	void SetActiveTarget(bool b) {
+		SetActiveTarget(gameObject, b);
+	}
+
 	private void OnTriggerEnter(Collider other) {
-		if(other.tag == "Egg") {
+		if (other.tag == "Egg") {
 			GetComponentInParent<BaseItemBehaviour>()._eggList.Add(other.gameObject);
 
 			other.GetComponent<Animator>().SetBool("Playing", true);
@@ -43,12 +66,15 @@ public class TargetCollider : MonoBehaviour {
 			other.transform.position = transform.parent.transform.position;
 			other.transform.localRotation = transform.parent.transform.localRotation;
 
-			if (_setItemToWaiting) GetComponentInParent<BaseItemBehaviour>().SetTrigger(BaseItemBehaviour.ItemState.Wait);
-			if (_lastCollider) GetComponentInParent<BaseItemBehaviour>().StartEggsAnimation();
-			if (_itemAnimStart) GetComponentInParent<BaseItemBehaviour>().SetTrigger(BaseItemBehaviour.ItemState.Play);
-			if (_nextTargetObject) _nextTargetObject.SetActive(true);
-
-			gameObject.SetActive(false);
+			if (_lastCollider) {
+				var eggList = GetComponentInParent<BaseItemBehaviour>()._eggList;
+				eggList.ForEach(egg => egg.GetComponent<Animator>().SetBool("Waiting", false));
+				eggList.Clear();
+			}
+			if (_itemAnimStart) GetComponentInParent<BaseItemBehaviour>().PlayAnimation();
+			if (_nextTargetObject) StartCoroutine(DelayMethod_Cor(_delaySeconds, () => SetActiveTarget(_nextTargetObject, true)));
+			
+			SetActiveTarget(false);
 		}
 	}
 }
