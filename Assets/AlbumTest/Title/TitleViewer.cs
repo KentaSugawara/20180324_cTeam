@@ -22,6 +22,18 @@ public class TitleViewer : MonoBehaviour {
     [SerializeField]
     private float _ToOpenNeedSeconds;
 
+    [SerializeField]
+    private AudioSource _Audio_Start;
+
+    [SerializeField]
+    private AudioSource _Audio_Help;
+
+    [SerializeField]
+    private AudioSource _Audio_HelpClose;
+
+    [SerializeField]
+    private AudioSource _Audio_BGM;
+
     private Vector3 _ViewPosition1;
     private Vector3 _ViewPosition2;
 
@@ -29,6 +41,11 @@ public class TitleViewer : MonoBehaviour {
     {
         _ViewPosition1 = _BackGround1.anchoredPosition;
         _ViewPosition2 = _BackGround2.anchoredPosition;
+    }
+
+    private void Start()
+    {
+        _Audio_BGM.Play();
     }
 
     private bool _isMoving = false;
@@ -42,11 +59,16 @@ public class TitleViewer : MonoBehaviour {
     public void HelpOpen()
     {
         _Help_ScrollView.verticalNormalizedPosition = 1.0f;
+        _Audio_Help.time = 0.5f;
+        _Audio_Help.Play();
+        
         _Help.SetActive(true);
     }
 
     public void HelpClose()
     {
+        _Audio_HelpClose.time = 0.2f;
+        _Audio_HelpClose.Play();
         _Help.SetActive(false);
     }
 
@@ -55,6 +77,7 @@ public class TitleViewer : MonoBehaviour {
         if (!_isMoving)
         {
             StopAllCoroutines();
+            _Audio_Start.Play();
             _StartButton.SetActive(false);
             StartCoroutine(Routine_Open());
         }
@@ -123,5 +146,14 @@ public class TitleViewer : MonoBehaviour {
         _isMoving = false;
 
         _StartButton.SetActive(true);
+    }
+
+    private IEnumerator Routine_BGM_In()
+    {
+        for (float t = 0.0f; t < 2.0f; t+= Time.deltaTime)
+        {
+            _Audio_BGM.volume = Mathf.Lerp(0.0f, 1.0f, t / 2.0f);
+            yield return null;
+        }
     }
 }
