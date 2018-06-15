@@ -34,9 +34,13 @@ public class Main_PictureBookViewer : MonoBehaviour {
 
     private List<Main_PictureBookViewerNode> _ScrollViewNodes = new List<Main_PictureBookViewerNode>();
 
-    public void Init()
+    public void Awake()
     {
         _ViewPosition = _BackGround.anchoredPosition;
+    }
+
+    public void Init()
+    {
         _ModelViewWindow.SetActive(false);
 
         _ViewWindowModel.SetActive(false);
@@ -66,6 +70,8 @@ public class Main_PictureBookViewer : MonoBehaviour {
         //    ++NumOfCharacters;
         //}
 
+        SetNew(false);
+
         {
             var datalist = Main_PictureBookManager.CharacterList.CharacterList;
             var savedatalist = Main_PictureBookManager.CharacterSaveData.Data;
@@ -75,6 +81,7 @@ public class Main_PictureBookViewer : MonoBehaviour {
                 obj.transform.SetParent(_ScrollViewContent, false);
                 //キャラのデータが存在するか検索
                 var data = savedatalist.Find(c => c.CloseID == chara.CloseID);
+                data.isNew = false;
                 if (data.NumOfPhotos > 0)
                 {
                     ++NumOfCharacters;
@@ -131,6 +138,7 @@ public class Main_PictureBookViewer : MonoBehaviour {
         if (!_isMoving)
         {
             _ModelViewWindow.SetActive(true);
+            _ViewWindowModel.GetComponent<Main_ModelViewWindow>().Init();
             if (_CurrentModel != null) Destroy(_CurrentModel);
             if (Prefab != null) _CurrentModel = Instantiate(Prefab);
             Debug.Log(_CurrentModel);
@@ -166,8 +174,6 @@ public class Main_PictureBookViewer : MonoBehaviour {
 
 
         yield return null;
-        _ContentSizeFitter.SetLayoutVertical();
-        _ScrollView.verticalNormalizedPosition = 1.0f;
 
         for (float t = 0.0f; t < _ToOpenNeedSeconds; t += Time.deltaTime)
         {
@@ -200,6 +206,17 @@ public class Main_PictureBookViewer : MonoBehaviour {
         _BackGround.anchoredPosition = HidePosition;
         _ModelViewWindow.SetActive(false);
         
+        _isMoving = false;
+    }
+
+    public void CloseWindowImmidiate()
+    {
+        var deltaSize = Vector2.Scale(_BackGround.sizeDelta, new Vector2(_BackGround.lossyScale.x, _BackGround.lossyScale.y));
+        var HidePosition = new Vector3(_ViewPosition.x, -_BackGround.sizeDelta.y * 0.6f, _ViewPosition.z);
+
+        _BackGround.anchoredPosition = HidePosition;
+        _ModelViewWindow.SetActive(false);
+
         _isMoving = false;
     }
 }

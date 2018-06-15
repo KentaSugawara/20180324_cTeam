@@ -7,7 +7,7 @@ public class PictureBookManagerTest : MonoBehaviour {
 
     public void AddTest()
     {
-        Main_PictureBookManager.CheckNewCharacters(new List<int>(){cnt});
+        Main_PictureBookManager.UpdateAlbum(new List<KeyValuePair<GameObject,int>>(){new KeyValuePair<GameObject, int>(null,cnt)});
         ++cnt;
     }
 }

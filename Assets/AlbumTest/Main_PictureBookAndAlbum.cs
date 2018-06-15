@@ -54,7 +54,6 @@ public class Main_PictureBookAndAlbum : MonoBehaviour {
     private IEnumerator Routine_Open()
     {
         isOpening = true;
-        yield return new WaitForSeconds(_OpenDelaySeconds);
 
         foreach (var obj in _OtherUIObjects)
         {
@@ -62,11 +61,16 @@ public class Main_PictureBookAndAlbum : MonoBehaviour {
         }
 
         _MainCamera.SetActive(false);
+
+        
         _UICamera.SetActive(true);
         _PictureBookViewer.Init();
         _AlbumViewer.Init();
         UpdateView(_SelectTabIndex);
         isOpening = false;
+
+        yield return null;
+        //yield return new WaitForSeconds(_OpenDelaySeconds);
     }
 
     public void Close()
@@ -76,6 +80,7 @@ public class Main_PictureBookAndAlbum : MonoBehaviour {
             obj.SetActive(true);
         }
 
+        _PictureBookViewer.CloseWindowImmidiate();
         _MainCamera.SetActive(true);
         _UICamera.SetActive(false);
         gameObject.SetActive(false);

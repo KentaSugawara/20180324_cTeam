@@ -43,6 +43,16 @@ public class Main_AlbumViewer : MonoBehaviour {
 
     private List<Main_AlbumViewerNode> _ScrollViewNodes = new List<Main_AlbumViewerNode>();
 
+    private Vector3 _GarbageBoxInfo_ViewPosition;
+
+    [SerializeField]
+    private RectTransform _GarbageBoxInfo;
+
+    private void Awake()
+    {
+        _GarbageBoxInfo_ViewPosition = _GarbageBoxInfo.anchoredPosition;
+    }
+
     public void Init()
     {
         _ZoomImage.gameObject.SetActive(false);
@@ -50,7 +60,7 @@ public class Main_AlbumViewer : MonoBehaviour {
 
         //ゴミ箱閉じる
         GarbageBoxClose();
-        _GarbageBoxInfo.SetActive(false);
+        _GarbageBoxInfo.gameObject.SetActive(false);
 
         ClearListInstance();
         ListUpTextures();
@@ -59,7 +69,7 @@ public class Main_AlbumViewer : MonoBehaviour {
     public void SetActive(bool value)
     {
         GarbageBoxClose();
-        _GarbageBoxInfo.SetActive(false);
+        _GarbageBoxInfo.gameObject.SetActive(false);
         _ScrollViewObject.SetActive(value);
     }
 
@@ -118,8 +128,6 @@ public class Main_AlbumViewer : MonoBehaviour {
     private IEnumerator OpenZoomPictureRoutine = null;
     public void PictureButton(Main_AlbumViewerNode node)
     {
-        if (_GarbageBoxInfo.activeInHierarchy) return;
-
         if (GarbageBoxActive)
         {
             if (node.isGarbageBoxSelected)
@@ -163,12 +171,9 @@ public class Main_AlbumViewer : MonoBehaviour {
         _ZoomImage.gameObject.SetActive(false);
     }
 
-    [SerializeField]
-    private GameObject _GarbageBoxInfo;
-
     public void GarbageBoxButton()
     {
-        if (_GarbageBoxInfo.activeInHierarchy) return;
+        if (_GarbageBoxInfo_isMoving) return;
 
         if (!GarbageBoxActive)
         {
@@ -176,16 +181,8 @@ public class Main_AlbumViewer : MonoBehaviour {
         }
         else
         {
-            //一つでも選択されていたら
-            if (GarbageBoxSelectList.Count > 0)
-            {
-                _GarbageBoxInfo.SetActive(true);
-            }
-            else
-            {
-                //ゴミ箱閉じる
-                GarbageBoxClose();
-            }
+            //ゴミ箱閉じる
+            GarbageBoxClose();
         }
     }
 
@@ -195,14 +192,14 @@ public class Main_AlbumViewer : MonoBehaviour {
         GarbageBoxActive = true;
         _Image_GarbageBox.sprite = _Sprite_GarbageBox_Open;
         EventSystem.current.SetSelectedGameObject(gameObject);
-        
+
+        GarbageBoxInfoOpen();
     }
 
     public void GarbageBoxClose()
     {
         //ゴミ箱開く
         GarbageBoxActive = false;
-        _GarbageBoxInfo.SetActive(false);
         _Image_GarbageBox.sprite = _Sprite_GarbageBox_Close;
         foreach(var node in GarbageBoxSelectList)
         {
@@ -211,6 +208,8 @@ public class Main_AlbumViewer : MonoBehaviour {
 
         GarbageBoxSelectList.Clear();
         EventSystem.current.SetSelectedGameObject(null);
+
+        GarbageBoxInfoClose();
     }
 
     public void GarbageBoxDelete()
@@ -260,5 +259,73 @@ public class Main_AlbumViewer : MonoBehaviour {
         _DataFileManager.Save_NewAlbumPicture(picture);
 
         //picture.CharacterCloseIDs = 
+    }
+
+    [SerializeField]
+    private float _GarbageBoxInfo_ToOpenNeedSeconds;
+
+    [SerializeField]
+    private float _GarbageBoxInfo_ToCloseNeedSeconds;
+
+    private bool _GarbageBoxInfo_isMoving;
+
+    private void GarbageBoxInfoOpen()
+    {
+        StartCoroutine(Routine_GarbageBoxInfoOpen());
+    }
+
+    private IEnumerator Routine_GarbageBoxInfoOpen()
+    {
+        var deltaSize = Vector2.Scale(_GarbageBoxInfo.sizeDelta, new Vector2(_GarbageBoxInfo.localScale.x, _GarbageBoxInfo.localScale.y));
+        var HidePosition = new Vector3(_GarbageBoxInfo_ViewPosition.x, -deltaSize.y * 1.1f, _GarbageBoxInfo_ViewPosition.z);
+        _GarbageBoxInfo.gameObject.SetActive(true);
+
+        Vector3 b1;
+        _GarbageBoxInfo.anchoredPosition = HidePosition;
+
+        _GarbageBoxInfo_isMoving = true;
+        yield return null;
+
+        for (float t = 0.0f; t < _GarbageBoxInfo_ToOpenNeedSeconds; t += Time.deltaTime)
+        {
+            float e = t / _GarbageBoxInfo_ToOpenNeedSeconds;
+            b1 = Vector3.Lerp(HidePosition, _GarbageBoxInfo_ViewPosition, e);
+            _GarbageBoxInfo.anchoredPosition = Vector3.Lerp(b1, _GarbageBoxInfo_ViewPosition, e);
+
+            yield return null;
+        }
+        _GarbageBoxInfo.anchoredPosition = _GarbageBoxInfo_ViewPosition;
+        _GarbageBoxInfo_isMoving = false;
+    }
+
+
+    private void GarbageBoxInfoClose()
+    {
+        StartCoroutine(Routine_GarbageBoxInfoClose());
+    }
+
+    private IEnumerator Routine_GarbageBoxInfoClose()
+    {
+        var deltaSize = Vector2.Scale(_GarbageBoxInfo.sizeDelta, new Vector2(_GarbageBoxInfo.localScale.x, _GarbageBoxInfo.localScale.y));
+        var HidePosition = new Vector3(_GarbageBoxInfo_ViewPosition.x, -deltaSize.y * 1.1f, _GarbageBoxInfo_ViewPosition.z);
+
+        Vector3 b1;
+        _GarbageBoxInfo.anchoredPosition = _GarbageBoxInfo_ViewPosition;
+
+        _GarbageBoxInfo_isMoving = true;
+        yield return null;
+
+        for (float t = 0.0f; t < _GarbageBoxInfo_ToCloseNeedSeconds; t += Time.deltaTime)
+        {
+            float e = t / _GarbageBoxInfo_ToCloseNeedSeconds;
+            b1 = Vector3.Lerp(_GarbageBoxInfo_ViewPosition, HidePosition, e);
+            _GarbageBoxInfo.anchoredPosition = Vector3.Lerp(b1, HidePosition, e);
+
+            yield return null;
+        }
+        _GarbageBoxInfo.anchoredPosition = HidePosition;
+        _GarbageBoxInfo_isMoving = false;
+
+        _GarbageBoxInfo.gameObject.SetActive(false);
     }
 }

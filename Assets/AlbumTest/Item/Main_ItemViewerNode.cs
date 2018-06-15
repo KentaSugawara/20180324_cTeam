@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class Main_ItemViewerNode : MonoBehaviour {
     [SerializeField]
@@ -15,6 +16,10 @@ public class Main_ItemViewerNode : MonoBehaviour {
 
     private Main_ItemViewer _ParentComponent;
     private Json_Item_ListNode _mySaveData;
+    public Json_Item_ListNode SaveData
+    {
+        get { return _mySaveData; }
+    }
     private ItemData _myData;
 
     public void Init(Main_ItemViewer parent, Json_Item_ListNode mySaveData, ItemData myData)
@@ -44,5 +49,40 @@ public class Main_ItemViewerNode : MonoBehaviour {
         {
             _Image_New.gameObject.SetActive(false);
         }
+    }
+
+    private void Awake()
+    {
+        EventTrigger currentTrigger = gameObject.AddComponent<EventTrigger>();
+        currentTrigger.triggers = new List<EventTrigger.Entry>();
+
+        {
+            EventTrigger.Entry entry = new EventTrigger.Entry();
+            entry.eventID = EventTriggerType.PointerDown;
+            entry.callback.AddListener((x) => PointerDown());
+
+            currentTrigger.triggers.Add(entry);
+        }
+
+        {
+            EventTrigger.Entry entry = new EventTrigger.Entry();
+            entry.eventID = EventTriggerType.PointerUp;
+            entry.callback.AddListener((x) => PointerUp());
+
+            currentTrigger.triggers.Add(entry);
+        }
+    }
+
+    public void PointerDown()
+    {
+        StopAllCoroutines();
+        //StartCoroutine(Routine_Drag());
+        _ParentComponent.CreateDragObj(_Image.sprite, _myData.CloseID, this);
+    }
+
+    public void PointerUp()
+    {
+        _ParentComponent.ReleaseDragObj(this);
+        StopAllCoroutines();
     }
 }

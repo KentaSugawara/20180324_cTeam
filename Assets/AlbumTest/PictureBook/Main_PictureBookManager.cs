@@ -47,15 +47,39 @@ public class Main_PictureBookManager : MonoBehaviour {
     /// <summary>
     /// 新しいキャラクターを撮影
     /// </summary>
-    public static void CheckNewCharacters(List<int> CloseIDList)
+    public static List<KeyValuePair<GameObject, Sprite>> GetNewCharacters(List<KeyValuePair<GameObject, int>> EggList)
     {
-        bool isChenge = false;
-        foreach (int CloseID in CloseIDList)
+        List<KeyValuePair<GameObject, Sprite>> NewList = new List<KeyValuePair<GameObject, Sprite>>();
+
+        foreach (var keyValue in EggList)
         {
-            var savedata = CharacterSaveData.Data.Find(c => c.CloseID == CloseID);
+            var savedata = CharacterSaveData.Data.Find(c => c.CloseID == keyValue.Value);
             if (savedata != null)
             {
-                //一枚以上撮っていたなら
+                //一枚も撮っていないなら
+                if (savedata.NumOfPhotos <= 0)
+                {
+                    var CharaData = CharacterList.CharacterList.Find(c => c.CloseID == keyValue.Value);
+                    if (CharaData != null)
+                    {
+                        NewList.Add(new KeyValuePair<GameObject, Sprite>(keyValue.Key, CharaData.CharaNameSprite));
+                    }
+                }
+            }
+        }
+
+        return NewList;
+    }
+
+    public static void UpdateAlbum(List<KeyValuePair<GameObject, int>> EggList)
+    {
+        bool isChenge = false;
+        foreach (var keyValue in EggList)
+        {
+            var savedata = CharacterSaveData.Data.Find(c => c.CloseID == keyValue.Value);
+            if (savedata != null)
+            {
+                //一枚も撮っていないなら
                 if (savedata.NumOfPhotos <= 0)
                 {
                     savedata.NumOfPhotos = 1;

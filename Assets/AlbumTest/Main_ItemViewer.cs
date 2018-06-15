@@ -17,10 +17,9 @@ public class Main_ItemViewer : MonoBehaviour {
 
     [SerializeField]
     private GameObject _Obj_New;
-    public void SetNew(bool value)
-    {
-        _Obj_New.SetActive(value);
-    }
+
+    [SerializeField]
+    private Text _Text_NumOfNew;
 
     [SerializeField]
     private Text _Text_NumOf;
@@ -70,9 +69,7 @@ public class Main_ItemViewer : MonoBehaviour {
             _ScrollViewNodes.Add(node);
         }
 
-        //_Text_NumOf.text = NumOfActive + "/" + _ScrollViewNodes.Count;
-
-        _Text_NumOf.text = "1/1";
+        _Text_NumOf.text = NumOfActive + "/" + _ScrollViewNodes.Count;
     }
 
     public void Open()
@@ -91,6 +88,7 @@ public class Main_ItemViewer : MonoBehaviour {
         if (!_isMoving)
         {
             StopAllCoroutines();
+            Main_ItemManager.UpdateisNew();
             StartCoroutine(Routine_Close());
         }
     }
@@ -145,16 +143,19 @@ public class Main_ItemViewer : MonoBehaviour {
 
     private List<DetectedPlane> _AllPlaneList = new List<DetectedPlane>();
 
-    public void SpawnItem(int Index)
+    public bool SpawnItem(int CloseID)
     {
-        Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width * 0.5f, Screen.height * 0.5f));
+        Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width * 0.2f, Screen.height * 0.5f));
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit, 1000.0f, 1 << 12))
         {
             var pose = new Pose(hit.point, Quaternion.FromToRotation(Vector3.forward, hit.normal));
 
-            var obj = Instantiate(_Prefab_Items[Index], pose.position, pose.rotation);
+            var item = Main_ItemManager.ItemList.ItemList.Find(i => i.CloseID == CloseID);
+            if (item == null || item.Prefab == null) return false;
+
+            var obj = Instantiate(item.Prefab, pose.position, pose.rotation);
 
             var plane = hit.collider.gameObject.GetComponent<DetectedPlane>();
 
@@ -166,7 +167,63 @@ public class Main_ItemViewer : MonoBehaviour {
                 obj.transform.parent = anchor.transform;
 
                 Debug.Log("ItemSpawn");
+                return true;
             }
+        }
+        return false;
+    }
+
+    [SerializeField]
+    private GameObject _Prefab_ItemDragObj;
+
+    private int _ItemIndex;
+    private Main_ItemDragObj _DragObj;
+    private Main_ItemViewerNode _DragObjChild;
+
+    [SerializeField]
+    private Transform _Canvas;
+
+    [SerializeField]
+    private RectTransform _Left;
+
+    public void CreateDragObj(Sprite sprite, int ItemIndex, Main_ItemViewerNode child)
+    {
+        if (_DragObj != null) return;
+
+        var obj = Instantiate(_Prefab_ItemDragObj);
+        var component = obj.GetComponent<Main_ItemDragObj>();
+        component.Init(sprite, ItemIndex);
+        obj.transform.SetParent(_Canvas);
+        _ItemIndex = ItemIndex;
+        _DragObj = component;
+        _DragObjChild = child;
+    }
+
+    public void ReleaseDragObj(Main_ItemViewerNode child)
+    {
+        if (_DragObjChild != child || _DragObj == null) return;
+
+        Debug.Log(Input.mousePosition + " " + _Left.position);
+        if (Input.mousePosition.x < _Left.anchoredPosition.x)
+        {
+            Debug.Log("SPawn");
+            if (SpawnItem(_ItemIndex)) child.SaveData.isNewActive = false;
+        }
+
+        Destroy(_DragObj.gameObject);
+        _DragObjChild = null;
+    }
+
+    public void SetNew(int NumOfNew)
+    {
+        if (NumOfNew > 0)
+        {
+            _Obj_New.SetActive(true);
+            _Text_NumOfNew.text = NumOfNew.ToString();
+        }
+        else
+        {
+            _Obj_New.SetActive(false);
         }
     }
 }

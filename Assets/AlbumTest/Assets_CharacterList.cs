@@ -15,6 +15,7 @@ public class CharacterData
     public string ViewName; //表示名
     public GameObject Prefab;
     public Sprite sprite;
+    public Sprite CharaNameSprite;
     public Color Color = Color.white;
     public string Text;
 }

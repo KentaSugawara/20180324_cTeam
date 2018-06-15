@@ -7,15 +7,15 @@ public static class Main_ChallengeManager {
     private static Main_DataFileManager DatafileManager;
     private static Assets_ChallengeList ChallengeList;
     private static Main_ChallengeViewer ChallengeViewer;
-    private static Main_NoticeViewer NoiceViewer;
+    private static Main_NoticeViewer NoticeViewer;
     public static Json_Challenge_DataList ChallengeSaveData { get; private set; }
     
-    public static void Init(Main_DataFileManager DatafileManager, Main_ChallengeViewer Viewer, Assets_ChallengeList Asset, Main_NoticeViewer NoiceViewer)
+    public static void Init(Main_DataFileManager DatafileManager, Main_ChallengeViewer Viewer, Assets_ChallengeList Asset, Main_NoticeViewer NoticeViewer)
     {
         Main_ChallengeManager.DatafileManager = DatafileManager;
         Main_ChallengeManager.ChallengeViewer = Viewer;
         Main_ChallengeManager.ChallengeList = Asset;
-        Main_ChallengeManager.NoiceViewer = NoiceViewer;
+        Main_ChallengeManager.NoticeViewer = NoticeViewer;
         UpdateFromJson();
 
         //セーブデータを補完する
@@ -69,11 +69,15 @@ public static class Main_ChallengeManager {
                     savedata.isCleard = true;
                     savedata.isNewCleard = true;
 
+                    //Main_ItemManager.ItemSaveData
+
                     //ここで通知に流す
-                    NoiceViewer.AddNotice("「" + challenge.Text +　"」くりあ！");
+                    NoticeViewer.AddNotice("「" + challenge.Text +　"」くりあ！");
                 }
             }
         }
+
+        Main_ItemManager.CheckUpdateItems();
 
         UpdateisNew();
     }
@@ -92,5 +96,18 @@ public static class Main_ChallengeManager {
             }
         }
         ChallengeViewer.SetNew(false);
+    }
+
+    public static int NumOfClear
+    {
+        get
+        {
+            int num = 0;
+            foreach (var c in ChallengeSaveData.Data)
+            {
+                if (c.isCleard == true) ++num;
+            }
+            return num;
+        }
     }
 }

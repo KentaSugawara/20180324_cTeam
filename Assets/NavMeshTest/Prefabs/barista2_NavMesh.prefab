@@ -1067,9 +1067,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be966690b5a2d3a459c12390578663d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tuneParams: {x: 0, y: 0, z: 0}
+  _tuneParams: {x: 1.45, y: 1.1, z: 1}
   _speed: 1
   _isMovable: 0
+  _rigTransform: {fileID: 0}
   stateChangeTime: 3
 --- !u!114 &114381890417848826
 MonoBehaviour:
@@ -1095,8 +1096,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1150d55ca01676d48b5a55ac6b24e3f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Agent: {fileID: 0}
-  _Rigidbody: {fileID: 0}
+  _BodyRenderer: {fileID: 137341405465786052}
   _CharaHight: 10
   _AutoMove: 1
   _EnableRun: 1
@@ -1106,6 +1106,7 @@ MonoBehaviour:
   _RunPossibility: 50
   _MinMoveInterval: 1
   _MaxMoveInterval: 2
+  _IntervalPossibility: 100
   _SpecialMotionPossibility: 0
   _SpecialMotionInterval: 0
   _MoveState: 0

@@ -19,10 +19,14 @@ public class NavMeshCharacter : MonoBehaviour {
     }
 
     [SerializeField]
-    private NavMeshAgent _Agent;
+    private Renderer _BodyRenderer;
 
-    [SerializeField]
-    private Rigidbody _Rigidbody;
+    public Renderer BodyRenderer
+    {
+        get { return _BodyRenderer; }
+    }
+
+    private NavMeshAgent _Agent;
 
     [SerializeField]
     private float _CharaHight;
@@ -93,6 +97,10 @@ public class NavMeshCharacter : MonoBehaviour {
 
     [SerializeField]
     private float _MaxMoveInterval;
+
+    [Header("移動から待機に移行する可能性(%)")]
+    [SerializeField]
+    private float _IntervalPossibility = 100.0f;
 
     [Header("待機時に特殊モーションをする可能性(%)")]
     [SerializeField, Range(0.0f, 100.0f)]
@@ -247,7 +255,10 @@ public class NavMeshCharacter : MonoBehaviour {
             yield return null;
         }
 
-        _MoveState = eMoveState.inIntarval;
+        if (Random.Range(0.0f, 100.0f) <= _IntervalPossibility)
+            _MoveState = eMoveState.inIntarval;
+        else
+            _MoveState = eMoveState.isMoving;
     }
 
     private IEnumerator Routine_OnGround()
@@ -285,6 +296,10 @@ public class NavMeshCharacter : MonoBehaviour {
                 ),
             Vector3.down
             );
+
+        NavMeshHit nvhit;
+        if (NavMesh.Raycast(ray.origin, ray.origin + ray.direction, out nvhit, NavMesh.AllAreas) == false) return false;
+
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 100.0f, 1 << 12))
         {

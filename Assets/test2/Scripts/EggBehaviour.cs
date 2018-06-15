@@ -202,8 +202,8 @@ public class EggBehaviour : MonoBehaviour {
     //
     public bool isInCamera {
         get {
-            var M_V = _camera.worldToCameraMatrix;
-            var M_P = _camera.projectionMatrix;
+            var M_V = Camera.main.worldToCameraMatrix;
+            var M_P = Camera.main.projectionMatrix;
             var M_VP = M_P * M_V;
 
             var pos = transform.position;
@@ -214,7 +214,7 @@ public class EggBehaviour : MonoBehaviour {
             var x = p.x / p.w;
             var y = p.y / p.w;
             var z = p.z / p.w;
-
+            Debug.Log(x + " " + y + " " + z);
             if (x < -_tuneParams.x) return false;
             if (x > _tuneParams.x) return false;
             if (y < -_tuneParams.y) return false;

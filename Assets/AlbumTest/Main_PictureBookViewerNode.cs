@@ -25,7 +25,7 @@ public class Main_PictureBookViewerNode : MonoBehaviour {
 
     public void SetViewWindow()
     {
-        if (_myData != null)
+        if (_myData != null && _myData.NumOfPhotos > 0)
             _ParentComponent.SetViewWindow(_myCharacterData.Prefab, _myCharacterData);
     }
 }

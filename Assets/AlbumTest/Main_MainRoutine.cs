@@ -30,7 +30,7 @@ public class Main_MainRoutine : MonoBehaviour {
     private void Awake()
     {
         Main_ChallengeManager.Init(_DataFileManager, _ChallengeViewer, _ChallengeList, _NoticeViewer);
-        Main_ItemManager.Init(_DataFileManager, _ItemList);
+        Main_ItemManager.Init(_DataFileManager, _ItemViewer, _ItemList);
         Main_PictureBookManager.Init(_DataFileManager, _PictureBookViewer, _CharacterList);
     }
 }

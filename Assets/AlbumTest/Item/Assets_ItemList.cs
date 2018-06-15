@@ -17,4 +17,5 @@ public class ItemData
     public Sprite sprite;
     public Color Color = Color.white;
     public string Text;
+    public int Need_NumOf_ChallengeClear;
 }
