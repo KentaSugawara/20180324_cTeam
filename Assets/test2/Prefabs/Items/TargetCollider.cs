@@ -55,6 +55,7 @@ public class TargetCollider : MonoBehaviour {
 
 	private void OnTriggerEnter(Collider other) {
 		if (other.tag == "Egg") {
+			Debug.LogError("a");
 			GetComponentInParent<BaseItemBehaviour>()._eggList.Add(other.gameObject);
 
 			other.GetComponent<Animator>().SetBool("Playing", true);
