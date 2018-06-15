@@ -192,6 +192,8 @@ public class EggSpawnerARCore : MonoBehaviour {
                 obj.transform.parent = anchor.transform;
 
                 _EggList.Add(obj);
+
+                obj.GetComponent<NavMeshCharacter>().Init(this);
             }
         }
     }
@@ -221,6 +223,11 @@ public class EggSpawnerARCore : MonoBehaviour {
             }
             _EggList.Clear();
         }
+    }
+
+    public void DestroyEgg(GameObject target)
+    {
+        if (_EggList.Contains(target)) _EggList.Remove(target);
     }
 
     public void CheckEggsInCamera()

@@ -80,6 +80,7 @@ public class TitleViewer : MonoBehaviour {
             StopAllCoroutines();
             _Audio_Start.Play();
             _StartButton.SetActive(false);
+            BGM_Out();
             StartCoroutine(Routine_Open());
         }
     }
@@ -89,6 +90,7 @@ public class TitleViewer : MonoBehaviour {
         if (!_isMoving)
         {
             StopAllCoroutines();
+            BGM_In();
             StartCoroutine(Routine_Close());
         }
     }

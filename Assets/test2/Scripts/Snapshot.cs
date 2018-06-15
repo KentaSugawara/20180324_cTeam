@@ -13,7 +13,7 @@ public class Snapshot : MonoBehaviour
     [SerializeField]
     RenderTexture m_snap = null;
     [SerializeField]
-    EggSpawner m_eggSpawner = null;
+    EggSpawnerARCore m_eggSpawner = null;
 
     [SerializeField]
     private GameObject m_BackGround;
@@ -55,7 +55,10 @@ public class Snapshot : MonoBehaviour
     private float m_SnapShot_StoreNeedSeconds;
 
     [SerializeField]
-    private List<GameObject> Test_EggList;
+    private AudioSource m_Audio_SnapShot;
+
+    [SerializeField]
+    private AudioSource m_Audio_NewChara;
 
 #if true//UNITY_ANDROID && !UNITY_EDITOR
     Texture2D m_tex2d;
@@ -88,13 +91,11 @@ public class Snapshot : MonoBehaviour
         //        int_list.Add(egg.GetComponent<EggData>()._closeID);
         //}
 
-        //******************要修正**********************//
-        foreach (var egg in Test_EggList)
+        foreach (var egg in EggSpawnerARCore.EggList)
         {
             if (egg.GetComponent<EggBehaviour>().isInCamera)
                 EggObjlist.Add(new KeyValuePair<GameObject, int>(egg, egg.GetComponent<EggData>()._closeID));
         }
-        //*********************************************//
 
         var NewEggList = Main_PictureBookManager.GetNewCharacters(EggObjlist);
 
@@ -169,6 +170,8 @@ public class Snapshot : MonoBehaviour
         {
             m_BackGround.SetActive(true);
             m_SnapShotImage.material.mainTexture = m_tex2d;
+
+            m_Audio_SnapShot.Play();
 
             yield return StartCoroutine(Routine_ImageReduction());
         }
@@ -275,6 +278,7 @@ public class Snapshot : MonoBehaviour
             //}
             m_EggNameImage.transform.localScale = Vector3.one;
 
+            m_Audio_NewChara.Play();
             yield return new WaitForSeconds(m_New_ViewSeconds);
 
             //縮小

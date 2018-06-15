@@ -36,6 +36,12 @@ public class Main_ItemViewer : MonoBehaviour {
     [SerializeField]
     private List<GameObject> _Prefab_Items;
 
+    [SerializeField]
+    private AudioSource _Audio_ItemCreate;
+
+    [SerializeField]
+    private AudioSource _Audio_ItemRelease;
+
     private Vector3 _ViewPosition;
 
     private bool _isMoving = false;
@@ -190,6 +196,7 @@ public class Main_ItemViewer : MonoBehaviour {
     {
         if (_DragObj != null) return;
 
+        _Audio_ItemCreate.Play();
         var obj = Instantiate(_Prefab_ItemDragObj);
         var component = obj.GetComponent<Main_ItemDragObj>();
         component.Init(sprite, ItemIndex);
@@ -203,6 +210,7 @@ public class Main_ItemViewer : MonoBehaviour {
     {
         if (_DragObjChild != child || _DragObj == null) return;
 
+        _Audio_ItemRelease.Play();
         Debug.Log(Input.mousePosition + " " + _Left.position);
         if (Input.mousePosition.x < _Left.anchoredPosition.x)
         {
