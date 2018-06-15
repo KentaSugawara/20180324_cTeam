@@ -4,11 +4,23 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Main_NoticeViewer : MonoBehaviour {
+    public enum eNoticeType
+    {
+        Challenge,
+        Item
+    }
+
     [SerializeField]
     private RectTransform _NoticeBackGround;
 
     [SerializeField]
     private Text _NoticeText;
+
+    [SerializeField]
+    private RectTransform _ItemNoticeBackGround;
+
+    [SerializeField]
+    private Text _ItemNoticeText;
 
     [SerializeField]
     private float _ToEnterSeconds;
@@ -19,7 +31,7 @@ public class Main_NoticeViewer : MonoBehaviour {
     [SerializeField]
     private float _ToExitSeconds;
 
-    private List<string> _Notices = new List<string>();
+    private List<KeyValuePair<string, eNoticeType>> _Notices = new List<KeyValuePair<string, eNoticeType>>();
 
     private Vector3 _ViewPosition;
 
@@ -27,6 +39,7 @@ public class Main_NoticeViewer : MonoBehaviour {
     {
         _ViewPosition = _NoticeBackGround.anchoredPosition;
         _NoticeBackGround.anchoredPosition = new Vector3(_ViewPosition.x, _NoticeBackGround.sizeDelta.x * 0.6f, _ViewPosition.z);
+        _ItemNoticeBackGround.anchoredPosition = new Vector3(_ViewPosition.x, _NoticeBackGround.sizeDelta.x * 0.6f, _ViewPosition.z);
     }
 
     private void Start()
@@ -40,54 +53,63 @@ public class Main_NoticeViewer : MonoBehaviour {
         {
             while (_Notices.Count <= 0) yield return null;
 
-            _NoticeText.text = _Notices[0];
+            if (_Notices[0].Value == eNoticeType.Challenge) _NoticeText.text = _Notices[0].Key;
+            else if (_Notices[0].Value == eNoticeType.Item) _ItemNoticeText.text = _Notices[0].Key;
 
-            yield return Routine_NoticeEnter();
+            yield return Routine_NoticeEnter(_Notices[0].Value);
             yield return new WaitForSeconds(_WaitSeconds);
-            yield return Routine_NoticeExit();
+            yield return Routine_NoticeExit(_Notices[0].Value);
 
             _Notices.RemoveAt(0);
         }
     }
 
-    public void AddNotice(string str)
+    public void AddNotice(string str, eNoticeType NoticeType)
     {
-        _Notices.Add(str);
+        _Notices.Add(new KeyValuePair<string, eNoticeType>(str, NoticeType));
     }
 
-    private IEnumerator Routine_NoticeEnter()
+    private IEnumerator Routine_NoticeEnter(eNoticeType NoticeType)
     {
-        var deltaSize = Vector2.Scale(_NoticeBackGround.sizeDelta, new Vector2(_NoticeBackGround.lossyScale.x, _NoticeBackGround.lossyScale.y));
-        var HidePosition = new Vector3(_ViewPosition.x, _NoticeBackGround.sizeDelta.x * 0.6f, _ViewPosition.z);
+        RectTransform background = null;
+        if (NoticeType == eNoticeType.Challenge) background = _NoticeBackGround;
+        else if (NoticeType == eNoticeType.Item) background = _ItemNoticeBackGround;
+
+        var deltaSize = Vector2.Scale(background.sizeDelta, new Vector2(background.lossyScale.x, background.lossyScale.y));
+        var HidePosition = new Vector3(_ViewPosition.x, background.sizeDelta.x * 0.6f, _ViewPosition.z);
         Vector3 b1;
 
-        _NoticeBackGround.anchoredPosition = HidePosition;
+        background.anchoredPosition = HidePosition;
 
         for (float t = 0.0f; t < _ToEnterSeconds; t += Time.deltaTime)
         {
             float e = t / _ToEnterSeconds;
             b1 = Vector3.Lerp(HidePosition, _ViewPosition, e);
-            _NoticeBackGround.anchoredPosition = Vector3.Lerp(b1, _ViewPosition, e);
+            background.anchoredPosition = Vector3.Lerp(b1, _ViewPosition, e);
 
             yield return null;
         }
-        _NoticeBackGround.anchoredPosition = _ViewPosition;
+        background.anchoredPosition = _ViewPosition;
     }
 
-    private IEnumerator Routine_NoticeExit()
+    private IEnumerator Routine_NoticeExit(eNoticeType NoticeType)
     {
-        var deltaSize = Vector2.Scale(_NoticeBackGround.sizeDelta, new Vector2(_NoticeBackGround.lossyScale.x, _NoticeBackGround.lossyScale.y));
-        var HidePosition = new Vector3(_ViewPosition.x, _NoticeBackGround.sizeDelta.x * 0.6f, _ViewPosition.z);
+        RectTransform background = null;
+        if (NoticeType == eNoticeType.Challenge) background = _NoticeBackGround;
+        else if (NoticeType == eNoticeType.Item) background = _ItemNoticeBackGround;
+
+        var deltaSize = Vector2.Scale(background.sizeDelta, new Vector2(background.lossyScale.x, background.lossyScale.y));
+        var HidePosition = new Vector3(_ViewPosition.x, background.sizeDelta.x * 0.6f, _ViewPosition.z);
         Vector3 b1;
 
         for (float t = 0.0f; t < _ToExitSeconds; t += Time.deltaTime)
         {
             float e = t / _ToEnterSeconds;
             b1 = Vector3.Lerp(_ViewPosition, HidePosition, e);
-            _NoticeBackGround.anchoredPosition = Vector3.Lerp(_ViewPosition, b1, e);
+            background.anchoredPosition = Vector3.Lerp(_ViewPosition, b1, e);
 
             yield return null;
         }
-        _NoticeBackGround.anchoredPosition = HidePosition;
+        background.anchoredPosition = HidePosition;
     }
 }
