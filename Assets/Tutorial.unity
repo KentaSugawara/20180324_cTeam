@@ -985,10 +985,12 @@ MonoBehaviour:
     type: 3}
   _Sprite_GarbageBox_Close: {fileID: 21300000, guid: c3b539db0dbd29a4eaf4372c4739da2e,
     type: 3}
+  _GarbageBoxInfo: {fileID: 1606361168}
   _AlbumDataList:
     Pictures: []
   _ZoomImage: {fileID: 2123222288}
-  _GarbageBoxInfo: {fileID: 1606361168}
+  _GarbageBoxInfo_ToOpenNeedSeconds: 0
+  _GarbageBoxInfo_ToCloseNeedSeconds: 0
 --- !u!4 &198963808
 Transform:
   m_ObjectHideFlags: 0
@@ -1172,6 +1174,20 @@ MonoBehaviour:
   _AlbumViewer: {fileID: 198963807}
   m_camera: {fileID: 744808287}
   m_snap: {fileID: 8400000, guid: 822c797aeab0f514387ad3569e336c57, type: 2}
+  m_eggSpawner: {fileID: 0}
+  m_BackGround: {fileID: 0}
+  m_SnapShotBackGround: {fileID: 0}
+  m_SnapShotImage: {fileID: 0}
+  m_ReductionNeedSeconds: 0
+  m_EggNameImage: {fileID: 0}
+  m_Prefab_New: {fileID: 0}
+  m_New_EnlargementNeedSeconds: 0
+  m_New_ViewSeconds: 0
+  m_New_ReductionNeedSeconds: 0
+  m_New_IntervalSeconds: 0
+  m_PictureBookButton: {fileID: 0}
+  m_SnapShot_StoreNeedSeconds: 0
+  Test_EggList: []
 --- !u!4 &359863591
 Transform:
   m_ObjectHideFlags: 0
@@ -7387,10 +7403,15 @@ MonoBehaviour:
   _Asset_ItemList: {fileID: 11400000, guid: e0e7633daa359984991f0820e69af5ef, type: 2}
   _BackGround: {fileID: 690988800}
   _Obj_New: {fileID: 1931332564}
+  _Text_NumOfNew: {fileID: 0}
   _Text_NumOf: {fileID: 2116902898}
   _ScrollView: {fileID: 1485114624}
   _ContentSizeFitter: {fileID: 1733533027}
   _ToOpenNeedSeconds: 0.5
+  _Prefab_Items: []
+  _Prefab_ItemDragObj: {fileID: 0}
+  _Canvas: {fileID: 0}
+  _Left: {fileID: 0}
 --- !u!4 &1541542248
 Transform:
   m_ObjectHideFlags: 0
@@ -14417,7 +14438,7 @@ MonoBehaviour:
         m_Calls: []
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-    NextButton: {fileID: 0}
+    NextButton: {fileID: 7877787}
   - Type: 1
     Tamago: 1
     text: "\u3053\u306E\u30B2\u30FC\u30E0\u306F\u307C\u304F\u305F\u3061\u305F\u307E\u3053\u3073\u3068\u3092\n\u5199\u771F\u306B\u64AE\u3057\u3066\u904A\u3076\u3093\u3060\n\u307E\u305A\u306F\u307C\u304F\u3092\u63A2\u3057\u3066\u307F\u3066\u306D\uFF01"
@@ -14426,7 +14447,7 @@ MonoBehaviour:
         m_Calls: []
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-    NextButton: {fileID: 0}
+    NextButton: {fileID: 7877787}
   - Type: 2
     Tamago: 2
     text: 
@@ -14927,6 +14948,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _RotateScale: 0.2
+  a: 0
+  b: 0
 --- !u!1 &2032244696
 GameObject:
   m_ObjectHideFlags: 0
