@@ -16,6 +16,7 @@ public class EggBehaviour : MonoBehaviour {
 	Transform _rigTransform;
 
 	Vector3 _rigPos = Vector3.zero;
+	Quaternion _rigRot = Quaternion.identity;
 
 	GameObject _item;
 
@@ -32,7 +33,7 @@ public class EggBehaviour : MonoBehaviour {
 		Slide,
 		Trampoline,
 		Wheel,
-		WoodBlockA,
+		WoodBlockA, WoodBlockB, WoodBlockC,
 	}
 
 	static Dictionary<EggState, string> triggers = new Dictionary<EggState, string>(){
@@ -49,6 +50,8 @@ public class EggBehaviour : MonoBehaviour {
 		{ EggState.Trampoline,  "Play_Trampoline" },
 		{ EggState.Wheel,       "Play_Wheel"	  },
 		{ EggState.WoodBlockA,  "Play_WoodBlock_A"  },
+		{ EggState.WoodBlockB,  "Play_WoodBlock_B"  },
+		{ EggState.WoodBlockC,  "Play_WoodBlock_C"  },
 	};
 
 	//
@@ -96,9 +99,14 @@ public class EggBehaviour : MonoBehaviour {
 	public void GetBodyPosition() {
 		_rigPos = _rigTransform.position;
 	}
-
 	public void SetBodyPosition() {
 		transform.position = _rigPos;
+	}
+	public void GetBodyRotation() {
+		_rigRot = _rigTransform.rotation;
+	}
+	public void SetBodyRotation() {
+		transform.rotation = _rigRot;
 	}
 
 	public void KillSelf() {

@@ -141,10 +141,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4250277993002434}
-  - component: {fileID: 54797561330175788}
   - component: {fileID: 95560037052878198}
+  - component: {fileID: 54797561330175788}
   - component: {fileID: 208069436557663674}
-  - component: {fileID: 114172943879607106}
+  - component: {fileID: 114190608857288894}
   m_Layer: 0
   m_Name: SeeSaw
   m_TagString: Untagged
@@ -227,7 +227,7 @@ Transform:
   m_GameObject: {fileID: 1978566946651196}
   m_LocalRotation: {x: -0.000000007139088, y: -0.70710665, z: 0.000000007139085, w: 0.70710695}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 4802931836750066}
   m_RootOrder: 0
@@ -314,7 +314,7 @@ Transform:
   m_GameObject: {fileID: 1537277539828310}
   m_LocalRotation: {x: -0.000000007139088, y: -0.70710665, z: 0.000000007139085, w: 0.70710695}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 4295906737419928}
   m_RootOrder: 0
@@ -769,7 +769,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b90c59b09a832a4aa71a5aec40ee6c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114172943879607106
+--- !u!114 &114190608857288894
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -777,12 +777,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1664207065978652}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73e2288a81bd94847b8de879b21448bd, type: 3}
+  m_Script: {fileID: 11500000, guid: 3dbd4b0b066f5c24096c148af8b6853f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _colliderList:
-  - {fileID: 1419255235887704}
-  - {fileID: 1053972965538396}
 --- !u!114 &114224384818516564
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -794,10 +791,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a427261e3d2eb3d45ac3714295e7d8ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _initActive: 1
   _playingState: 9
   _lastCollider: 0
-  _setItemToWaiting: 1
   _itemAnimStart: 0
+  _nextTargetObject: {fileID: 1053972965538396}
+  _delaySeconds: 1
 --- !u!114 &114776004183818054
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -809,10 +808,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a427261e3d2eb3d45ac3714295e7d8ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _initActive: 0
   _playingState: 10
   _lastCollider: 1
-  _setItemToWaiting: 0
   _itemAnimStart: 1
+  _nextTargetObject: {fileID: 1419255235887704}
+  _delaySeconds: 8
 --- !u!114 &114786903224603306
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -857,7 +858,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.2
+  m_Radius: 0.05
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
