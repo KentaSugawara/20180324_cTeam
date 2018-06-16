@@ -187,11 +187,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 4738622}
---- !u!4 &13131176 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4405036701297488, guid: bcf8e46d91e7872488b9e033dd6d7c33,
-    type: 2}
-  m_PrefabInternal: {fileID: 560607584}
 --- !u!1 &24271725
 GameObject:
   m_ObjectHideFlags: 0
@@ -852,7 +847,7 @@ GameObject:
   m_Component:
   - component: {fileID: 62292262}
   - component: {fileID: 62292261}
-  m_Layer: 0
+  m_Layer: 23
   m_Name: "13_\u5199\u771F\u6D88\u53BB\u6642\u300C\u3044\u3044\u3048\u300D"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1094,7 +1089,7 @@ GameObject:
   - component: {fileID: 75101055}
   - component: {fileID: 75101054}
   - component: {fileID: 75101053}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: Scrollbar Vertical
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1277,7 +1272,7 @@ GameObject:
   - component: {fileID: 77829769}
   - component: {fileID: 77829771}
   - component: {fileID: 77829770}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1399,7 +1394,7 @@ GameObject:
   - component: {fileID: 81544316}
   - component: {fileID: 81544315}
   - component: {fileID: 81544314}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: Scrollbar Horizontal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2242,7 +2237,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &154716279
 Transform:
   m_ObjectHideFlags: 0
@@ -2269,9 +2264,9 @@ Camera:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 154716278}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
-  m_ClearFlags: 4
+  m_ClearFlags: 2
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -2287,7 +2282,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 8388608
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -2305,7 +2300,7 @@ AudioListener:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 154716278}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!1 &169097275
 GameObject:
   m_ObjectHideFlags: 0
@@ -2363,7 +2358,7 @@ GameObject:
   m_Component:
   - component: {fileID: 170237182}
   - component: {fileID: 170237181}
-  m_Layer: 0
+  m_Layer: 23
   m_Name: "11_\u305A\u304B\u3093\u30FB\u30A2\u30EB\u30D0\u30E0\u5207\u66FF\u6642"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2555,7 +2550,7 @@ GameObject:
   m_Component:
   - component: {fileID: 175697521}
   - component: {fileID: 175697520}
-  m_Layer: 0
+  m_Layer: 23
   m_Name: "12_\u5199\u771F\u6D88\u53BB\u6642\u300C\u306F\u3044\u300D"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2670,6 +2665,11 @@ Transform:
   m_Father: {fileID: 1599227521}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &179315110 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4317469568586518, guid: bcf8e46d91e7872488b9e033dd6d7c33,
+    type: 2}
+  m_PrefabInternal: {fileID: 560607584}
 --- !u!1 &199122796
 GameObject:
   m_ObjectHideFlags: 0
@@ -2678,7 +2678,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 199122797}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: Sliding Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3451,6 +3451,11 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!4 &229045683 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4855177786755238, guid: 76c8e37a8850af140b81811416c08a1e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1192405980}
 --- !u!1 &235448810
 GameObject:
   m_ObjectHideFlags: 0
@@ -3492,6 +3497,11 @@ Transform:
   m_Father: {fileID: 1129614669}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &241787004 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4062503883903568, guid: f4b07f821dab8ac49aeebf596520dd03,
+    type: 2}
+  m_PrefabInternal: {fileID: 1012360059}
 --- !u!1001 &241923452
 Prefab:
   m_ObjectHideFlags: 0
@@ -4001,7 +4011,7 @@ GameObject:
   - component: {fileID: 274900846}
   - component: {fileID: 274900848}
   - component: {fileID: 274900847}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4217,6 +4227,102 @@ Prefab:
     - target: {fileID: 1237218626122128, guid: 14788b30861e6ef4099d23a320b0914a, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1464739186545674, guid: 14788b30861e6ef4099d23a320b0914a, type: 2}
+      propertyPath: m_Layer
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 1136453251075130, guid: 14788b30861e6ef4099d23a320b0914a, type: 2}
+      propertyPath: m_Layer
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 1420830965899924, guid: 14788b30861e6ef4099d23a320b0914a, type: 2}
+      propertyPath: m_Layer
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 1518210357304456, guid: 14788b30861e6ef4099d23a320b0914a, type: 2}
+      propertyPath: m_Layer
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 1207838397577280, guid: 14788b30861e6ef4099d23a320b0914a, type: 2}
+      propertyPath: m_Layer
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 1690862242118584, guid: 14788b30861e6ef4099d23a320b0914a, type: 2}
+      propertyPath: m_Layer
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 1058797823440076, guid: 14788b30861e6ef4099d23a320b0914a, type: 2}
+      propertyPath: m_Layer
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 1736910689234450, guid: 14788b30861e6ef4099d23a320b0914a, type: 2}
+      propertyPath: m_Layer
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 1220793341039740, guid: 14788b30861e6ef4099d23a320b0914a, type: 2}
+      propertyPath: m_Layer
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 1294111986708028, guid: 14788b30861e6ef4099d23a320b0914a, type: 2}
+      propertyPath: m_Layer
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 1794866617084654, guid: 14788b30861e6ef4099d23a320b0914a, type: 2}
+      propertyPath: m_Layer
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 1237218626122128, guid: 14788b30861e6ef4099d23a320b0914a, type: 2}
+      propertyPath: m_Layer
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 1433449004178266, guid: 14788b30861e6ef4099d23a320b0914a, type: 2}
+      propertyPath: m_Layer
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 1291650397294716, guid: 14788b30861e6ef4099d23a320b0914a, type: 2}
+      propertyPath: m_Layer
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 1174953598160776, guid: 14788b30861e6ef4099d23a320b0914a, type: 2}
+      propertyPath: m_Layer
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 1301704075075842, guid: 14788b30861e6ef4099d23a320b0914a, type: 2}
+      propertyPath: m_Layer
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 1587147047789992, guid: 14788b30861e6ef4099d23a320b0914a, type: 2}
+      propertyPath: m_Layer
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 1881248203797004, guid: 14788b30861e6ef4099d23a320b0914a, type: 2}
+      propertyPath: m_Layer
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 1176074312224552, guid: 14788b30861e6ef4099d23a320b0914a, type: 2}
+      propertyPath: m_Layer
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 1433959718820224, guid: 14788b30861e6ef4099d23a320b0914a, type: 2}
+      propertyPath: m_Layer
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 1276123261791334, guid: 14788b30861e6ef4099d23a320b0914a, type: 2}
+      propertyPath: m_Layer
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 1891674605596428, guid: 14788b30861e6ef4099d23a320b0914a, type: 2}
+      propertyPath: m_Layer
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 1719559620016100, guid: 14788b30861e6ef4099d23a320b0914a, type: 2}
+      propertyPath: m_Layer
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 1508049297187114, guid: 14788b30861e6ef4099d23a320b0914a, type: 2}
+      propertyPath: m_Layer
+      value: 23
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 14788b30861e6ef4099d23a320b0914a, type: 2}
@@ -4440,7 +4546,7 @@ GameObject:
   m_Component:
   - component: {fileID: 350155656}
   - component: {fileID: 350155655}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: AlbumViewer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4521,22 +4627,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55379f6092670a04babe2fa581bfe8ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _MainCamera: {fileID: 677688174}
-  _UICamera: {fileID: 0}
-  _OtherUIObjects:
-  - {fileID: 686582404}
-  _SelectImage: {fileID: 623700099}
-  _SelectImagePositions:
-  - {x: -200, y: 565, z: 0}
-  - {x: 200, y: 565, z: 0}
-  _SelectImageMoveNeedSeconds: 0.3
-  _OpenDelaySeconds: 0.5
-  _PictureBookViewer: {fileID: 637570958}
-  _AlbumViewer: {fileID: 997001150}
-  _Audio_Open: {fileID: 0}
-  _Audio_Close: {fileID: 0}
-  _Audio_SelectTab: {fileID: 0}
-  _Audio_BGM: {fileID: 0}
 --- !u!4 &353810106
 Transform:
   m_ObjectHideFlags: 0
@@ -4666,7 +4756,7 @@ GameObject:
   - component: {fileID: 373811606}
   - component: {fileID: 373811608}
   - component: {fileID: 373811607}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4861,7 +4951,7 @@ GameObject:
   m_Component:
   - component: {fileID: 406569727}
   - component: {fileID: 406569726}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: PictureBookViewer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4882,12 +4972,13 @@ MonoBehaviour:
   _DataFileManager: {fileID: 235448811}
   _ScrollViewObject: {fileID: 1208773619}
   _ContentSizeFitter: {fileID: 861664455}
-  _Obj_New: {fileID: 1642913897}
+  _Obj_New: {fileID: 1642913901}
   _ScrollView: {fileID: 1208773621}
   _ScrollViewContent: {fileID: 861664453}
   _Text_NumOfPictures: {fileID: 728212485}
   _Prefab_Node: {fileID: 1965473661221724, guid: 1ad53d929ce13004ebef4c750dd286ef,
     type: 2}
+  _NewViewSeconds: 0
   _ModelViewWindow: {fileID: 1587091337}
   _BackGround: {fileID: 852398466}
   _ViewWindowModel: {fileID: 1860450230}
@@ -5626,6 +5717,11 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 434905773}
+--- !u!4 &435244494 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4557080782973692, guid: 00f0c205100d666468f4ffc61194fddd,
+    type: 2}
+  m_PrefabInternal: {fileID: 117181506}
 --- !u!1 &441238196
 GameObject:
   m_ObjectHideFlags: 0
@@ -5637,7 +5733,7 @@ GameObject:
   - component: {fileID: 441238200}
   - component: {fileID: 441238199}
   - component: {fileID: 441238198}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: AlbumScrollView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6410,11 +6506,6 @@ Transform:
   m_Father: {fileID: 508228256}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &491785646 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4606798224548988, guid: c75f184c516c7044aa10089c88b531f9,
-    type: 2}
-  m_PrefabInternal: {fileID: 624335186}
 --- !u!1 &502719119
 GameObject:
   m_ObjectHideFlags: 0
@@ -6725,7 +6816,7 @@ GameObject:
   m_Component:
   - component: {fileID: 519332721}
   - component: {fileID: 519332720}
-  m_Layer: 0
+  m_Layer: 23
   m_Name: "10_\u30AD\u30E3\u30E9\u8A73\u7D30\u9589\u3058\u308B\u6642"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7670,7 +7761,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 574406812}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: Sliding Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8578,6 +8669,7 @@ GameObject:
   m_Component:
   - component: {fileID: 627916102}
   - component: {fileID: 627916103}
+  - component: {fileID: 627916104}
   m_Layer: 0
   m_Name: Example Controller
   m_TagString: Untagged
@@ -8604,6 +8696,22 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 627916101}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c226330ff421a484ab59a9aecaf5ac98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _camera: {fileID: 896679035}
+  _Mesh: {fileID: 0}
+  _EggPrefabs: []
+  _MaxSpawnNum: 10
+  _EggSpawnInterval: 1
+--- !u!114 &627916104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 627916101}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 26074b15f9c13404d858bfedb8b8c00c, type: 3}
@@ -8612,14 +8720,7 @@ MonoBehaviour:
   FirstPersonCamera: {fileID: 896679035}
   DetectedPlanePrefab: {fileID: 1654175882956584, guid: 6a35c744e5010405c847fad90282d2be,
     type: 2}
-  EggPrefabs:
-  - {fileID: 1977925632367580, guid: 8988973c14893ab4f88d6c46de5c470f, type: 2}
-  - {fileID: 1465188930412664, guid: 068495c0619c1af479755aec1868382b, type: 2}
-  - {fileID: 1914144942981554, guid: 4f8e23fc503400846a6a661489293d71, type: 2}
-  - {fileID: 1104526081991400, guid: 72eef939acfc81646a3146e3794212a4, type: 2}
-  - {fileID: 1922016768312252, guid: f9c15a39a50e9cc42ab6c240c0176d48, type: 2}
-  - {fileID: 1834562648677542, guid: 176441545c36abe4296318b5313bf8bf, type: 2}
-  - {fileID: 0}
+  AndyAndroidPrefab: {fileID: 0}
   SearchingForPlaneUI: {fileID: 1133631540}
 --- !u!1 &630649140
 GameObject:
@@ -8793,12 +8894,13 @@ MonoBehaviour:
   _DataFileManager: {fileID: 1257295444}
   _ScrollViewObject: {fileID: 425662442}
   _ContentSizeFitter: {fileID: 1221043679}
-  _Obj_New: {fileID: 1912193847}
+  _Obj_New: {fileID: 0}
   _ScrollView: {fileID: 425662444}
   _ScrollViewContent: {fileID: 1221043677}
   _Text_NumOfPictures: {fileID: 2098625671}
   _Prefab_Node: {fileID: 1965473661221724, guid: 1ad53d929ce13004ebef4c750dd286ef,
     type: 2}
+  _NewViewSeconds: 0
   _ModelViewWindow: {fileID: 1309756161}
   _BackGround: {fileID: 29039267}
   _ViewWindowModel: {fileID: 422692461}
@@ -9830,7 +9932,7 @@ GameObject:
   - component: {fileID: 692332854}
   - component: {fileID: 692332856}
   - component: {fileID: 692332855}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: GarbageBoxInfo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9972,7 +10074,7 @@ GameObject:
   - component: {fileID: 701557382}
   - component: {fileID: 701557384}
   - component: {fileID: 701557383}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10045,7 +10147,7 @@ GameObject:
   m_Component:
   - component: {fileID: 704409142}
   - component: {fileID: 704409141}
-  m_Layer: 0
+  m_Layer: 23
   m_Name: "09_\u30AD\u30E3\u30E9\u8A73\u7D30\u8868\u793A\u6642"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10402,7 +10504,7 @@ GameObject:
   - component: {fileID: 728212483}
   - component: {fileID: 728212484}
   - component: {fileID: 728212485}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: NumOf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10625,7 +10727,7 @@ GameObject:
   - component: {fileID: 763484656}
   - component: {fileID: 763484655}
   - component: {fileID: 763484654}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: Close
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10827,7 +10929,7 @@ GameObject:
   - component: {fileID: 772132508}
   - component: {fileID: 772132510}
   - component: {fileID: 772132509}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11262,7 +11364,7 @@ GameObject:
   - component: {fileID: 838064917}
   - component: {fileID: 838064919}
   - component: {fileID: 838064918}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11394,11 +11496,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 844186535}
---- !u!4 &845188775 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4250277993002434, guid: e9ea01a95af9cf44481a1a76f2ea606a,
-    type: 2}
-  m_PrefabInternal: {fileID: 1087984647}
 --- !u!1001 &846984105
 Prefab:
   m_ObjectHideFlags: 0
@@ -11538,7 +11635,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 852398466}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: ViewWindow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11625,7 +11722,7 @@ GameObject:
   - component: {fileID: 861664453}
   - component: {fileID: 861664455}
   - component: {fileID: 861664454}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11926,7 +12023,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4286578687
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -11949,7 +12046,7 @@ GameObject:
   - component: {fileID: 902258173}
   - component: {fileID: 902258172}
   - component: {fileID: 902258171}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: Viewport
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12171,15 +12268,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1090004719077490, guid: e50e9b821c5e76a4e96773c250e79427, type: 2}
       propertyPath: m_Layer
-      value: 8
+      value: 23
       objectReference: {fileID: 0}
     - target: {fileID: 1416561711782336, guid: e50e9b821c5e76a4e96773c250e79427, type: 2}
       propertyPath: m_Layer
-      value: 8
+      value: 23
       objectReference: {fileID: 0}
     - target: {fileID: 1385002641633650, guid: e50e9b821c5e76a4e96773c250e79427, type: 2}
       propertyPath: m_Layer
-      value: 8
+      value: 23
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e50e9b821c5e76a4e96773c250e79427, type: 2}
@@ -13509,6 +13606,11 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1063304755}
+--- !u!4 &1073063196 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4524542136754780, guid: c75f184c516c7044aa10089c88b531f9,
+    type: 2}
+  m_PrefabInternal: {fileID: 624335186}
 --- !u!1 &1075993920
 GameObject:
   m_ObjectHideFlags: 0
@@ -13892,7 +13994,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 360d2f2b24e0dea48893b83a85a423b7, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -14265,7 +14367,7 @@ GameObject:
   - component: {fileID: 1168325485}
   - component: {fileID: 1168325484}
   - component: {fileID: 1168325483}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: ZoomImageButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14969,7 +15071,7 @@ GameObject:
   - component: {fileID: 1208773621}
   - component: {fileID: 1208773623}
   - component: {fileID: 1208773622}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: PictureBookScrollView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15061,11 +15163,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1208773619}
---- !u!4 &1209824616 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4027873761635874, guid: 00f0c205100d666468f4ffc61194fddd,
-    type: 2}
-  m_PrefabInternal: {fileID: 117181506}
 --- !u!1 &1215364867
 GameObject:
   m_ObjectHideFlags: 0
@@ -15267,7 +15364,7 @@ GameObject:
   - component: {fileID: 1218224299}
   - component: {fileID: 1218224298}
   - component: {fileID: 1218224297}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: Button_Album
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16054,7 +16151,7 @@ GameObject:
   - component: {fileID: 1283142577}
   - component: {fileID: 1283142579}
   - component: {fileID: 1283142578}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16129,7 +16226,7 @@ GameObject:
   - component: {fileID: 1284132278}
   - component: {fileID: 1284132277}
   - component: {fileID: 1284132276}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: Button_PictureBook
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16251,7 +16348,7 @@ GameObject:
   - component: {fileID: 1297080888}
   - component: {fileID: 1297080890}
   - component: {fileID: 1297080889}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16490,7 +16587,7 @@ GameObject:
   - component: {fileID: 1341496759}
   - component: {fileID: 1341496758}
   - component: {fileID: 1341496757}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: Viewport
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16902,7 +16999,7 @@ GameObject:
   - component: {fileID: 1366741432}
   - component: {fileID: 1366741434}
   - component: {fileID: 1366741433}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: NumOf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16976,7 +17073,7 @@ GameObject:
   - component: {fileID: 1372151249}
   - component: {fileID: 1372151251}
   - component: {fileID: 1372151250}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17604,7 +17701,7 @@ GameObject:
   - component: {fileID: 1430268357}
   - component: {fileID: 1430268356}
   - component: {fileID: 1430268355}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: Yes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17985,7 +18082,7 @@ GameObject:
   - component: {fileID: 1472592403}
   - component: {fileID: 1472592405}
   - component: {fileID: 1472592404}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18157,7 +18254,7 @@ GameObject:
   - component: {fileID: 1485282570}
   - component: {fileID: 1485282569}
   - component: {fileID: 1485282568}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: No
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18480,7 +18577,7 @@ GameObject:
   - component: {fileID: 1515300010}
   - component: {fileID: 1515300012}
   - component: {fileID: 1515300011}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18973,7 +19070,7 @@ GameObject:
   - component: {fileID: 1587091338}
   - component: {fileID: 1587091340}
   - component: {fileID: 1587091339}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: PictureBookView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19310,7 +19407,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1599227521}
   - component: {fileID: 1599227520}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: PictureBook_Album
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19328,23 +19425,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55379f6092670a04babe2fa581bfe8ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _MainCamera: {fileID: 677688174}
-  _UICamera: {fileID: 154716278}
-  _OtherUIObjects:
-  - {fileID: 1815729895}
-  - {fileID: 423294585}
-  _SelectImage: {fileID: 1957361899}
-  _SelectImagePositions:
-  - {x: -200, y: 565, z: 0}
-  - {x: 200, y: 565, z: 0}
-  _SelectImageMoveNeedSeconds: 0.3
-  _OpenDelaySeconds: 0
-  _PictureBookViewer: {fileID: 406569726}
-  _AlbumViewer: {fileID: 350155655}
-  _Audio_Open: {fileID: 2131540187}
-  _Audio_Close: {fileID: 1681585907}
-  _Audio_SelectTab: {fileID: 170237181}
-  _Audio_BGM: {fileID: 1062452750}
 --- !u!4 &1599227521
 Transform:
   m_ObjectHideFlags: 0
@@ -19375,7 +19455,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1606450271}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: Sliding Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19600,7 +19680,7 @@ GameObject:
   - component: {fileID: 1615031802}
   - component: {fileID: 1615031804}
   - component: {fileID: 1615031803}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: Window
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19802,7 +19882,7 @@ GameObject:
   - component: {fileID: 1631470877}
   - component: {fileID: 1631470879}
   - component: {fileID: 1631470878}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: ScrollViewPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19865,11 +19945,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1631470876}
---- !u!4 &1641131552 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4833445610696780, guid: 76c8e37a8850af140b81811416c08a1e,
-    type: 2}
-  m_PrefabInternal: {fileID: 1192405980}
 --- !u!1 &1642913897
 GameObject:
   m_ObjectHideFlags: 0
@@ -19880,6 +19955,7 @@ GameObject:
   - component: {fileID: 1642913898}
   - component: {fileID: 1642913900}
   - component: {fileID: 1642913899}
+  - component: {fileID: 1642913901}
   m_Layer: 0
   m_Name: New
   m_TagString: Untagged
@@ -19895,16 +19971,16 @@ RectTransform:
   m_GameObject: {fileID: 1642913897}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1391462627}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -15, y: 150}
-  m_SizeDelta: {x: 256, y: 128}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -15, y: 92.400024}
+  m_SizeDelta: {x: 384, y: 192}
+  m_Pivot: {x: 0.5, y: 0.2}
 --- !u!114 &1642913899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19938,6 +20014,21 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1642913897}
+--- !u!114 &1642913901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1642913897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4763a7ca3640e1a4d9500b8f0e7917f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _New: {fileID: 1642913898}
+  _OpenNeedSeconds: 1
+  _ViewSeconds: 1
+  _HideNeedSeconds: 1
 --- !u!1 &1654448483
 GameObject:
   m_ObjectHideFlags: 0
@@ -19949,7 +20040,7 @@ GameObject:
   - component: {fileID: 1654448487}
   - component: {fileID: 1654448486}
   - component: {fileID: 1654448485}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20852,7 +20943,7 @@ GameObject:
   - component: {fileID: 1699815373}
   - component: {fileID: 1699815372}
   - component: {fileID: 1699815371}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20969,7 +21060,7 @@ GameObject:
   - component: {fileID: 1705636558}
   - component: {fileID: 1705636557}
   - component: {fileID: 1705636556}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: GarbageBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21209,7 +21300,7 @@ MonoBehaviour:
   _AlbumViewer: {fileID: 350155655}
   m_camera: {fileID: 896679035}
   m_snap: {fileID: 8400000, guid: 822c797aeab0f514387ad3569e336c57, type: 2}
-  m_eggSpawner: {fileID: 0}
+  m_eggSpawner: {fileID: 1135678163}
   m_BackGround: {fileID: 588520523}
   m_SnapShotBackGround: {fileID: 1418573292}
   m_SnapShotImage: {fileID: 2024468975}
@@ -23370,7 +23461,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1860450232}
   - component: {fileID: 1860450231}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: ModelViewWindow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23628,7 +23719,7 @@ GameObject:
   - component: {fileID: 1876978542}
   - component: {fileID: 1876978541}
   - component: {fileID: 1876978540}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: CloseButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23763,7 +23854,7 @@ GameObject:
   - component: {fileID: 1883514829}
   - component: {fileID: 1883514828}
   - component: {fileID: 1883514827}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: Scrollbar Vertical
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23994,7 +24085,7 @@ GameObject:
   - component: {fileID: 1893495480}
   - component: {fileID: 1893495479}
   - component: {fileID: 1893495478}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24657,11 +24748,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!4 &1954835746 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4519167007946552, guid: f4b07f821dab8ac49aeebf596520dd03,
-    type: 2}
-  m_PrefabInternal: {fileID: 1012360059}
 --- !u!1 &1957361898
 GameObject:
   m_ObjectHideFlags: 0
@@ -24672,7 +24758,7 @@ GameObject:
   - component: {fileID: 1957361899}
   - component: {fileID: 1957361901}
   - component: {fileID: 1957361900}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: SelectImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24787,7 +24873,7 @@ GameObject:
   - component: {fileID: 1982713938}
   - component: {fileID: 1982713940}
   - component: {fileID: 1982713939}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24876,12 +24962,12 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 13131176}
-  - {fileID: 1641131552}
-  - {fileID: 845188775}
-  - {fileID: 491785646}
-  - {fileID: 1209824616}
-  - {fileID: 1954835746}
+  - {fileID: 179315110}
+  - {fileID: 229045683}
+  - {fileID: 2030023956}
+  - {fileID: 1073063196}
+  - {fileID: 435244494}
+  - {fileID: 241787004}
   m_Father: {fileID: 508228256}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -24998,7 +25084,7 @@ GameObject:
   - component: {fileID: 1991588722}
   - component: {fileID: 1991588721}
   - component: {fileID: 1991588720}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: Text_Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25222,7 +25308,7 @@ GameObject:
   - component: {fileID: 2003810958}
   - component: {fileID: 2003810960}
   - component: {fileID: 2003810959}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: BackGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25359,7 +25445,7 @@ GameObject:
   - component: {fileID: 2027735075}
   - component: {fileID: 2027735077}
   - component: {fileID: 2027735076}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25417,6 +25503,11 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2027735074}
+--- !u!4 &2030023956 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4751873675963980, guid: e9ea01a95af9cf44481a1a76f2ea606a,
+    type: 2}
+  m_PrefabInternal: {fileID: 1087984647}
 --- !u!1 &2053946977
 GameObject:
   m_ObjectHideFlags: 0
@@ -25615,7 +25706,7 @@ GameObject:
   - component: {fileID: 2087049056}
   - component: {fileID: 2087049058}
   - component: {fileID: 2087049057}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25876,7 +25967,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 2105557404}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: Sliding Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25981,7 +26072,7 @@ GameObject:
   - component: {fileID: 2118285842}
   - component: {fileID: 2118285841}
   - component: {fileID: 2118285840}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: Scrollbar Horizontal
   m_TagString: Untagged
   m_Icon: {fileID: 0}

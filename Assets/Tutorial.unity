@@ -599,6 +599,8 @@ MonoBehaviour:
   _ToOpenNeedSeconds: 0.5
   _Text_ViewName: {fileID: 0}
   _Text_Info: {fileID: 0}
+  _Audio_OpenViewWindow: {fileID: 0}
+  _Audio_CloseViewWindow: {fileID: 0}
 --- !u!1 &161830177
 GameObject:
   m_ObjectHideFlags: 0
@@ -991,6 +993,8 @@ MonoBehaviour:
   _ZoomImage: {fileID: 2123222288}
   _GarbageBoxInfo_ToOpenNeedSeconds: 0
   _GarbageBoxInfo_ToCloseNeedSeconds: 0
+  _Audio_GarbageBoxYes: {fileID: 0}
+  _Audio_GarbageBoxNo: {fileID: 0}
 --- !u!4 &198963808
 Transform:
   m_ObjectHideFlags: 0
@@ -1187,7 +1191,8 @@ MonoBehaviour:
   m_New_IntervalSeconds: 0
   m_PictureBookButton: {fileID: 0}
   m_SnapShot_StoreNeedSeconds: 0
-  Test_EggList: []
+  m_Audio_SnapShot: {fileID: 0}
+  m_Audio_NewChara: {fileID: 0}
 --- !u!4 &359863591
 Transform:
   m_ObjectHideFlags: 0
@@ -1606,6 +1611,10 @@ MonoBehaviour:
   _OpenDelaySeconds: 0.5
   _PictureBookViewer: {fileID: 106251300}
   _AlbumViewer: {fileID: 198963807}
+  _Audio_Open: {fileID: 0}
+  _Audio_Close: {fileID: 0}
+  _Audio_SelectTab: {fileID: 0}
+  _Audio_BGM: {fileID: 0}
 --- !u!1 &450693414
 GameObject:
   m_ObjectHideFlags: 0
@@ -2701,6 +2710,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _NoticeBackGround: {fileID: 390812492}
   _NoticeText: {fileID: 1819551954}
+  _ItemNoticeBackGround: {fileID: 0}
+  _ItemNoticeText: {fileID: 0}
   _ToEnterSeconds: 1
   _WaitSeconds: 2
   _ToExitSeconds: 1
@@ -7409,6 +7420,8 @@ MonoBehaviour:
   _ContentSizeFitter: {fileID: 1733533027}
   _ToOpenNeedSeconds: 0.5
   _Prefab_Items: []
+  _Audio_ItemCreate: {fileID: 0}
+  _Audio_ItemRelease: {fileID: 0}
   _Prefab_ItemDragObj: {fileID: 0}
   _Canvas: {fileID: 0}
   _Left: {fileID: 0}
@@ -14439,7 +14452,7 @@ MonoBehaviour:
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
     NextButton: {fileID: 7877787}
-  - Type: 1
+  - Type: 0
     Tamago: 1
     text: "\u3053\u306E\u30B2\u30FC\u30E0\u306F\u307C\u304F\u305F\u3061\u305F\u307E\u3053\u3073\u3068\u3092\n\u5199\u771F\u306B\u64AE\u3057\u3066\u904A\u3076\u3093\u3060\n\u307E\u305A\u306F\u307C\u304F\u3092\u63A2\u3057\u3066\u307F\u3066\u306D\uFF01"
     _OnTap:
@@ -14448,7 +14461,7 @@ MonoBehaviour:
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
     NextButton: {fileID: 7877787}
-  - Type: 2
+  - Type: 0
     Tamago: 2
     text: 
     _OnTap:

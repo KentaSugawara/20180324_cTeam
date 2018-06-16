@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using GoogleARCore;
+using GoogleARCore.Examples.Common;
 
 public class Main_ItemViewer : MonoBehaviour {
 
@@ -149,9 +150,9 @@ public class Main_ItemViewer : MonoBehaviour {
 
     private List<DetectedPlane> _AllPlaneList = new List<DetectedPlane>();
 
-    public bool SpawnItem(int CloseID)
+    public bool SpawnItem(int CloseID, Vector3 ScreenPos)
     {
-        Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width * 0.2f, Screen.height * 0.5f));
+        Ray ray = Camera.main.ScreenPointToRay(ScreenPos);
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit, 1000.0f, 1 << 12))
@@ -161,13 +162,14 @@ public class Main_ItemViewer : MonoBehaviour {
             var item = Main_ItemManager.ItemList.ItemList.Find(i => i.CloseID == CloseID);
             if (item == null || item.Prefab == null) return false;
 
-            var obj = Instantiate(item.Prefab, pose.position, pose.rotation);
+            var obj = Instantiate(item.Prefab, pose.position, /*pose.rotation*/item.Prefab.transform.rotation * Quaternion.Euler(0.0f, Camera.main.transform.rotation.eulerAngles.y + 90.0f, 0.0f));
+            obj.transform.localScale *= 0.6f;
 
-            var plane = hit.collider.gameObject.GetComponent<DetectedPlane>();
+            var plane = hit.collider.gameObject.GetComponent<GoogleARCore.Examples.Common.DetectedPlaneVisualizer>();
 
             if (plane != null)
             {
-                var anchor = plane.CreateAnchor(pose);
+                var anchor = plane.CurrentDetectedPlane.CreateAnchor(pose);
 
                 // Make Andy model a child of the anchor.
                 obj.transform.parent = anchor.transform;
@@ -212,10 +214,10 @@ public class Main_ItemViewer : MonoBehaviour {
 
         _Audio_ItemRelease.Play();
         Debug.Log(Input.mousePosition + " " + _Left.position);
-        if (Input.mousePosition.x < _Left.anchoredPosition.x)
+        if (Input.mousePosition.x < _Left.position.x)
         {
-            Debug.Log("SPawn");
-            if (SpawnItem(_ItemIndex)) child.SaveData.isNewActive = false;
+            Debug.Log("Spawn");
+            if (SpawnItem(_ItemIndex, Input.mousePosition)) child.SaveData.isNewActive = false;
         }
 
         Destroy(_DragObj.gameObject);

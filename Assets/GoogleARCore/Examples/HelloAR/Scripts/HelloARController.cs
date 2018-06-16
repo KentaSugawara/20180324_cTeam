@@ -92,7 +92,7 @@ namespace GoogleARCore.Examples.HelloAR
 
             //SearchingForPlaneUI.SetActive(showSearchingUI);
 
-            // If the player has not touched the screen, we are done with this update.
+            ////If the player has not touched the screen, we are done with this update.
             //Touch touch;
             //if (Input.touchCount < 1 || (touch = Input.GetTouch(0)).phase != TouchPhase.Began)
             //{

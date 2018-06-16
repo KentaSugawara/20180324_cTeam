@@ -14,11 +14,7 @@ public class Main_PictureBookViewer : MonoBehaviour {
     private ContentSizeFitter _ContentSizeFitter;
 
     [SerializeField]
-    private GameObject _Obj_New;
-    public void SetNew(bool value)
-    {
-        _Obj_New.SetActive(value);
-    }
+    private Main_PictureBookNew _Obj_New;
 
     [SerializeField]
     private ScrollRect _ScrollView;
@@ -31,6 +27,9 @@ public class Main_PictureBookViewer : MonoBehaviour {
 
     [SerializeField]
     private GameObject _Prefab_Node;
+
+    [SerializeField]
+    private float _NewViewSeconds;
 
     private List<Main_PictureBookViewerNode> _ScrollViewNodes = new List<Main_PictureBookViewerNode>();
 
@@ -70,7 +69,7 @@ public class Main_PictureBookViewer : MonoBehaviour {
         //    ++NumOfCharacters;
         //}
 
-        SetNew(false);
+
 
         {
             var datalist = Main_PictureBookManager.CharacterList.CharacterList;
@@ -226,5 +225,15 @@ public class Main_PictureBookViewer : MonoBehaviour {
         _ModelViewWindow.SetActive(false);
 
         _isMoving = false;
+    }
+
+    public void HideNew()
+    {
+        _Obj_New.HideNew();
+    }
+
+    public void ViewNew()
+    {
+        _Obj_New.ViewNew();
     }
 }
