@@ -48,7 +48,7 @@ namespace GoogleARCore.Examples.HelloAR
         /// <summary>
         /// A model to place when a raycast from a user touch hits a plane.
         /// </summary>
-        public GameObject[] EggPrefabs;
+        public GameObject AndyAndroidPrefab;
 
         /// <summary>
         /// A gameobject parenting UI for displaying the "searching for planes" snackbar.
@@ -80,17 +80,17 @@ namespace GoogleARCore.Examples.HelloAR
 
             // Hide snackbar when currently tracking at least one plane.
             Session.GetTrackables<DetectedPlane>(m_AllPlanes);
-            bool showSearchingUI = true;
-            for (int i = 0; i < m_AllPlanes.Count; i++)
-            {
-                if (m_AllPlanes[i].TrackingState == TrackingState.Tracking)
-                {
-                    showSearchingUI = false;
-                    break;
-                }
-            }
+            //bool showSearchingUI = true;
+            //for (int i = 0; i < m_AllPlanes.Count; i++)
+            //{
+            //    if (m_AllPlanes[i].TrackingState == TrackingState.Tracking)
+            //    {
+            //        showSearchingUI = false;
+            //        break;
+            //    }
+            //}
 
-            SearchingForPlaneUI.SetActive(showSearchingUI);
+            //SearchingForPlaneUI.SetActive(showSearchingUI);
 
             // If the player has not touched the screen, we are done with this update.
             //Touch touch;
@@ -117,20 +117,17 @@ namespace GoogleARCore.Examples.HelloAR
             //    else
             //    {
             //        // Instantiate Andy model at the hit pose.
-            //        var eggObject = Instantiate(EggPrefabs[Random.Range(0, EggPrefabs.Length)], hit.Pose.position, hit.Pose.rotation);
+            //        var andyObject = Instantiate(AndyAndroidPrefab, hit.Pose.position, hit.Pose.rotation);
 
             //        // Compensate for the hitPose rotation facing away from the raycast (i.e. camera).
-            //        eggObject.transform.Rotate(0, k_ModelRotation, 0, Space.Self);
-
-            //        // サイズ変更
-            //        eggObject.transform.localScale /= 2;
+            //        andyObject.transform.Rotate(0, k_ModelRotation, 0, Space.Self);
 
             //        // Create an anchor to allow ARCore to track the hitpoint as understanding of the physical
             //        // world evolves.
             //        var anchor = hit.Trackable.CreateAnchor(hit.Pose);
 
             //        // Make Andy model a child of the anchor.
-            //        eggObject.transform.parent = anchor.transform;
+            //        andyObject.transform.parent = anchor.transform;
             //    }
             //}
         }
@@ -204,11 +201,6 @@ namespace GoogleARCore.Examples.HelloAR
                     toastObject.Call("show");
                 }));
             }
-        }
-
-        private void OnGUI()
-        {
-            
         }
     }
 }
