@@ -256,6 +256,7 @@ public class Snapshot : MonoBehaviour
         //今は一つだけ
         for (int i = 0; i < NewImageList.Count; ++i)
         {
+            m_EggNameImage.rectTransform.sizeDelta = new Vector2(NewEggList[i].Value.texture.width * 3.0f, NewEggList[i].Value.texture.height * 3.0f);
             m_EggNameImage.sprite = NewEggList[i].Value;
             //拡大
             NewImageList[i].gameObject.SetActive(true);

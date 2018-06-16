@@ -120,8 +120,11 @@ public class NavMeshCharacter : MonoBehaviour {
 
     private void OnDisable()
     {
-        _EggSpawner.DestroyEgg(gameObject);
-        Destroy(transform.parent.gameObject);
+        if (!gameObject.activeInHierarchy)
+        {
+            _EggSpawner.DestroyEgg(gameObject);
+            Destroy(transform.parent.gameObject);
+        }
     }
 
     private IEnumerator _AIRoutine;
@@ -169,6 +172,7 @@ public class NavMeshCharacter : MonoBehaviour {
     public void Init(EggSpawnerARCore Spawner)
     {
         _EggSpawner = Spawner;
+        Debug.Log(_EggSpawner);
     }
 
     public void Play() {

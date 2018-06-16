@@ -74,10 +74,10 @@ public class Main_PictureBookAndAlbum : MonoBehaviour {
             obj.SetActive(false);
         }
 
-        _MainCamera.SetActive(false);
-
-        
-        _UICamera.SetActive(true);
+        _MainCamera.GetComponent<Camera>().enabled = false;
+        _MainCamera.GetComponent<AudioListener>().enabled = false;
+        _UICamera.GetComponent<Camera>().enabled = true;
+        _UICamera.GetComponent<AudioListener>().enabled = true;
         _PictureBookViewer.Init();
         _AlbumViewer.Init();
         UpdateView(_SelectTabIndex);
@@ -97,8 +97,10 @@ public class Main_PictureBookAndAlbum : MonoBehaviour {
 
         _PictureBookViewer.CloseWindowImmidiate();
         _Audio_Close.Play();
-        _MainCamera.SetActive(true);
-        _UICamera.SetActive(false);
+        _MainCamera.GetComponent<Camera>().enabled = true;
+        _MainCamera.GetComponent<AudioListener>().enabled = true;
+        _UICamera.GetComponent<Camera>().enabled = false;
+        _UICamera.GetComponent<AudioListener>().enabled = false;
         gameObject.SetActive(false);
     }
 

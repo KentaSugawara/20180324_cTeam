@@ -212,9 +212,9 @@ public class Main_ItemViewer : MonoBehaviour {
 
         _Audio_ItemRelease.Play();
         Debug.Log(Input.mousePosition + " " + _Left.position);
-        if (Input.mousePosition.x < _Left.anchoredPosition.x)
+        if (Input.mousePosition.x < _Left.position.x)
         {
-            Debug.Log("SPawn");
+            Debug.Log("Spawn");
             if (SpawnItem(_ItemIndex)) child.SaveData.isNewActive = false;
         }
 
