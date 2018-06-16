@@ -122,10 +122,10 @@ public class Main_PictureBookManager : MonoBehaviour {
         {
             if (node.isNew)
             {
-                PictureBookViewer.SetNew(true);
+                PictureBookViewer.ViewNew();
                 return;
             }
         }
-        PictureBookViewer.SetNew(false);
+        PictureBookViewer.HideNew();
     }
 }

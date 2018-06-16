@@ -950,7 +950,7 @@ MonoBehaviour:
   _CharaHight: 10
   _AutoMove: 0
   _EnableRun: 1
-  _FieldOfVisionScale: {x: 1, y: 1, z: 1}
+  _FieldOfVisionScale: {x: 1.5, y: 1, z: 1.5}
   _WalkSpeed: 0.5
   _RunSpeed: 1
   _RunPossibility: 50
@@ -978,7 +978,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Tracked: {fileID: 0}
-  m_Size: {x: 1, y: 0.1, z: 1}
+  m_Size: {x: 1.5, y: 1, z: 0.5}
 --- !u!136 &136900550788332298
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -1150,16 +1150,16 @@ NavMeshAgent:
   m_GameObject: {fileID: 1639750988762474}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.01
+  m_Radius: 0.15
   m_Speed: 0.05
   m_Acceleration: 8
-  avoidancePriority: 50
+  avoidancePriority: 0
   m_AngularSpeed: 120
-  m_StoppingDistance: 0.01
+  m_StoppingDistance: 0.1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1
-  m_Height: 0.03
+  m_Height: 0.5
   m_BaseOffset: -0.0825
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4

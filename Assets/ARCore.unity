@@ -4978,12 +4978,13 @@ MonoBehaviour:
   _DataFileManager: {fileID: 235448811}
   _ScrollViewObject: {fileID: 1208773619}
   _ContentSizeFitter: {fileID: 861664455}
-  _Obj_New: {fileID: 1642913897}
+  _Obj_New: {fileID: 1642913901}
   _ScrollView: {fileID: 1208773621}
   _ScrollViewContent: {fileID: 861664453}
   _Text_NumOfPictures: {fileID: 728212485}
   _Prefab_Node: {fileID: 1965473661221724, guid: 1ad53d929ce13004ebef4c750dd286ef,
     type: 2}
+  _NewViewSeconds: 0
   _ModelViewWindow: {fileID: 1587091337}
   _BackGround: {fileID: 852398466}
   _ViewWindowModel: {fileID: 1860450230}
@@ -8899,12 +8900,13 @@ MonoBehaviour:
   _DataFileManager: {fileID: 1257295444}
   _ScrollViewObject: {fileID: 425662442}
   _ContentSizeFitter: {fileID: 1221043679}
-  _Obj_New: {fileID: 1912193847}
+  _Obj_New: {fileID: 0}
   _ScrollView: {fileID: 425662444}
   _ScrollViewContent: {fileID: 1221043677}
   _Text_NumOfPictures: {fileID: 2098625671}
   _Prefab_Node: {fileID: 1965473661221724, guid: 1ad53d929ce13004ebef4c750dd286ef,
     type: 2}
+  _NewViewSeconds: 0
   _ModelViewWindow: {fileID: 1309756161}
   _BackGround: {fileID: 29039267}
   _ViewWindowModel: {fileID: 422692461}
@@ -13998,7 +14000,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 360d2f2b24e0dea48893b83a85a423b7, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -19986,6 +19988,7 @@ GameObject:
   - component: {fileID: 1642913898}
   - component: {fileID: 1642913900}
   - component: {fileID: 1642913899}
+  - component: {fileID: 1642913901}
   m_Layer: 0
   m_Name: New
   m_TagString: Untagged
@@ -20001,16 +20004,16 @@ RectTransform:
   m_GameObject: {fileID: 1642913897}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1391462627}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -15, y: 150}
-  m_SizeDelta: {x: 256, y: 128}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -15, y: 92.400024}
+  m_SizeDelta: {x: 384, y: 192}
+  m_Pivot: {x: 0.5, y: 0.2}
 --- !u!114 &1642913899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20044,6 +20047,21 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1642913897}
+--- !u!114 &1642913901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1642913897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4763a7ca3640e1a4d9500b8f0e7917f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _New: {fileID: 1642913898}
+  _OpenNeedSeconds: 1
+  _ViewSeconds: 1
+  _HideNeedSeconds: 1
 --- !u!1 &1654448483
 GameObject:
   m_ObjectHideFlags: 0
