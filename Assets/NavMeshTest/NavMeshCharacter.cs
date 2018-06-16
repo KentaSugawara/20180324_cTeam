@@ -362,7 +362,7 @@ public class NavMeshCharacter : MonoBehaviour {
             }
             else
             {
-                if (Vector3.SqrMagnitude(Vector3.Scale(_MoveTargetPosition, new Vector3(1, 0, 1)) - Vector3.Scale(transform.position, new Vector3(1, 0, 1))) < 0.1f)
+                if (Vector3.SqrMagnitude(Vector3.Scale(_MoveTargetPosition, new Vector3(1, 0, 1)) - Vector3.Scale(transform.position, new Vector3(1, 0, 1))) < 0.05f)
                 {
                     _LastMoveTargetPoint = _MoveTargetPoint;
                     _MoveTargetPoint = null;
@@ -406,18 +406,38 @@ public class NavMeshCharacter : MonoBehaviour {
 
     private bool CalcNextPoint()
     {
-        Ray ray = new Ray(
-            transform.position + 
-            new Vector3(
-                (Random.Range(0, 2) == 0 ? Random.Range(0.2f, 0.4f) : Random.Range(-0.4f, -0.2f)) * _NavMeshBuilder.m_Size.x,
-                1.0f,
-                (Random.Range(0, 2) == 0 ? Random.Range(0.2f, 0.4f) : Random.Range(-0.4f, -0.2f)) * _NavMeshBuilder.m_Size.z
-                ),
-            Vector3.down
-            );
+        Vector3 pos;
+        if (Random.Range(0, 2) == 0)
+        {
+            pos = new Vector3
+                (
+                    Random.Range(-0.4f, 0.4f),
+                    1.0f,
+                    (Random.Range(0, 2) == 0 ? Random.Range(0.2f, 0.4f) : Random.Range(-0.4f, -0.2f)) * _NavMeshBuilder.m_Size.z
+                );
+        }
+        else
+        {
+            pos = new Vector3
+                (
+                    (Random.Range(0, 2) == 0 ? Random.Range(0.2f, 0.4f) : Random.Range(-0.4f, -0.2f)) * _NavMeshBuilder.m_Size.x,
+                    1.0f,
+                    Random.Range(-0.4f, 0.4f)
+                );
+        }
 
-        //NavMeshHit nvhit;
-        //if (NavMesh.Raycast(ray.origin, ray.origin + Vector3.down * 100.0f, out nvhit, NavMesh.AllAreas) == false) return false;
+        Ray ray = new Ray(transform.position + pos, Vector3.down);
+
+        NavMeshHit nvhit;
+        if (NavMesh.Raycast(ray.origin, ray.origin + Vector3.down * 2.0f, out nvhit, NavMesh.AllAreas))
+        {
+            Debug.Log("NavMeshRaycast Failed");
+            return false;
+        }
+
+        //var c = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        //c.transform.position = ray.origin;
+        //c.transform.localScale = new Vector3(0.1f, 4.0f, 0.1f);
 
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 100.0f, 1 << 12))
