@@ -1423,7 +1423,7 @@ MonoBehaviour:
   _CharaHight: 10
   _AutoMove: 1
   _EnableRun: 1
-  _FieldOfVisionScale: {x: 0.5, y: 1, z: 0.5}
+  _FieldOfVisionScale: {x: 1, y: 1, z: 1}
   _WalkSpeed: 0.1
   _RunSpeed: 0.2
   _RunPossibility: 20
@@ -1451,7 +1451,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Tracked: {fileID: 0}
-  m_Size: {x: 0.5, y: 0.1, z: 0.5}
+  m_Size: {x: 1, y: 0.1, z: 1}
 --- !u!136 &136050610421834434
 CapsuleCollider:
   m_ObjectHideFlags: 1

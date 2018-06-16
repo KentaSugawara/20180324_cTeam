@@ -186,7 +186,8 @@ public class EggSpawnerARCore : MonoBehaviour {
             {
                 var pose = new Pose(hit.point, Quaternion.FromToRotation(Vector3.forward, hit.normal));
                 //すぽーん
-                var obj = Instantiate(_EggPrefabs[Random.Range(0, _EggPrefabs.Length)], pose.position, pose.rotation);
+                var prefab = _EggPrefabs[Random.Range(0, _EggPrefabs.Length)];
+                var obj = Instantiate(prefab, pose.position, prefab.transform.rotation);
 
                 var anchor = TargetPlane.CreateAnchor(pose);
 
