@@ -209,11 +209,12 @@ public class Main_AlbumViewer : MonoBehaviour {
         GarbageBoxSelectList.Clear();
         EventSystem.current.SetSelectedGameObject(null);
 
-        GarbageBoxInfoClose();
+        GarbageBoxInfoClose(false);
     }
 
     public void GarbageBoxDelete()
     {
+        _Audio_GarbageBoxYes.Play();
         foreach (var node in GarbageBoxSelectList)
         {
             _ScrollViewNodes.Remove(node);
@@ -267,6 +268,12 @@ public class Main_AlbumViewer : MonoBehaviour {
     [SerializeField]
     private float _GarbageBoxInfo_ToCloseNeedSeconds;
 
+    [SerializeField]
+    private AudioSource _Audio_GarbageBoxYes;
+
+    [SerializeField]
+    private AudioSource _Audio_GarbageBoxNo;
+
     private bool _GarbageBoxInfo_isMoving;
 
     private void GarbageBoxInfoOpen()
@@ -301,6 +308,13 @@ public class Main_AlbumViewer : MonoBehaviour {
 
     private void GarbageBoxInfoClose()
     {
+        _Audio_GarbageBoxNo.Play();
+        StartCoroutine(Routine_GarbageBoxInfoClose());
+    }
+
+    private void GarbageBoxInfoClose(bool enableAudio)
+    {
+        if (enableAudio) _Audio_GarbageBoxNo.Play();
         StartCoroutine(Routine_GarbageBoxInfoClose());
     }
 

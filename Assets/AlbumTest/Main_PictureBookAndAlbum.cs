@@ -32,6 +32,18 @@ public class Main_PictureBookAndAlbum : MonoBehaviour {
     [SerializeField]
     private Main_AlbumViewer _AlbumViewer;
 
+    [SerializeField]
+    private AudioSource _Audio_Open;
+
+    [SerializeField]
+    private AudioSource _Audio_Close;
+
+    [SerializeField]
+    private AudioSource _Audio_SelectTab;
+
+    [SerializeField]
+    private Main_BGM _Audio_BGM;
+
     private int _SelectTabIndex;
 
     private void Start()
@@ -47,6 +59,8 @@ public class Main_PictureBookAndAlbum : MonoBehaviour {
         if (!isOpening)
         {
             gameObject.SetActive(true);
+            _Audio_Open.Play();
+            _Audio_BGM.BGM_In();
             StartCoroutine(Routine_Open());
         }
     }
@@ -75,12 +89,14 @@ public class Main_PictureBookAndAlbum : MonoBehaviour {
 
     public void Close()
     {
+        _Audio_BGM.BGM_Out();
         foreach (var obj in _OtherUIObjects)
         {
             obj.SetActive(true);
         }
 
         _PictureBookViewer.CloseWindowImmidiate();
+        _Audio_Close.Play();
         _MainCamera.SetActive(true);
         _UICamera.SetActive(false);
         gameObject.SetActive(false);
@@ -91,7 +107,8 @@ public class Main_PictureBookAndAlbum : MonoBehaviour {
         if (_SelectTabIndex == Index) return;
         _SelectTabIndex = Index;
         UpdateView(_SelectTabIndex);
-
+        _Audio_SelectTab.time = 0.2f;
+        _Audio_SelectTab.Play();
         if (_SelectImageMoveRoutine != null) StopCoroutine(_SelectImageMoveRoutine);
         _SelectImageMoveRoutine = Routine_SelectImageMove(_SelectImagePositions[Index]);
         StartCoroutine(_SelectImageMoveRoutine);

@@ -147,9 +147,16 @@ public class Main_PictureBookViewer : MonoBehaviour {
             _Text_Info.text = chara.Text;
 
             StopAllCoroutines();
+            _Audio_OpenViewWindow.Play();
             StartCoroutine(Routine_OpenWindow());
         }
     }
+
+    [SerializeField]
+    private AudioSource _Audio_OpenViewWindow;
+
+    [SerializeField]
+    private AudioSource _Audio_CloseViewWindow;
 
     public void CloseViewWindow()
     {
@@ -157,6 +164,7 @@ public class Main_PictureBookViewer : MonoBehaviour {
         {
             _ViewWindowModel.SetActive(false);
             StopAllCoroutines();
+            _Audio_CloseViewWindow.Play();
             StartCoroutine(Routine_CloseWindow());
         }
     }
