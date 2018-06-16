@@ -116,6 +116,17 @@ public class NavMeshCharacter : MonoBehaviour {
         _Animator = GetComponent<Animator>();
     }
 
+    private EggSpawnerARCore _EggSpawner;
+
+    private void OnDisable()
+    {
+        if (!gameObject.activeInHierarchy)
+        {
+            _EggSpawner.DestroyEgg(gameObject);
+            Destroy(transform.parent.gameObject);
+        }
+    }
+
     private IEnumerator _AIRoutine;
 
     private Vector3 _LastHitNormal;
@@ -156,6 +167,12 @@ public class NavMeshCharacter : MonoBehaviour {
 
         StartCoroutine(Routine_Main());
         StartCoroutine(Routine_OnGround());
+    }
+
+    public void Init(EggSpawnerARCore Spawner)
+    {
+        _EggSpawner = Spawner;
+        Debug.Log(_EggSpawner);
     }
 
     public void Play() {

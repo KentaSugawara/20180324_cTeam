@@ -113,7 +113,7 @@ public class EggSpawnerARCore : MonoBehaviour {
                     var obj = Instantiate(randEgg, pose.position, pose.rotation);
 
                     obj.transform.localRotation = randEgg.transform.localRotation;
-					obj.transform.localScale /= 10;
+					obj.transform.localScale *= 0.6f;
 
                     var anchor = TargetPlane.CreateAnchor(pose);
 
@@ -121,6 +121,8 @@ public class EggSpawnerARCore : MonoBehaviour {
                     obj.transform.parent = anchor.transform;
 
                     _EggList.Add(obj);
+
+                    obj.GetComponent<NavMeshCharacter>().Init(this);
                 }
             }
 
@@ -198,6 +200,7 @@ public class EggSpawnerARCore : MonoBehaviour {
 
     public static bool CheckScreenOut(Vector3 _pos)
     {
+        if (Camera.main == null) return false;
         Vector3 view_pos = Camera.main.WorldToViewportPoint(_pos);
         if (view_pos.x < -0.2f ||
            view_pos.x > 1.2f ||
@@ -221,6 +224,15 @@ public class EggSpawnerARCore : MonoBehaviour {
             }
             _EggList.Clear();
         }
+    }
+
+    /// <summary>
+    /// 指定のEggを消す
+    /// </summary>
+    /// <param name="target"></param>
+    public void DestroyEgg(GameObject target)
+    {
+        if (_EggList.Contains(target)) _EggList.Remove(target);
     }
 
     public void CheckEggsInCamera()

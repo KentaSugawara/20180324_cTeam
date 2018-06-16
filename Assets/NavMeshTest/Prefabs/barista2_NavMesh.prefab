@@ -900,7 +900,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1835519086125062}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.1280155, y: -4.644026, z: 1.1328546}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4704370761468668}
@@ -1611,7 +1611,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Tracked: {fileID: 0}
-  m_Size: {x: 0.1, y: 0.1, z: 0.1}
+  m_Size: {x: 0.5, y: 0.1, z: 0.5}
 --- !u!114 &114502516490271104
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1627,14 +1627,14 @@ MonoBehaviour:
   _CharaHight: 10
   _AutoMove: 1
   _EnableRun: 1
-  _FieldOfVisionScale: {x: 0.1, y: 1, z: 0.1}
-  _WalkSpeed: 0.5
-  _RunSpeed: 1
-  _RunPossibility: 50
-  _MinMoveInterval: 1
-  _MaxMoveInterval: 2
-  _IntervalPossibility: 100
-  _Rate_Idle: 1
+  _FieldOfVisionScale: {x: 0.5, y: 1, z: 0.5}
+  _WalkSpeed: 0.1
+  _RunSpeed: 0.2
+  _RunPossibility: 20
+  _MinMoveInterval: 2
+  _MaxMoveInterval: 8
+  _IntervalPossibility: 50
+  _Rate_Idle: 3
   _Rate_Unique: 1
   _Rate_Happy: 1
   _Rate_Angry: 1

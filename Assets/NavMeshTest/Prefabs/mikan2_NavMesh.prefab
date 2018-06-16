@@ -852,14 +852,14 @@ MonoBehaviour:
   _CharaHight: 10
   _AutoMove: 1
   _EnableRun: 1
-  _FieldOfVisionScale: {x: 0.1, y: 1, z: 0.1}
-  _WalkSpeed: 0.5
-  _RunSpeed: 1
-  _RunPossibility: 50
-  _MinMoveInterval: 1
-  _MaxMoveInterval: 2
-  _IntervalPossibility: 100
-  _Rate_Idle: 1
+  _FieldOfVisionScale: {x: 0.5, y: 1, z: 0.5}
+  _WalkSpeed: 0.1
+  _RunSpeed: 0.2
+  _RunPossibility: 20
+  _MinMoveInterval: 2
+  _MaxMoveInterval: 8
+  _IntervalPossibility: 50
+  _Rate_Idle: 3
   _Rate_Unique: 1
   _Rate_Happy: 1
   _Rate_Angry: 1
@@ -880,7 +880,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Tracked: {fileID: 0}
-  m_Size: {x: 0.1, y: 0.1, z: 0.1}
+  m_Size: {x: 0.5, y: 0.1, z: 0.5}
 --- !u!114 &114701728308885866
 MonoBehaviour:
   m_ObjectHideFlags: 1
