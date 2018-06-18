@@ -1908,6 +1908,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 4557080782973692, guid: 00f0c205100d666468f4ffc61194fddd, type: 2}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 00f0c205100d666468f4ffc61194fddd, type: 2}
   m_IsPrefabParent: 0
@@ -5508,8 +5512,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _RotateScale: 0.2
-  a: 0
-  b: 0
 --- !u!4 &422692463
 Transform:
   m_ObjectHideFlags: 0
@@ -8899,6 +8901,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 4524542136754780, guid: c75f184c516c7044aa10089c88b531f9, type: 2}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c75f184c516c7044aa10089c88b531f9, type: 2}
   m_IsPrefabParent: 0
@@ -8947,6 +8953,8 @@ MonoBehaviour:
   _EggPrefabs: []
   _MaxSpawnNum: 10
   _EggSpawnInterval: 1
+  _DistanceOfAlive: 10
+  _DestroyCheckDelaySeconds: 5
 --- !u!114 &627916104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13338,6 +13346,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 4062503883903568, guid: f4b07f821dab8ac49aeebf596520dd03, type: 2}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f4b07f821dab8ac49aeebf596520dd03, type: 2}
   m_IsPrefabParent: 0
@@ -15022,6 +15034,8 @@ MonoBehaviour:
   - {fileID: 1228018377891322, guid: 84452c9e3e844a14983077daf49eda37, type: 2}
   _MaxSpawnNum: 1
   _EggSpawnInterval: 0
+  _DistanceOfAlive: 10
+  _DestroyCheckDelaySeconds: 5
 --- !u!1 &1151340368
 GameObject:
   m_ObjectHideFlags: 0
@@ -15634,6 +15648,10 @@ Prefab:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4833445610696780, guid: 76c8e37a8850af140b81811416c08a1e, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4855177786755238, guid: 76c8e37a8850af140b81811416c08a1e, type: 2}
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
@@ -24387,8 +24405,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _RotateScale: 0.2
-  a: 0
-  b: 0
 --- !u!4 &1860450232
 Transform:
   m_ObjectHideFlags: 0
@@ -25912,7 +25928,7 @@ MonoBehaviour:
     Tamago: 0
     text: "\u3046\u308F\u3063\u898B\u3064\u304B\u3063\u3061\u3083\u3063\u305F\uFF01"
     ChangeFontSize: 1
-    FontSize: 70
+    FontSize: 65
     _OnTap:
       m_PersistentCalls:
         m_Calls: []
@@ -25922,7 +25938,19 @@ MonoBehaviour:
     _TutorialMethod: {fileID: 0}
   - Type: 0
     Tamago: 0
-    text: "\u753B\u9762\u4E0B\u306E\u4E38\u3044\u30DC\u30BF\u30F3\u3092\u30BF\u30C3\u30D7\u3059\u308B\u3068\u5199\u771F\u304C\u64AE\u308C\u308B\u3088\n\u8D64\u3044\u67A0\u3068\u9752\u3044\u67A0\u306E\u9593\u306B\u53CE\u307E\u308B\u3088\u3046\u306B\u5199\u3057\u3066\u306D"
+    text: "\u753B\u9762\u4E0B\u306E\u4E38\u3044\u30DC\u30BF\u30F3\u3092\u30BF\u30C3\u30D7\u3059\u308B\u3068\n\u5199\u771F\u304C\u64AE\u308C\u308B\u3088"
+    ChangeFontSize: 1
+    FontSize: 42
+    _OnTap:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    NextButton: {fileID: 0}
+    _TutorialMethod: {fileID: 0}
+  - Type: 0
+    Tamago: 0
+    text: "\u8D64\u3044\u67A0\u3068\u9752\u3044\u67A0\u306E\u9593\u306B\u53CE\u307E\u308B\u3088\u3046\u306B\u5199\u3057\u3066\u306D"
     ChangeFontSize: 0
     FontSize: 0
     _OnTap:
@@ -26956,12 +26984,12 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 657bfb50dfceaab4e8853ad5d2d29bc9, type: 3}
-    m_FontSize: 44
+    m_FontSize: 42
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 3
     m_MaxSize: 50
-    m_Alignment: 3
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
