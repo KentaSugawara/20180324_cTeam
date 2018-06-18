@@ -1,91 +1,69 @@
 fileFormatVersion: 2
-guid: fdbf80daf3dbe564fbbf676bd12bfa2a
+guid: af0887fda25e51143910ff7ed5834104
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: body
-    100002: Bone001
-    100004: Bone002
-    100006: Bone003
-    100008: Bone004
-    100010: Bone005
-    100012: Bone006
-    100014: Box002
-    100016: Box003
-    100018: Box004
-    100020: Box005
-    100022: CTL_rig_footL
-    100024: CTL_rig_footR
-    100026: hat
-    100028: HP_IKchain_footL
-    100030: HP_IKchain_legL
-    100032: IK Chain001
-    100034: IK Chain002
-    100036: leg_L
-    100038: leg_R
-    100040: RIG_body
-    100042: RIG_footL
-    100044: RIG_footL(mirrored)
-    100046: RIG_footL_end
-    100048: RIG_footL_end(mirrored)
-    100050: RIG_legLa
-    100052: RIG_legLb
-    100054: RIG_legLb(mirrored)
-    100056: RIG_legRa
-    100058: //RootNode
+    100002: CTL_rig_footL
+    100004: CTL_rig_footR
+    100006: CTL_rig_root
+    100008: hat
+    100010: HP_IKchain_footL
+    100012: HP_IKchain_legL
+    100014: IK Chain001
+    100016: IK Chain002
+    100018: leg_L
+    100020: leg_R
+    100022: //RootNode
+    100024: RIG_body
+    100026: RIG_footL
+    100028: RIG_footL(mirrored)
+    100030: RIG_footL_end
+    100032: RIG_footL_end(mirrored)
+    100034: RIG_legLa
+    100036: RIG_legLb
+    100038: RIG_legLb(mirrored)
+    100040: RIG_legRa
+    100042: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8001"
     400000: body
-    400002: Bone001
-    400004: Bone002
-    400006: Bone003
-    400008: Bone004
-    400010: Bone005
-    400012: Bone006
-    400014: Box002
-    400016: Box003
-    400018: Box004
-    400020: Box005
-    400022: CTL_rig_footL
-    400024: CTL_rig_footR
-    400026: hat
-    400028: HP_IKchain_footL
-    400030: HP_IKchain_legL
-    400032: IK Chain001
-    400034: IK Chain002
-    400036: leg_L
-    400038: leg_R
-    400040: RIG_body
-    400042: RIG_footL
-    400044: RIG_footL(mirrored)
-    400046: RIG_footL_end
-    400048: RIG_footL_end(mirrored)
-    400050: RIG_legLa
-    400052: RIG_legLb
-    400054: RIG_legLb(mirrored)
-    400056: RIG_legRa
-    400058: //RootNode
-    2100000: Material mikan
-    2300000: Box002
-    2300002: Box003
-    2300004: Box005
-    2300006: hat
-    3300000: Box002
-    3300002: Box003
-    3300004: Box005
-    3300006: hat
-    4300000: hat
-    4300002: body
-    4300004: leg_R
-    4300006: leg_L
-    4300008: Box002
-    4300010: Box005
-    4300012: Box003
-    4300014: Box004
-    7400000: Unique_Tanuki2
+    400002: CTL_rig_footL
+    400004: CTL_rig_footR
+    400006: CTL_rig_root
+    400008: hat
+    400010: HP_IKchain_footL
+    400012: HP_IKchain_legL
+    400014: IK Chain001
+    400016: IK Chain002
+    400018: leg_L
+    400020: leg_R
+    400022: //RootNode
+    400024: RIG_body
+    400026: RIG_footL
+    400028: RIG_footL(mirrored)
+    400030: RIG_footL_end
+    400032: RIG_footL_end(mirrored)
+    400034: RIG_legLa
+    400036: RIG_legLb
+    400038: RIG_legLb(mirrored)
+    400040: RIG_legRa
+    400042: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8001"
+    2100000: 02 - Default
+    2100002: 03 - Default
+    2100004: 01 - Default
+    2300000: hat
+    2300002: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8001"
+    3300000: hat
+    3300002: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8001"
+    4300000: body
+    4300002: leg_R
+    4300004: leg_L
+    4300006: hat
+    4300008: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8001"
+    7400000: Unique_Pantsu_1
     9500000: //RootNode
     13700000: body
-    13700002: Box004
-    13700004: leg_L
-    13700006: leg_R
+    13700002: leg_L
+    13700004: leg_R
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -115,10 +93,10 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Unique_Tanuki2
+      name: Unique_Pantsu_1
       takeName: Take 001
       firstFrame: 0
-      lastFrame: 79
+      lastFrame: 94
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
