@@ -9,9 +9,6 @@ public class EggSpawnerARCore : MonoBehaviour {
     private Camera _camera;
 
     [SerializeField]
-    private Mesh _Mesh;
-
-    [SerializeField]
     private GameObject[] _EggPrefabs;
 
     [SerializeField]
@@ -25,6 +22,7 @@ public class EggSpawnerARCore : MonoBehaviour {
 
     void Start()
     {
+        _EggList.Clear();
         StartCoroutine(Routine_Spawn());
     }
 

@@ -787,21 +787,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1150d55ca01676d48b5a55ac6b24e3f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Agent: {fileID: 0}
-  _Rigidbody: {fileID: 0}
+  _BodyRenderer: {fileID: 137014265019376060, guid: 827fa3850dafc7040b202f754d9787fb,
+    type: 2}
   _CharaHight: 10
   _AutoMove: 1
   _EnableRun: 1
-  _FieldOfVisionScale: {x: 1, y: 1, z: 3}
-  _WalkSpeed: 0.5
-  _RunSpeed: 1
-  _RunPossibility: 50
-  _MinMoveInterval: 1
-  _MaxMoveInterval: 2
-  _SpecialMotionPossibility: 0
-  _SpecialMotionInterval: 0
+  _FieldOfVisionScale: {x: 1.5, y: 1, z: 1.5}
+  _WalkSpeed: 0.1
+  _RunSpeed: 0.2
+  _RunPossibility: 20
+  _MinMoveInterval: 2
+  _MaxMoveInterval: 8
+  _IntervalPossibility: 50
+  _Rate_Idle: 3
+  _Rate_Unique: 1
+  _Rate_Happy: 1
+  _Rate_Angry: 1
+  _Rate_Sad: 1
+  _Rate_Funny: 1
   _MoveState: 0
   _CharaState: 0
+  _CharaAudio: {fileID: 114836685157484604, guid: 827fa3850dafc7040b202f754d9787fb,
+    type: 2}
 --- !u!114 &114692871540687696
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -814,7 +821,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Tracked: {fileID: 0}
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.5, y: 1, z: 0.5}
 --- !u!114 &114841776478987488
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -826,10 +833,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be966690b5a2d3a459c12390578663d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tuneParams: {x: 0, y: 0, z: 0}
-  _speed: 1
-  _isMovable: 0
-  stateChangeTime: 3
+  _tuneParams: {x: 1.45, y: 1.1, z: 1}
+  _rigTransform: {fileID: 4106378720279514, guid: 827fa3850dafc7040b202f754d9787fb,
+    type: 2}
 --- !u!136 &136880948050921584
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -1001,16 +1007,16 @@ NavMeshAgent:
   m_GameObject: {fileID: 1725036642386154}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.1
-  m_Speed: 0.5
+  m_Radius: 0.15
+  m_Speed: 0.05
   m_Acceleration: 8
-  avoidancePriority: 50
+  avoidancePriority: 0
   m_AngularSpeed: 120
   m_StoppingDistance: 0.1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1
-  m_Height: 0.3
+  m_Height: 0.5
   m_BaseOffset: -0.0825
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
