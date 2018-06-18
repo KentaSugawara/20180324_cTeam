@@ -76,7 +76,7 @@ public class Main_ChallengeViewer : MonoBehaviour {
         Debug.Log("Sort");
         //_ScrollViewNodes.OrderByDescending(x => x.name);//.ThenBy(x => x.SaveData.isCleard ? 0 : 1).ThenBy(x => x.SaveData.isNewCleard ? 0 : 1)
         _ScrollViewNodes.Sort((a, b) => a.Data.CloseID - b.Data.CloseID);
-        for (int i = _ScrollViewNodes.Count - 1; i >= 0; --i)
+        for (int i = _ScrollViewNodes.Count - 1, moveCount = 0; i >= moveCount; --i)
         {
             if (_ScrollViewNodes[i].SaveData.isNewCleard)
             {
@@ -84,10 +84,12 @@ public class Main_ChallengeViewer : MonoBehaviour {
                 var target = _ScrollViewNodes[i];
                 _ScrollViewNodes.RemoveAt(i);
                 _ScrollViewNodes.Insert(0, target);
+                ++i;
+                ++moveCount;
             }
         }
 
-        for (int i = 0; i < _ScrollViewNodes.Count; ++i)
+        for (int i = 0, moveCount = 0; i < _ScrollViewNodes.Count - moveCount; ++i)
         {
             if (_ScrollViewNodes[i].SaveData.isCleard && !_ScrollViewNodes[i].SaveData.isNewCleard)
             {
@@ -95,6 +97,9 @@ public class Main_ChallengeViewer : MonoBehaviour {
                 var target = _ScrollViewNodes[i];
                 _ScrollViewNodes.RemoveAt(i);
                 _ScrollViewNodes.Add(target);
+                Debug.Log(target.SaveData.CloseID + " 下へ");
+                --i;
+                ++moveCount;
             }
         }
         //_ScrollViewNodes.Sort((a, b) => (b.SaveData.isCleard ? 0 : 1) - (a.SaveData.isCleard ? 0 : 1));

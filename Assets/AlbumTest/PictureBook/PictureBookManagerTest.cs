@@ -7,7 +7,11 @@ public class PictureBookManagerTest : MonoBehaviour {
 
     public void AddTest()
     {
-        Main_PictureBookManager.UpdateAlbum(new List<KeyValuePair<GameObject,int>>(){new KeyValuePair<GameObject, int>(null,cnt)});
+        var s = new SnapShotInfo();
+        s.CharaCloseIndex = cnt;
+        var list = new List<KeyValuePair<GameObject, SnapShotInfo>>() { new KeyValuePair<GameObject, SnapShotInfo>(null, s) };
+        Main_PictureBookManager.UpdateAlbum(list);
+        Main_ChallengeManager.CheckChallenges(list);
         ++cnt;
     }
 }

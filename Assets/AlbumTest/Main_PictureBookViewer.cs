@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class Main_PictureBookViewer : MonoBehaviour {
     [SerializeField]
@@ -235,5 +236,21 @@ public class Main_PictureBookViewer : MonoBehaviour {
     public void ViewNew()
     {
         _Obj_New.ViewNew();
+    }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        _ScrollView.OnInitializePotentialDrag(eventData);
+        _ScrollView.OnBeginDrag(eventData);
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        _ScrollView.OnEndDrag(eventData);
+    }
+
+    public void OnDrag(BaseEventData eventData)
+    {
+        _ScrollView.OnDrag((PointerEventData)eventData);
     }
 }

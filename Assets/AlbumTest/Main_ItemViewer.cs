@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using GoogleARCore;
 using GoogleARCore.Examples.Common;
 
@@ -84,6 +85,13 @@ public class Main_ItemViewer : MonoBehaviour {
         if (!_isMoving)
         {
             gameObject.SetActive(true);
+
+            if (_DragObj != null)
+            {
+                Destroy(_DragObj.gameObject);
+                _DragObjChild = null;
+            }
+
             ListUpItems();
             StopAllCoroutines();
             StartCoroutine(Routine_Open());
@@ -150,6 +158,8 @@ public class Main_ItemViewer : MonoBehaviour {
 
     private List<DetectedPlane> _AllPlaneList = new List<DetectedPlane>();
 
+    private GameObject _CurrentItemInstance;
+
     public bool SpawnItem(int CloseID, Vector3 ScreenPos)
     {
         Ray ray = Camera.main.ScreenPointToRay(ScreenPos);
@@ -174,6 +184,14 @@ public class Main_ItemViewer : MonoBehaviour {
                 // Make Andy model a child of the anchor.
                 obj.transform.parent = anchor.transform;
 
+
+                if (_CurrentItemInstance != null)
+                {
+                    //アンカーごと消す
+                    Destroy(_CurrentItemInstance.transform.parent.gameObject);
+                }
+                _CurrentItemInstance = obj;
+
                 Debug.Log("ItemSpawn");
                 return true;
             }
@@ -196,7 +214,11 @@ public class Main_ItemViewer : MonoBehaviour {
 
     public void CreateDragObj(Sprite sprite, int ItemIndex, Main_ItemViewerNode child)
     {
-        if (_DragObj != null) return;
+        if (_DragObj != null)
+        {
+            Destroy(_DragObj.gameObject);
+            _DragObjChild = null;
+        }
 
         _Audio_ItemCreate.Play();
         var obj = Instantiate(_Prefab_ItemDragObj);
@@ -235,5 +257,20 @@ public class Main_ItemViewer : MonoBehaviour {
         {
             _Obj_New.SetActive(false);
         }
+    }
+
+    public void OnBeginDrag(BaseEventData eventData)
+    {
+        _ScrollView.OnBeginDrag((PointerEventData)eventData);
+    }
+
+    public void OnEndDrag(BaseEventData eventData)
+    {
+        _ScrollView.OnEndDrag((PointerEventData)eventData);
+    }
+
+    public void OnDrag(BaseEventData eventData)
+    {
+        _ScrollView.OnDrag((PointerEventData)eventData);
     }
 }

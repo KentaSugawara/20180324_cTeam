@@ -51,7 +51,7 @@ public static class Main_ChallengeManager {
     /// <summary>
     /// チャレンジが新しく達成されているかを調べる
     /// </summary>
-    public static void CheckChallenges()
+    public static void CheckChallenges(List<KeyValuePair<GameObject, SnapShotInfo>> SnapShots)
     {
         //全てのチャレンジを調べる
         foreach(var challenge in ChallengeList.ChallengeList)
@@ -63,7 +63,7 @@ public static class Main_ChallengeManager {
                 if (savedata.isCleard) continue;
 
                 //まだされていないならば
-                if (challenge.Challenge != null && challenge.Challenge.Check()) //判定
+                if (challenge.Challenge != null && challenge.Challenge.Check(SnapShots)) //判定
                 {
                     //クリアされていたら
                     savedata.isCleard = true;

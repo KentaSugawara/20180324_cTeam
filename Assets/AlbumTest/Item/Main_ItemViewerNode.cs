@@ -85,4 +85,19 @@ public class Main_ItemViewerNode : MonoBehaviour {
         _ParentComponent.ReleaseDragObj(this);
         StopAllCoroutines();
     }
+
+    public void OnBeginDrag(BaseEventData eventData)
+    {
+        _ParentComponent.OnBeginDrag((PointerEventData)eventData);
+    }
+
+    public void OnEndDrag(BaseEventData eventData)
+    {
+        _ParentComponent.OnEndDrag((PointerEventData)eventData);
+    }
+
+    public void OnDrag(BaseEventData eventData)
+    {
+        _ParentComponent.OnDrag((PointerEventData)eventData);
+    }
 }

@@ -342,4 +342,19 @@ public class Main_AlbumViewer : MonoBehaviour {
 
         _GarbageBoxInfo.gameObject.SetActive(false);
     }
+
+    public void OnBeginDrag(BaseEventData eventData)
+    {
+        _ScrollView.OnBeginDrag((PointerEventData)eventData);
+    }
+
+    public void OnEndDrag(BaseEventData eventData)
+    {
+        _ScrollView.OnEndDrag((PointerEventData)eventData);
+    }
+
+    public void OnDrag(BaseEventData eventData)
+    {
+        _ScrollView.OnDrag((PointerEventData)eventData);
+    }
 }
