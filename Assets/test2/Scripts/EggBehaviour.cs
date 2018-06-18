@@ -17,6 +17,8 @@ public class EggBehaviour : MonoBehaviour {
 
 	Vector3 _rigPos = Vector3.zero;
 	Quaternion _rigRot = Quaternion.identity;
+    NavMeshCharacter _NavMeshCharacter;
+    int _ID_Playing = Animator.StringToHash("Playing");
 
 	GameObject _item;
 
@@ -60,9 +62,27 @@ public class EggBehaviour : MonoBehaviour {
 	void Awake() {
 		_isTaken = false;
 		_animator = GetComponent<Animator>();
+        _NavMeshCharacter = GetComponent<NavMeshCharacter>();
 	}
 
-	bool CheckForward() {
+    private void Start()
+    {
+        StartCoroutine(Routine_CheckDestroy());
+    }
+
+    IEnumerator Routine_CheckDestroy()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(EggSpawnerARCore.DestroyCheckDelaySeconds);
+            //写真に写された後に画面外なら削除
+            if (_isTaken && !_animator.GetBool(_ID_Playing) && !isInCamera) KillSelf();
+            //プレイヤーから一定距離離れたら削除
+            else if (Vector3.SqrMagnitude((Camera.main.transform.position - transform.position)) > EggSpawnerARCore.DistanceOfAlive * EggSpawnerARCore.DistanceOfAlive) KillSelf();
+        }
+    }
+
+    bool CheckForward() {
 		List<DetectedPlane> planeList = new List<DetectedPlane>();
 		Session.GetTrackables<DetectedPlane>(planeList);
 
@@ -110,22 +130,21 @@ public class EggBehaviour : MonoBehaviour {
 	}
 
 	public void KillSelf() {
-		foreach (var egg in EggSpawnerARCore.EggList) {
-			if (egg == gameObject) {
-				EggSpawnerARCore.EggList.Remove(egg);
-				break;
-			}
-		}
+        //foreach (var egg in EggSpawnerARCore.EggList) {
+        //	if (egg == gameObject) {
+        //		EggSpawnerARCore.EggList.Remove(egg);
+        //		break;
+        //	}
+        //}
+        EggSpawnerARCore.Instance.RemoveEgg(gameObject);
 		Destroy(gameObject);
 	}
 
-	public void PlayAgent() {
-		GetComponent<NavMeshAgent>().enabled = true;
-		GetComponent<NavMeshCharacter>().Play();
+	public void PlayAgent() {		
+		GetComponent<NavMeshCharacter>().EndItemPlaying();
 	}
-	public void StopAgent() {
-		GetComponent<NavMeshCharacter>().Stop();
-		GetComponent<NavMeshAgent>().enabled = false;
+	public void StopAgent(int ItemCloseIndex) {
+		GetComponent<NavMeshCharacter>().StartItemPlaying(ItemCloseIndex);
 	}
 
 	//

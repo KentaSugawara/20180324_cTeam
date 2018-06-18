@@ -17,8 +17,21 @@ public class EggSpawnerARCore : MonoBehaviour {
     [SerializeField]
     private float _EggSpawnInterval = 1;
 
+    [SerializeField]
+    private float _DistanceOfAlive = 10.0f;
+
+    [SerializeField]
+    private float _DestroyCheckDelaySeconds = 5.0f;
+
     private static List<GameObject> _EggList = new List<GameObject>();
     private List<DetectedPlane> _AllPlaneList = new List<DetectedPlane>();
+
+    private void Awake()
+    {
+        Instance = this;
+        DistanceOfAlive = _DistanceOfAlive;
+        DestroyCheckDelaySeconds = _DestroyCheckDelaySeconds;
+    }
 
     void Start()
     {
@@ -229,7 +242,7 @@ public class EggSpawnerARCore : MonoBehaviour {
     /// 指定のEggを消す
     /// </summary>
     /// <param name="target"></param>
-    public void DestroyEgg(GameObject target)
+    public void RemoveEgg(GameObject target)
     {
         if (_EggList.Contains(target)) _EggList.Remove(target);
     }
@@ -249,6 +262,9 @@ public class EggSpawnerARCore : MonoBehaviour {
         }
     }
 
+    public static EggSpawnerARCore Instance { get; private set; }
     public static List<GameObject> EggList { get { return _EggList; } }
     public int MaxNum { get { return _MaxSpawnNum; } }
+    public static float DistanceOfAlive { get; private set; }
+    public static float DestroyCheckDelaySeconds { get; private set; }
 }

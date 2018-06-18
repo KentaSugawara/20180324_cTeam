@@ -125,7 +125,7 @@ public class NavMeshCharacter : MonoBehaviour {
 
     private void OnDisable()
     {
-        if (gameObject != null) _EggSpawner.DestroyEgg(gameObject);
+        if (gameObject != null) _EggSpawner.RemoveEgg(gameObject);
         if (transform.parent != null) Destroy(transform.parent.gameObject);
     }
 
@@ -179,6 +179,7 @@ public class NavMeshCharacter : MonoBehaviour {
 
     public void Play() {
         _PlayingItemIndex = null;
+        _Agent.enabled = true;
         _CharaFieldOfVision.Play();
         StartCoroutine(Routine_Main());
         StartCoroutine(Routine_OnGround());
@@ -190,6 +191,7 @@ public class NavMeshCharacter : MonoBehaviour {
         _CharaFieldOfVision.Stop();
         StopAllCoroutines();
         _Agent.isStopped = true;
+        _Agent.enabled = false;
         GetComponent<Collider>().enabled = false;
     }
 

@@ -23,6 +23,8 @@ public class Main_Tutorial : MonoBehaviour {
         public eTamago Tamago;
         [Multiline(3)]
         public string text;
+        public bool ChangeFontSize;
+        public int FontSize;
         public UnityEvent _OnTap;
         public Button NextButton;
         public TutorialMethod _TutorialMethod;
@@ -133,6 +135,7 @@ public class Main_Tutorial : MonoBehaviour {
             _TutorialList[_TutorialIndex]._TutorialMethod.Method(() => isMoving = false);
             while (isMoving) yield return null;
 
+            NextMoving = false;
             Next();
         }
         else 
@@ -156,20 +159,25 @@ public class Main_Tutorial : MonoBehaviour {
                 _Fukidashi.localScale = _Scale_Fukidashi;
             }
         }
+        NextMoving = false;
     }
 
     private int _TutorialIndex = -1;
+    private bool NextMoving = false;
     private void Next()
     {
+        if (NextMoving) return;
         if (_TutorialList.Count > _TutorialIndex + 1)
         {
             ++_TutorialIndex;
             _TutorialList[_TutorialIndex]._OnTap.Invoke();
+            if (_TutorialList[_TutorialIndex].ChangeFontSize) _Text_Fukidashi.fontSize = _TutorialList[_TutorialIndex].FontSize;
             _Text_Fukidashi.text = _TutorialList[_TutorialIndex].text;
             _Animator_Tamago.SetTrigger(_TutorialList[_TutorialIndex].Tamago.ToString());
         }
 
         StopAllCoroutines();
+        NextMoving = true;
         StartCoroutine(Routine_Next());
     }
 
@@ -273,5 +281,15 @@ public class Main_Tutorial : MonoBehaviour {
         {
             Next();
         }
+    }
+
+    public void DeleteIndex(int index)
+    {
+        _TutorialList.RemoveAt(index);
+    }
+
+    public void InsertIndex(int index)
+    {
+        _TutorialList.Insert(index, new TutorialChild());
     }
 }
