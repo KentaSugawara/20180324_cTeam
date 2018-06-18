@@ -4,22 +4,46 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class Main_ModelViewWindow : MonoBehaviour {
-    [SerializeField]
-    private float _RotateScale;
+	[SerializeField]
+	private float _RotateScale;
 
-    private float _RotateX;
-    private float _RotateY;
+	private float _RotateX;
+	private float _RotateY;
 
-    public void Init()
+	private List<int> _triggerHash = new List<int>(){
+		Animator.StringToHash("Idle"),
+		Animator.StringToHash("Walk"),
+		Animator.StringToHash("Run"),
+		Animator.StringToHash("Jump"),
+		Animator.StringToHash("Unique"),
+	};
+
+	private Animator _childAnimator;
+
+	[SerializeField]
+	private float _changeAnimInterval = 3;
+
+	public void Init()
     {
         transform.localRotation = Quaternion.Euler(0.0f, 180.0f, 0.0f);
         var angles = transform.localRotation.eulerAngles;
         _RotateX = angles.y;
         _RotateY = angles.x;
+
+		_childAnimator = GetComponentInChildren<Animator>();
     }
 
-	private void Update() {
-		
+	private void OnEnable() {
+		StartCoroutine(ChangeMotion());
+	}
+
+	IEnumerator ChangeMotion() {
+		while (true) {
+			foreach(var trigger in _triggerHash) {
+				yield return new WaitForSeconds(_changeAnimInterval);
+				_childAnimator.SetTrigger(trigger);
+			}
+		}
 	}
 
 	private Vector2 _LastPoint;
