@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BaseItemBehaviour : MonoBehaviour {
 
+	public int _ID = 0;
+
 	[System.NonSerialized]
 	public List<GameObject> _eggList = new List<GameObject>();
 

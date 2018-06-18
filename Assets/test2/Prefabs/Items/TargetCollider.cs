@@ -56,23 +56,24 @@ public class TargetCollider : MonoBehaviour {
 	private void OnTriggerEnter(Collider other) {
 		if (other.tag == "Egg") {
 			//Debug.LogError(1);
-			GetComponentInParent<BaseItemBehaviour>()._eggList.Add(other.gameObject);
+			var baseItemBehaviour = GetComponentInParent<BaseItemBehaviour>();
+			baseItemBehaviour._eggList.Add(other.gameObject);
 
 			other.GetComponent<Animator>().SetBool("Playing", true);
 			other.GetComponent<Animator>().SetBool("Waiting", true);
 			other.GetComponent<EggBehaviour>().SetTrigger(_playingState);
 
-			other.GetComponent<EggBehaviour>().StopAgent();
+			other.GetComponent<EggBehaviour>().StopAgent(baseItemBehaviour._ID);
 
 			other.transform.position = transform.parent.transform.position;
 			other.transform.localRotation = transform.parent.transform.localRotation;
 
 			if (_lastCollider) {
-				var eggList = GetComponentInParent<BaseItemBehaviour>()._eggList;
+				var eggList = baseItemBehaviour._eggList;
 				eggList.ForEach(egg => egg.GetComponent<Animator>().SetBool("Waiting", false));
 				eggList.Clear();
 			}
-			if (_itemAnimStart) GetComponentInParent<BaseItemBehaviour>().PlayAnimation();
+			if (_itemAnimStart) baseItemBehaviour.PlayAnimation();
 			if (_nextTargetObject) StartCoroutine(DelayMethod_Cor(_delaySeconds, () => SetActiveTarget(_nextTargetObject, true)));
 			
 			SetActiveTarget(false);

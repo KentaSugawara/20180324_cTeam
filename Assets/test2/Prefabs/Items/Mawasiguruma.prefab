@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 95039372124314464}
   - component: {fileID: 54426641715534416}
   - component: {fileID: 208065949321839472}
-  - component: {fileID: 114315175799329108}
+  - component: {fileID: 114262821884574760}
   m_Layer: 0
   m_Name: Mawasiguruma
   m_TagString: Untagged
@@ -344,7 +344,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &114315175799329108
+--- !u!114 &114262821884574760
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -352,9 +352,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1316449525652442}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3dbd4b0b066f5c24096c148af8b6853f, type: 3}
+  m_Script: {fileID: 11500000, guid: d2f3caa602eaad34fb26dc6625bf7e69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _ID: 4
 --- !u!114 &114692392617323802
 MonoBehaviour:
   m_ObjectHideFlags: 1

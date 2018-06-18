@@ -67,10 +67,10 @@ ModelImporter:
     4300008: eye
     4300010: ribbon
     4300012: hat
-    7400000: Happy
-    7400002: Angry
-    7400004: Sad
-    7400006: Funny
+    7400000: Emotion_Happy
+    7400002: Emotion_Angry
+    7400004: Emotion_Sad
+    7400006: Emotion_Funny
     9500000: //RootNode
     13700000: body
     13700002: eye
@@ -106,7 +106,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Happy
+      name: Emotion_Happy
       takeName: Take 001
       firstFrame: 0
       lastFrame: 20
@@ -134,7 +134,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Angry
+      name: Emotion_Angry
       takeName: Take 001
       firstFrame: 21
       lastFrame: 58
@@ -162,7 +162,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Sad
+      name: Emotion_Sad
       takeName: Take 001
       firstFrame: 59
       lastFrame: 140
@@ -190,7 +190,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Funny
+      name: Emotion_Funny
       takeName: Take 001
       firstFrame: 141
       lastFrame: 180
