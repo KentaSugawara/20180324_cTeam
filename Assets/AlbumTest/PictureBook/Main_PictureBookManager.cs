@@ -47,19 +47,19 @@ public class Main_PictureBookManager : MonoBehaviour {
     /// <summary>
     /// 新しいキャラクターを撮影
     /// </summary>
-    public static List<KeyValuePair<GameObject, Sprite>> GetNewCharacters(List<KeyValuePair<GameObject, int>> EggList)
+    public static List<KeyValuePair<GameObject, Sprite>> GetNewCharacters(List<KeyValuePair<GameObject, SnapShotInfo>> EggList)
     {
         List<KeyValuePair<GameObject, Sprite>> NewList = new List<KeyValuePair<GameObject, Sprite>>();
 
         foreach (var keyValue in EggList)
         {
-            var savedata = CharacterSaveData.Data.Find(c => c.CloseID == keyValue.Value);
+            var savedata = CharacterSaveData.Data.Find(c => c.CloseID == keyValue.Value.CharaCloseIndex);
             if (savedata != null)
             {
                 //一枚も撮っていないなら
                 if (savedata.NumOfPhotos <= 0)
                 {
-                    var CharaData = CharacterList.CharacterList.Find(c => c.CloseID == keyValue.Value);
+                    var CharaData = CharacterList.CharacterList.Find(c => c.CloseID == keyValue.Value.CharaCloseIndex);
                     if (CharaData != null)
                     {
                         NewList.Add(new KeyValuePair<GameObject, Sprite>(keyValue.Key, CharaData.CharaNameSprite));
@@ -71,12 +71,12 @@ public class Main_PictureBookManager : MonoBehaviour {
         return NewList;
     }
 
-    public static void UpdateAlbum(List<KeyValuePair<GameObject, int>> EggList)
+    public static void UpdateAlbum(List<KeyValuePair<GameObject, SnapShotInfo>> EggList)
     {
         bool isChenge = false;
         foreach (var keyValue in EggList)
         {
-            var savedata = CharacterSaveData.Data.Find(c => c.CloseID == keyValue.Value);
+            var savedata = CharacterSaveData.Data.Find(c => c.CloseID == keyValue.Value.CharaCloseIndex);
             if (savedata != null)
             {
                 //一枚も撮っていないなら
@@ -95,7 +95,6 @@ public class Main_PictureBookManager : MonoBehaviour {
 
         if (isChenge)
         {
-            Main_ChallengeManager.CheckChallenges();
             UpdateisNew();
         }
     }

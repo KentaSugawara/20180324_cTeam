@@ -26,6 +26,9 @@ public class TitleViewer : MonoBehaviour {
     private AudioSource _Audio_Start;
 
     [SerializeField]
+    private AudioSource _Audio_Close;
+
+    [SerializeField]
     private AudioSource _Audio_Help;
 
     [SerializeField]
@@ -90,6 +93,7 @@ public class TitleViewer : MonoBehaviour {
         if (!_isMoving)
         {
             StopAllCoroutines();
+            _Audio_Close.Play();
             BGM_In();
             StartCoroutine(Routine_Close());
         }

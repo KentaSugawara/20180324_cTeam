@@ -10,7 +10,7 @@ public class NavMeshCharacter : MonoBehaviour {
         isMoving,
     }
 
-    protected enum eCharaState
+    public enum eCharaState
     {
         isWaiting,
         isWalking,
@@ -19,7 +19,8 @@ public class NavMeshCharacter : MonoBehaviour {
         inHappy,
         inAngry,
         inSad,
-        inFunny
+        inFunny,
+        isItemPlaying
     }
 
     [SerializeField]
@@ -103,6 +104,10 @@ public class NavMeshCharacter : MonoBehaviour {
 
     [SerializeField]
     private eCharaState _CharaState = eCharaState.isWaiting;
+    public eCharaState CharaState
+    {
+        get { return _CharaState; }
+    }
 
     [Space(5)]
     [Header("鳴き声")]
@@ -173,6 +178,7 @@ public class NavMeshCharacter : MonoBehaviour {
     }
 
     public void Play() {
+        _PlayingItemIndex = null;
         _CharaFieldOfVision.Play();
         StartCoroutine(Routine_Main());
         StartCoroutine(Routine_OnGround());
@@ -180,10 +186,31 @@ public class NavMeshCharacter : MonoBehaviour {
     }
 
     public void Stop() {
+        _PlayingItemIndex = null;
         _CharaFieldOfVision.Stop();
         StopAllCoroutines();
         _Agent.isStopped = true;
         GetComponent<Collider>().enabled = false;
+    }
+
+    private int? _PlayingItemIndex = -1;
+    public int? PlayingItemIndex
+    {
+        get { return _PlayingItemIndex; }
+    }
+
+    public void StartItemPlaying(int ItemIndex)
+    {
+        _PlayingItemIndex = ItemIndex;
+        _CharaState = eCharaState.isItemPlaying;
+        Stop();
+    }
+
+    public void EndItemPlaying()
+    {
+        _PlayingItemIndex = null;
+        _CharaState = eCharaState.isWaiting;
+        Play();
     }
 
     private IEnumerator Routine_Main()
@@ -362,7 +389,7 @@ public class NavMeshCharacter : MonoBehaviour {
             }
             else
             {
-                if (Vector3.SqrMagnitude(Vector3.Scale(_MoveTargetPosition, new Vector3(1, 0, 1)) - Vector3.Scale(transform.position, new Vector3(1, 0, 1))) < 0.05f)
+                if (Vector3.SqrMagnitude(Vector3.Scale(_MoveTargetPosition, new Vector3(1, 0, 1)) - Vector3.Scale(transform.position, new Vector3(1, 0, 1))) < 0.1f)
                 {
                     _LastMoveTargetPoint = _MoveTargetPoint;
                     _MoveTargetPoint = null;
@@ -406,38 +433,18 @@ public class NavMeshCharacter : MonoBehaviour {
 
     private bool CalcNextPoint()
     {
-        Vector3 pos;
-        if (Random.Range(0, 2) == 0)
-        {
-            pos = new Vector3
-                (
-                    Random.Range(-0.4f, 0.4f),
-                    1.0f,
-                    (Random.Range(0, 2) == 0 ? Random.Range(0.2f, 0.4f) : Random.Range(-0.4f, -0.2f)) * _NavMeshBuilder.m_Size.z
-                );
-        }
-        else
-        {
-            pos = new Vector3
-                (
-                    (Random.Range(0, 2) == 0 ? Random.Range(0.2f, 0.4f) : Random.Range(-0.4f, -0.2f)) * _NavMeshBuilder.m_Size.x,
-                    1.0f,
-                    Random.Range(-0.4f, 0.4f)
-                );
-        }
+        Ray ray = new Ray(
+            transform.position + 
+            new Vector3(
+                (Random.Range(0, 2) == 0 ? Random.Range(0.2f, 0.4f) : Random.Range(-0.4f, -0.2f)) * _NavMeshBuilder.m_Size.x,
+                1.0f,
+                (Random.Range(0, 2) == 0 ? Random.Range(0.2f, 0.4f) : Random.Range(-0.4f, -0.2f)) * _NavMeshBuilder.m_Size.z
+                ),
+            Vector3.down
+            );
 
-        Ray ray = new Ray(transform.position + pos, Vector3.down);
-
-        NavMeshHit nvhit;
-        if (NavMesh.Raycast(ray.origin, ray.origin + Vector3.down * 2.0f, out nvhit, NavMesh.AllAreas))
-        {
-            Debug.Log("NavMeshRaycast Failed");
-            return false;
-        }
-
-        //var c = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        //c.transform.position = ray.origin;
-        //c.transform.localScale = new Vector3(0.1f, 4.0f, 0.1f);
+        //NavMeshHit nvhit;
+        //if (NavMesh.Raycast(ray.origin, ray.origin + Vector3.down * 100.0f, out nvhit, NavMesh.AllAreas) == false) return false;
 
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 100.0f, 1 << 12))

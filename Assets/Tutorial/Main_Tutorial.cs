@@ -13,7 +13,7 @@ public class Main_Tutorial : MonoBehaviour {
 
     public enum eTutorialType
     {
-        Tamago, Button, Find, Take1, Take2
+        Tamago, Button, Method
     }
 
     [System.Serializable]
@@ -25,6 +25,7 @@ public class Main_Tutorial : MonoBehaviour {
         public string text;
         public UnityEvent _OnTap;
         public Button NextButton;
+        public TutorialMethod _TutorialMethod;
     }
 
     [SerializeField]
@@ -34,7 +35,10 @@ public class Main_Tutorial : MonoBehaviour {
     private Animator _Animator_Tamago;
 
     [SerializeField]
-    private GameObject _BackGround;
+    private RectTransform _TamagoTransform;
+
+    [SerializeField]
+    private Image _BackGround;
 
     [SerializeField]
     private Transform _Yubi;
@@ -51,12 +55,23 @@ public class Main_Tutorial : MonoBehaviour {
     [SerializeField, Space(5)]
     private float _Seconds_Fukidashi;
 
+    [SerializeField]
+    private float _Seconds_Fade;
+
     private Vector2 _Scale_Fukidashi;
+    private Vector3 _TamagoPosition;
 
     void Start () {
         _Scale_Fukidashi = _Fukidashi.localScale;
         _HoleView.material.SetFloat("_ScreenW", Screen.width);
         _HoleView.material.SetFloat("_ScreenH", Screen.height);
+
+        _Fukidashi.localScale = Vector3.zero;
+
+        _TamagoPosition = _Animator_Tamago.GetComponent<RectTransform>().anchoredPosition;
+
+        _TamagoTransform.gameObject.SetActive(false);
+        _BackGround.gameObject.SetActive(false);
 
         Next();
     }
@@ -66,9 +81,10 @@ public class Main_Tutorial : MonoBehaviour {
         if (_TutorialList[_TutorialIndex].Type == eTutorialType.Button)
         {
             _Fukidashi.gameObject.SetActive(false);
-            _BackGround.SetActive(false);
+            _BackGround.gameObject.SetActive(false);
             _HoleView.gameObject.SetActive(true);
             _Yubi.gameObject.SetActive(true);
+            _Animator_Tamago.gameObject.SetActive(false);
 
             Vector3 pos = _TutorialList[_TutorialIndex].NextButton.transform.position;
             RectTransform r = (RectTransform)_TutorialList[_TutorialIndex].NextButton.transform;
@@ -87,14 +103,15 @@ public class Main_Tutorial : MonoBehaviour {
         else if (_TutorialList[_TutorialIndex].Type == eTutorialType.Tamago)
         {
             _Fukidashi.gameObject.SetActive(true);
-            _BackGround.SetActive(true);
             _HoleView.gameObject.SetActive(false);
             _Yubi.gameObject.SetActive(false);
 
+            _Fukidashi.localScale = new Vector2(0, 0);
+
+            yield return StartCoroutine(Routine_Fade(true, true));
+
             //ふきだし
             {
-                _Fukidashi.localScale = new Vector2(0, 0);
-
                 for (float t = 0.0f; t < _Seconds_Fukidashi; t += Time.deltaTime)
                 {
                     var b = Vector2.Lerp(Vector2.zero, _Scale_Fukidashi, t / _Seconds_Fukidashi);
@@ -104,12 +121,27 @@ public class Main_Tutorial : MonoBehaviour {
                 _Fukidashi.localScale = _Scale_Fukidashi;
             }
         }
-        else
+        else if (_TutorialList[_TutorialIndex].Type == eTutorialType.Method)
         {
-            _Fukidashi.gameObject.SetActive(true);
-            _BackGround.SetActive(true);
+            _Fukidashi.gameObject.SetActive(false);
             _HoleView.gameObject.SetActive(false);
             _Yubi.gameObject.SetActive(false);
+
+            yield return StartCoroutine(Routine_Fade(false, false));
+
+            bool isMoving = true;
+            _TutorialList[_TutorialIndex]._TutorialMethod.Method(() => isMoving = false);
+            while (isMoving) yield return null;
+
+            Next();
+        }
+        else 
+        {
+            _Fukidashi.gameObject.SetActive(true);
+            _HoleView.gameObject.SetActive(false);
+            _Yubi.gameObject.SetActive(false);
+
+            yield return StartCoroutine(Routine_Fade(false, false));
 
             //ふきだし
             {
@@ -139,6 +171,92 @@ public class Main_Tutorial : MonoBehaviour {
 
         StopAllCoroutines();
         StartCoroutine(Routine_Next());
+    }
+
+    private bool _Active_Tamago = false;
+    private bool _Active_Backgournd = false;
+
+    private IEnumerator Routine_Fade(bool tamago, bool background)
+    {
+        int cnt = 0;
+        if (_Active_Tamago != tamago)
+        {
+            ++cnt;
+            _Active_Tamago = tamago;
+            StartCoroutine(Routine_Fade_Tamago(tamago, () => --cnt));
+        }
+        if (_Active_Backgournd != background)
+        {
+            ++cnt;
+            _Active_Backgournd = background;
+            StartCoroutine(Routine_Fade_Background(background, () => --cnt));
+        }
+        while(cnt > 0) yield return null;
+    }
+
+    private IEnumerator Routine_Fade_Tamago(bool tamago, System.Action endcallback)
+    {
+        var deltaSize = Vector2.Scale(_TamagoTransform.sizeDelta, new Vector2(_TamagoTransform.lossyScale.x, _TamagoTransform.lossyScale.y));
+        var HidePosition = new Vector3(_TamagoPosition.x, -deltaSize.y * 0.6f, _TamagoPosition.z);
+        Vector3 StartPos, EndPos;
+        if (tamago)
+        {
+            _TamagoTransform.gameObject.SetActive(true);
+            StartPos = HidePosition;
+            EndPos = _TamagoPosition;
+        }
+        else
+        {
+            StartPos = _TamagoPosition;
+            EndPos = HidePosition;
+        }
+
+        Vector3 b;
+        for (float t = 0.0f; t < _Seconds_Fade; t += Time.deltaTime)
+        {
+            float e = t / _Seconds_Fade;
+            b = Vector3.Lerp(StartPos, EndPos, e);
+            _TamagoTransform.anchoredPosition = Vector3.Lerp(b, EndPos, e);
+
+            yield return null;
+        }
+        _TamagoTransform.anchoredPosition = EndPos;
+
+        if (!tamago) _TamagoTransform.gameObject.SetActive(false);
+
+        endcallback();
+    }
+
+    private IEnumerator Routine_Fade_Background(bool background, System.Action endcallback)
+    {
+        Color StartColor = _BackGround.color;
+        Color EndColor = _BackGround.color;
+        if (background)
+        {
+            _BackGround.gameObject.SetActive(true);
+            StartColor.a = 0.0f;
+            EndColor.a = 0.588f;
+        }
+        else
+        {
+            StartColor.a = 0.588f;
+            EndColor.a = 0.0f;
+        }
+
+        Color b;
+        for (float t = 0.0f; t < _Seconds_Fade; t += Time.deltaTime)
+        {
+            float e = t / _Seconds_Fade;
+            b = Color.Lerp(StartColor, EndColor, e);
+            _BackGround.color = Color.Lerp(b, EndColor, e);
+
+            yield return null;
+        }
+        _BackGround.color = EndColor;
+
+        if (!background) _BackGround.gameObject.SetActive(false);
+
+        endcallback();
     }
 
     public void OnTap()

@@ -57,7 +57,15 @@ public class Main_NoticeViewer : MonoBehaviour {
             else if (_Notices[0].Value == eNoticeType.Item) _ItemNoticeText.text = _Notices[0].Key;
 
             yield return Routine_NoticeEnter(_Notices[0].Value);
-            yield return new WaitForSeconds(_WaitSeconds);
+            _Taped = false;
+            for (float t = 0.0f; t < _WaitSeconds; t += Time.deltaTime)
+            {
+                if (_Taped)
+                {
+                    break;
+                }
+                yield return null;
+            }
             yield return Routine_NoticeExit(_Notices[0].Value);
 
             _Notices.RemoveAt(0);
@@ -111,5 +119,11 @@ public class Main_NoticeViewer : MonoBehaviour {
             yield return null;
         }
         background.anchoredPosition = HidePosition;
+    }
+
+    private bool _Taped;
+    public void Tap()
+    {
+        _Taped = true;
     }
 }

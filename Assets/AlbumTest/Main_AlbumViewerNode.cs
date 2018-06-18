@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class Main_AlbumViewerNode : MonoBehaviour {
     [SerializeField]
@@ -178,5 +179,20 @@ public class Main_AlbumViewerNode : MonoBehaviour {
     public void OpenZoomPicture()
     {
         _ParentComponent.PictureButton(this);
+    }
+
+    public void OnBeginDrag(BaseEventData eventData)
+    {
+        _ParentComponent.OnBeginDrag((PointerEventData)eventData);
+    }
+
+    public void OnEndDrag(BaseEventData eventData)
+    {
+        _ParentComponent.OnEndDrag((PointerEventData)eventData);
+    }
+
+    public void OnDrag(BaseEventData eventData)
+    {
+        _ParentComponent.OnDrag((PointerEventData)eventData);
     }
 }

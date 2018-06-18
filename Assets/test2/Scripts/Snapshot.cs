@@ -83,7 +83,7 @@ public class Snapshot : MonoBehaviour
 
     IEnumerator SaveCamImage()
     {
-        var EggObjlist = new List<KeyValuePair<GameObject, int>>();
+        var EggObjlist = new List<KeyValuePair<GameObject, SnapShotInfo>>();
 
         //foreach (var egg in EggSpawnerARCore.EggList)
         //{
@@ -94,7 +94,14 @@ public class Snapshot : MonoBehaviour
         foreach (var egg in EggSpawnerARCore.EggList)
         {
             if (egg.GetComponent<EggBehaviour>().isInCamera)
-                EggObjlist.Add(new KeyValuePair<GameObject, int>(egg, egg.GetComponent<EggData>()._closeID));
+            {
+                var info = new SnapShotInfo();
+                info.CharaCloseIndex = egg.GetComponent<EggData>()._closeID;
+                var nchara = egg.GetComponent<NavMeshCharacter>();
+                info.CharaState = nchara.CharaState;
+                info.ItemCloseIndex = nchara.PlayingItemIndex;
+                EggObjlist.Add(new KeyValuePair<GameObject, SnapShotInfo>(egg, info));
+            }
         }
 
         var NewEggList = Main_PictureBookManager.GetNewCharacters(EggObjlist);
@@ -108,8 +115,8 @@ public class Snapshot : MonoBehaviour
         m_camera.targetTexture = m_snap;
         // レンダリング
         m_camera.Render();
-        // レンダリングされているものを m_tex2d に読み込む
-        Texture2D m_tex2d = new Texture2D(m_snap.width, m_snap.height);
+        // レンダリングされているものを m_tex2d に読み込む 透明度を消す？
+        Texture2D m_tex2d = new Texture2D(m_snap.width, m_snap.height, TextureFormat.RGB24, false);
         m_tex2d.ReadPixels(new Rect(0, 0, m_snap.width, m_snap.height), 0, 0);
 
         // テクスチャの上下反転
@@ -198,6 +205,17 @@ public class Snapshot : MonoBehaviour
         //アルバムを更新
         Main_PictureBookManager.UpdateAlbum(EggObjlist);
         _AlbumViewer.SnapShot(m_tex2d);
+
+
+        //チャレンジ判定に使うリストを作成
+        List<SnapShotInfo> SnapShots = new List<SnapShotInfo>();
+        {
+            foreach (var egg in EggObjlist)
+            {
+                SnapShotInfo s = new SnapShotInfo();
+            }
+        }
+        Main_ChallengeManager.CheckChallenges(EggObjlist);
 
         //// テクスチャを PNG に変換
         //byte[] bytes = m_tex2d.EncodeToPNG();
