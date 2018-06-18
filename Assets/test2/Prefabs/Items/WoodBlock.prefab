@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 4062503883903568}
   - component: {fileID: 54549193512726990}
   - component: {fileID: 208165653659123792}
-  - component: {fileID: 114107865838993172}
+  - component: {fileID: 114490204994962004}
   m_Layer: 0
   m_Name: WoodBlock
   m_TagString: Untagged
@@ -496,17 +496,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &114107865838993172
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1713625029020854}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3dbd4b0b066f5c24096c148af8b6853f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114284685507025218
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -535,6 +524,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b90c59b09a832a4aa71a5aec40ee6c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114490204994962004
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1713625029020854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2f3caa602eaad34fb26dc6625bf7e69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ID: 5
 --- !u!114 &114503660107346164
 MonoBehaviour:
   m_ObjectHideFlags: 1
