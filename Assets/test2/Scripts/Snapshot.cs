@@ -49,6 +49,9 @@ public class Snapshot : MonoBehaviour
     private float m_New_IntervalSeconds;
 
     [SerializeField]
+    private float m_SnapShotDistance;
+
+    [SerializeField]
     private RectTransform m_PictureBookButton;
 
     [SerializeField]
@@ -91,16 +94,26 @@ public class Snapshot : MonoBehaviour
         //        int_list.Add(egg.GetComponent<EggData>()._closeID);
         //}
 
+        RaycastHit hit;
         foreach (var egg in EggSpawnerARCore.EggList)
         {
-            if (egg.GetComponent<EggBehaviour>().isInCamera)
+            //範囲外なら棄却
+            if ((Camera.main.transform.position - egg.transform.position).sqrMagnitude >= m_SnapShotDistance * m_SnapShotDistance) continue;
+            if (egg.GetComponent<EggBehaviour>().isInCameraForSnap)
             {
-                var info = new SnapShotInfo();
-                info.CharaCloseIndex = egg.GetComponent<EggData>()._closeID;
-                var nchara = egg.GetComponent<NavMeshCharacter>();
-                info.CharaState = nchara.CharaState;
-                info.ItemCloseIndex = nchara.PlayingItemIndex;
-                EggObjlist.Add(new KeyValuePair<GameObject, SnapShotInfo>(egg, info));
+                var vector = (egg.transform.position - Camera.main.transform.position);
+                Ray ray = new Ray(Camera.main.transform.position, vector.normalized);
+                if (Physics.Raycast(ray, out hit, m_SnapShotDistance, 1 << 8))
+                {
+                    if (hit.collider.gameObject != egg) continue;
+
+                    var info = new SnapShotInfo();
+                    info.CharaCloseIndex = egg.GetComponent<EggData>()._closeID;
+                    var nchara = egg.GetComponent<NavMeshCharacter>();
+                    info.CharaState = nchara.CharaState;
+                    info.ItemCloseIndex = nchara.PlayingItemIndex;
+                    EggObjlist.Add(new KeyValuePair<GameObject, SnapShotInfo>(egg, info));
+                }
             }
         }
 
