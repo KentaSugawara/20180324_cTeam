@@ -34,7 +34,7 @@ public class TargetCollider : MonoBehaviour {
 	[SerializeField]
 	float _delaySeconds;
 
-	private void Awake() {
+	private void OnEnable() {
 		SetActiveTarget(_initActive);
 	}
 
