@@ -162,8 +162,6 @@ public class EggBehaviour : MonoBehaviour {
 
 	public bool isInCameraForSnap {
 		get {
-			if (!isFaceToCamera) return false;
-
 			var M_V = Camera.main.worldToCameraMatrix;
 			var M_P = Camera.main.projectionMatrix;
 			var M_VP = M_P * M_V;
