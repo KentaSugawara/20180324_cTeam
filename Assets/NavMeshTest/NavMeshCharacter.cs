@@ -171,10 +171,11 @@ public class NavMeshCharacter : MonoBehaviour {
         StartCoroutine(Routine_OnGround());
     }
 
-    public void Init(EggSpawnerARCore Spawner)
+    public void Init(EggSpawnerARCore Spawner, float MaxDestinationSeconds)
     {
         _EggSpawner = Spawner;
         Debug.Log(_EggSpawner);
+        _GiveUpAribalSeconds = MaxDestinationSeconds;
     }
 
     public void Play() {
@@ -399,6 +400,11 @@ public class NavMeshCharacter : MonoBehaviour {
                 }
             }
 
+            _DestinationElapsedTime += Time.deltaTime;
+            if (_DestinationElapsedTime >= _GiveUpAribalSeconds)
+            {
+                break;
+            }
 
             yield return null;
         }
@@ -454,6 +460,7 @@ public class NavMeshCharacter : MonoBehaviour {
             _MoveTargetPosition = hit.point;
             _Agent.isStopped = false;
             _Agent.SetDestination(_MoveTargetPosition);
+            _DestinationElapsedTime = 0.0f;
 
             //デバッグ用
             //var obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -463,6 +470,9 @@ public class NavMeshCharacter : MonoBehaviour {
         }
         return false;
     }
+
+    private float _GiveUpAribalSeconds;
+    private float _DestinationElapsedTime = 0.0f;
 
     public void SetTargetPoint(NavMeshTargetPoint MoveTargetPoint)
     {

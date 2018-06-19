@@ -5414,6 +5414,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _RotateScale: 0.2
+  _changeAnimInterval: 3
 --- !u!4 &422692463
 Transform:
   m_ObjectHideFlags: 0
@@ -8851,6 +8852,7 @@ MonoBehaviour:
   _EggPrefabs: []
   _MaxSpawnNum: 10
   _EggSpawnInterval: 1
+  _GiveUpAribalSeconds: 5
   _DistanceOfAlive: 10
   _DestroyCheckDelaySeconds: 5
 --- !u!114 &627916104
@@ -14631,11 +14633,12 @@ MonoBehaviour:
   - {fileID: 1872363210978924, guid: 2947d153930697d4eb08a00989cba063, type: 2}
   - {fileID: 1799073094335300, guid: 98e6cf7cacb8f6a4b8fdc8009a25f73f, type: 2}
   - {fileID: 1634643701753654, guid: 827fa3850dafc7040b202f754d9787fb, type: 2}
-  - {fileID: 0}
+  - {fileID: 1743227638368404, guid: 275e14d60fc940e409b897705d98e05b, type: 2}
   - {fileID: 1665314718695286, guid: d3115ea72f41c9948bdc64d3398b8662, type: 2}
   - {fileID: 1228018377891322, guid: 98b972baa4f42374f914841e020a498b, type: 2}
   _MaxSpawnNum: 10
   _EggSpawnInterval: 3
+  _GiveUpAribalSeconds: 5
   _DistanceOfAlive: 10
   _DestroyCheckDelaySeconds: 5
 --- !u!1 &1151340368
@@ -21760,6 +21763,7 @@ MonoBehaviour:
   m_New_ViewSeconds: 1.5
   m_New_ReductionNeedSeconds: 0.15
   m_New_IntervalSeconds: 0.2
+  m_SnapShotDistance: 2
   m_PictureBookButton: {fileID: 1391462627}
   m_SnapShot_StoreNeedSeconds: 1
   m_Audio_SnapShot: {fileID: 116722174}
@@ -23960,6 +23964,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _RotateScale: 0.2
+  _changeAnimInterval: 3
 --- !u!4 &1860450232
 Transform:
   m_ObjectHideFlags: 0

@@ -99,7 +99,9 @@ public class Snapshot : MonoBehaviour
         {
             //範囲外なら棄却
             if ((Camera.main.transform.position - egg.transform.position).sqrMagnitude >= m_SnapShotDistance * m_SnapShotDistance) continue;
-            if (egg.GetComponent<EggBehaviour>().isInCameraForSnap)
+            var eggbhaviour = egg.GetComponent<EggBehaviour>();
+            var nchara = egg.GetComponent<NavMeshCharacter>();
+            if (eggbhaviour.isInCameraForSnap && (nchara.CharaState == NavMeshCharacter.eCharaState.isItemPlaying || eggbhaviour.isFaceToCamera))
             {
                 var vector = (egg.transform.position - Camera.main.transform.position);
                 Ray ray = new Ray(Camera.main.transform.position, vector.normalized);
@@ -109,9 +111,9 @@ public class Snapshot : MonoBehaviour
 
                     var info = new SnapShotInfo();
                     info.CharaCloseIndex = egg.GetComponent<EggData>()._closeID;
-                    var nchara = egg.GetComponent<NavMeshCharacter>();
                     info.CharaState = nchara.CharaState;
                     info.ItemCloseIndex = nchara.PlayingItemIndex;
+                    info._Animator = egg.GetComponent<Animator>();
                     EggObjlist.Add(new KeyValuePair<GameObject, SnapShotInfo>(egg, info));
                 }
             }
