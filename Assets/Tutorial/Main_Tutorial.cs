@@ -25,6 +25,11 @@ public class Main_Tutorial : MonoBehaviour {
         public string text;
         public bool ChangeFontSize;
         public int FontSize;
+        public bool ActiveYubi;
+        public Vector3 YubiScreenPos;
+        public bool ActiveHoleView;
+        public Vector2 HoleViewScreenPos;
+        public Vector2 HoleViewSize;
         public UnityEvent _OnTap;
         public Button NextButton;
         public TutorialMethod _TutorialMethod;
@@ -80,12 +85,28 @@ public class Main_Tutorial : MonoBehaviour {
 
     private IEnumerator Routine_Next()
     {
+        var YubiActive = _TutorialList[_TutorialIndex].ActiveYubi;
+        _Yubi.gameObject.SetActive(YubiActive);
+        if (YubiActive)
+        {
+            _Yubi.position = _TutorialList[_TutorialIndex].YubiScreenPos;
+        }
+
+        var HoleViewActive = _TutorialList[_TutorialIndex].ActiveHoleView;
+        _HoleView.gameObject.SetActive(HoleViewActive);
+        if (HoleViewActive)
+        {
+            _HoleView.material.SetFloat("_HoleX", _TutorialList[_TutorialIndex].HoleViewScreenPos.x);
+            _HoleView.material.SetFloat("_HoleY", _TutorialList[_TutorialIndex].HoleViewScreenPos.y);
+
+            _HoleView.material.SetFloat("_Width", _TutorialList[_TutorialIndex].HoleViewSize.x);
+            _HoleView.material.SetFloat("_Height", _TutorialList[_TutorialIndex].HoleViewSize.y);
+        }
+
         if (_TutorialList[_TutorialIndex].Type == eTutorialType.Button)
         {
             _Fukidashi.gameObject.SetActive(false);
             _BackGround.gameObject.SetActive(false);
-            _HoleView.gameObject.SetActive(true);
-            _Yubi.gameObject.SetActive(true);
             _Animator_Tamago.gameObject.SetActive(false);
 
             Vector3 pos = _TutorialList[_TutorialIndex].NextButton.transform.position;
@@ -105,8 +126,6 @@ public class Main_Tutorial : MonoBehaviour {
         else if (_TutorialList[_TutorialIndex].Type == eTutorialType.Tamago)
         {
             _Fukidashi.gameObject.SetActive(true);
-            _HoleView.gameObject.SetActive(false);
-            _Yubi.gameObject.SetActive(false);
 
             _Fukidashi.localScale = new Vector2(0, 0);
 
@@ -126,8 +145,6 @@ public class Main_Tutorial : MonoBehaviour {
         else if (_TutorialList[_TutorialIndex].Type == eTutorialType.Method)
         {
             _Fukidashi.gameObject.SetActive(false);
-            _HoleView.gameObject.SetActive(false);
-            _Yubi.gameObject.SetActive(false);
 
             yield return StartCoroutine(Routine_Fade(false, false));
 
@@ -141,8 +158,6 @@ public class Main_Tutorial : MonoBehaviour {
         else 
         {
             _Fukidashi.gameObject.SetActive(true);
-            _HoleView.gameObject.SetActive(false);
-            _Yubi.gameObject.SetActive(false);
 
             yield return StartCoroutine(Routine_Fade(false, false));
 
