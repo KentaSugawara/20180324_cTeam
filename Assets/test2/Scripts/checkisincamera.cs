@@ -9,6 +9,6 @@ public class checkisincamera : MonoBehaviour {
 		var eggBehaviour = GetComponent<EggBehaviour>();
 		//Debug.Log("isInCamera : " + eggBehaviour.isInCamera);
 		//Debug.Log("isInCameraForSnap :" + eggBehaviour.isInCameraForSnap);
-		Debug.Log("isFaceToCamera : " + eggBehaviour.isFaceToCamera);
+		//Debug.Log("isFaceToCamera : " + eggBehaviour.isFaceToCamera);
 	}
 }
