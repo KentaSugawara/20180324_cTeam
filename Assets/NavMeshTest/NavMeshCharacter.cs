@@ -481,6 +481,7 @@ public class NavMeshCharacter : MonoBehaviour {
             _MoveTargetPoint = MoveTargetPoint;
             _MoveTargetPosition = MoveTargetPoint.transform.position;
             _Agent.SetDestination(MoveTargetPoint.transform.position);
+            _DestinationElapsedTime = 0.0f;
         }
     }
 }
