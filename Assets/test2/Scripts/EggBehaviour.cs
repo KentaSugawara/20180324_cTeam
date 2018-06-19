@@ -11,6 +11,9 @@ public class EggBehaviour : MonoBehaviour {
 	[SerializeField]
 	Vector3 _tuneParamsForSnap;
 
+	[SerializeField]
+	float _dotParam;
+
 	public Camera _camera { get; set; }
 
 	public bool _isTaken { get; set; }
@@ -20,8 +23,8 @@ public class EggBehaviour : MonoBehaviour {
 
 	Vector3 _rigPos = Vector3.zero;
 	Quaternion _rigRot = Quaternion.identity;
-    NavMeshCharacter _NavMeshCharacter;
-    int _ID_Playing = Animator.StringToHash("Playing");
+	NavMeshCharacter _NavMeshCharacter;
+	int _ID_Playing = Animator.StringToHash("Playing");
 
 	GameObject _item;
 
@@ -43,17 +46,17 @@ public class EggBehaviour : MonoBehaviour {
 
 	static Dictionary<EggState, string> triggers = new Dictionary<EggState, string>(){
 		{ EggState.Idle,        "Idle" },
-		{ EggState.Walk,		"Walk" },
-		{ EggState.Run,			"Run" },
-		{ EggState.Jump,		"Jump" },
+		{ EggState.Walk,        "Walk" },
+		{ EggState.Run,         "Run" },
+		{ EggState.Jump,        "Jump" },
 		{ EggState.CampFireA,   "Play_CampFire_A" },
 		{ EggState.CampFireB,   "Play_CampFire_B" },
 		{ EggState.CampFireC,   "Play_CampFire_C" },
-		{ EggState.SeeSawA,     "Play_SeeSaw_A"	  },
-		{ EggState.SeeSawB,     "Play_SeeSaw_B"	  },
-		{ EggState.Slide,       "Play_Slide"	  },
+		{ EggState.SeeSawA,     "Play_SeeSaw_A"   },
+		{ EggState.SeeSawB,     "Play_SeeSaw_B"   },
+		{ EggState.Slide,       "Play_Slide"      },
 		{ EggState.Trampoline,  "Play_Trampoline" },
-		{ EggState.Wheel,       "Play_Wheel"	  },
+		{ EggState.Wheel,       "Play_Wheel"      },
 		{ EggState.WoodBlockA,  "Play_WoodBlock_A"  },
 		{ EggState.WoodBlockB,  "Play_WoodBlock_B"  },
 		{ EggState.WoodBlockC,  "Play_WoodBlock_C"  },
@@ -65,44 +68,22 @@ public class EggBehaviour : MonoBehaviour {
 	void Awake() {
 		_isTaken = false;
 		_animator = GetComponent<Animator>();
-        _NavMeshCharacter = GetComponent<NavMeshCharacter>();
+		_NavMeshCharacter = GetComponent<NavMeshCharacter>();
 	}
 
-    private void Start()
-    {
-        StartCoroutine(Routine_CheckDestroy());
-    }
+	private void Start() {
+		StartCoroutine(Routine_CheckDestroy());
+	}
 
-    IEnumerator Routine_CheckDestroy()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(EggSpawnerARCore.DestroyCheckDelaySeconds);
-            //写真に写された後に画面外なら削除
-            if (_isTaken && !_animator.GetBool(_ID_Playing) && !isInCamera) KillSelf();
-            //プレイヤーから一定距離離れたら削除
-            else if (Vector3.SqrMagnitude((Camera.main.transform.position - transform.position)) > EggSpawnerARCore.DistanceOfAlive * EggSpawnerARCore.DistanceOfAlive) KillSelf();
-        }
-    }
-
-    bool CheckForward() {
-		List<DetectedPlane> planeList = new List<DetectedPlane>();
-		Session.GetTrackables<DetectedPlane>(planeList);
-
-		RaycastHit hit;
-		Vector3 originPos = transform.position + Vector3.up * 0.2f;
-		Vector3 vec = transform.TransformDirection(new Vector3(0, -1, 1));
-
-		if (Physics.Raycast(originPos, vec, out hit)) {
-			Debug.Log(hit);
-			Debug.DrawRay(originPos, vec, Color.yellow);
-			return true;
+	IEnumerator Routine_CheckDestroy() {
+		while (true) {
+			yield return new WaitForSeconds(EggSpawnerARCore.DestroyCheckDelaySeconds);
+			//写真に写された後に画面外なら削除
+			if (_isTaken && !_animator.GetBool(_ID_Playing) && !isInCamera) KillSelf();
+			//プレイヤーから一定距離離れたら削除
+			else if (Vector3.SqrMagnitude((Camera.main.transform.position - transform.position)) > EggSpawnerARCore.DistanceOfAlive * EggSpawnerARCore.DistanceOfAlive) KillSelf();
 		}
-
-		Debug.DrawRay(originPos, vec, Color.red);
-		return false;
 	}
-
 
 	public void OnTriggerEnter(Collider other) {
 		if (other.tag == "Item") {
@@ -133,17 +114,17 @@ public class EggBehaviour : MonoBehaviour {
 	}
 
 	public void KillSelf() {
-        //foreach (var egg in EggSpawnerARCore.EggList) {
-        //	if (egg == gameObject) {
-        //		EggSpawnerARCore.EggList.Remove(egg);
-        //		break;
-        //	}
-        //}
-        EggSpawnerARCore.Instance.RemoveEgg(gameObject);
+		//foreach (var egg in EggSpawnerARCore.EggList) {
+		//	if (egg == gameObject) {
+		//		EggSpawnerARCore.EggList.Remove(egg);
+		//		break;
+		//	}
+		//}
+		EggSpawnerARCore.Instance.RemoveEgg(gameObject);
 		Destroy(gameObject);
 	}
 
-	public void PlayAgent() {		
+	public void PlayAgent() {
 		GetComponent<NavMeshCharacter>().EndItemPlaying();
 	}
 	public void StopAgent(int ItemCloseIndex) {
@@ -169,11 +150,11 @@ public class EggBehaviour : MonoBehaviour {
 			var z = p.z / p.w;
 
 			if (x <= -1 - _tuneParams.x) return false;
-			if (x >=  1 + _tuneParams.x) return false;
+			if (x >= 1 + _tuneParams.x) return false;
 			if (y <= -1 - _tuneParams.y) return false;
-			if (y >=  1 + _tuneParams.y) return false;
+			if (y >= 1 + _tuneParams.y) return false;
 			if (z <= -1 - _tuneParams.z) return false;
-			if (z >=  1 + _tuneParams.z) return false;
+			if (z >= 1 + _tuneParams.z) return false;
 
 			return true;
 		}
@@ -195,18 +176,37 @@ public class EggBehaviour : MonoBehaviour {
 			var z = p.z / p.w;
 
 			if (x <= -1 - _tuneParamsForSnap.x) return false;
-			if (x >=  1 + _tuneParamsForSnap.x) return false;
+			if (x >= 1 + _tuneParamsForSnap.x) return false;
 			if (y <= -1 - _tuneParamsForSnap.y) return false;
-			if (y >=  1 + _tuneParamsForSnap.y) return false;
+			if (y >= 1 + _tuneParamsForSnap.y) return false;
 			if (z <= -1 - _tuneParamsForSnap.z) return false;
-			if (z >=  1 + _tuneParamsForSnap.z) return false;
+			if (z >= 1 + _tuneParamsForSnap.z) return false;
 
 			return true;
 		}
 	}
 
+	public bool isFaceToCamera {
+		get {
+			if (Vector3.Dot(transform.forward.normalized, -Camera.main.transform.forward.normalized) > DotParam)
+				return true;
+			else
+				return false;
+		}
+	}
+
 	public GameObject targetItem {
 		get { return _item; }
+	}
+
+	public float DotParam {
+		get {
+			return _dotParam;
+		}
+
+		set {
+			_dotParam = value;
+		}
 	}
 
 	void CheckTrigger(string name) { _animator.SetTrigger(name); }
