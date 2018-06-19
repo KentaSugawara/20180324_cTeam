@@ -936,7 +936,7 @@ MonoBehaviour:
   _HARIBOTE: 0
   _tuneParams: {x: 0.15, y: 0, z: 0}
   _tuneParamsForSnap: {x: -0.2, y: -0.4, z: 0}
-  _dotParam: 0.8
+  _dotParam: 0.6
   _rigTransform: {fileID: 4216609396352832}
 --- !u!114 &114608559956225500
 MonoBehaviour:
@@ -1164,6 +1164,6 @@ NavMeshAgent:
   m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 0.5
-  m_BaseOffset: -0.0825
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4

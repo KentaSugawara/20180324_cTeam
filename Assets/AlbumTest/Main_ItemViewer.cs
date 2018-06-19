@@ -175,7 +175,7 @@ public class Main_ItemViewer : MonoBehaviour {
             if (item == null || item.Prefab == null) return false;
 
             var obj = Instantiate(item.Prefab, pose.position, /*pose.rotation*/item.Prefab.transform.rotation * Quaternion.Euler(0.0f, Camera.main.transform.rotation.eulerAngles.y + 90.0f, 0.0f));
-            obj.transform.localScale *= 0.6f;
+            obj.transform.localScale *= 0.45f;
 
             var plane = hit.collider.gameObject.GetComponent<GoogleARCore.Examples.Common.DetectedPlaneVisualizer>();
 
@@ -214,6 +214,8 @@ public class Main_ItemViewer : MonoBehaviour {
     [SerializeField]
     private RectTransform _Left;
 
+    private IEnumerator RoutineItem;
+
     public void CreateDragObj(Sprite sprite, int ItemIndex, Main_ItemViewerNode child)
     {
         if (_DragObj != null)
@@ -221,6 +223,9 @@ public class Main_ItemViewer : MonoBehaviour {
             Destroy(_DragObj.gameObject);
             _DragObjChild = null;
         }
+
+        //if (RoutineItem != null) StopClose
+        //RoutineItem = Routine_Item();
 
         _Audio_ItemCreate.Play();
         var obj = Instantiate(_Prefab_ItemDragObj);
@@ -230,6 +235,15 @@ public class Main_ItemViewer : MonoBehaviour {
         _ItemIndex = ItemIndex;
         _DragObj = component;
         _DragObjChild = child;
+    }
+
+    private IEnumerator Routine_Item()
+    {
+        while (true)
+        {
+
+            yield return null;
+        }
     }
 
     public void ReleaseDragObj(Main_ItemViewerNode child)

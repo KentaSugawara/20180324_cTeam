@@ -432,7 +432,7 @@ public class NavMeshCharacter : MonoBehaviour {
                 {
                     if (NavMesh.SamplePosition(_Agent.transform.localPosition, out navhit, _CharaHight * 1.5f, NavMesh.AllAreas))
                     {
-                        _Agent.baseOffset = hit.point.y - navhit.position.y;
+                        //_Agent.baseOffset = hit.point.y - navhit.position.y;
                         _LastHitNormal = hit.normal;
                         CalcNextPoint();
                     }

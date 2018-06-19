@@ -6775,6 +6775,7 @@ MonoBehaviour:
   - {fileID: 1129614668}
   - {fileID: 648718927}
   - {fileID: 1732566827}
+  _eggspawner: {fileID: 0}
 --- !u!1 &509981598
 GameObject:
   m_ObjectHideFlags: 0
@@ -14617,7 +14618,7 @@ MonoBehaviour:
   - {fileID: 1362689605617396, guid: c52cd592069d953409cfde4212b0fa1c, type: 2}
   - {fileID: 1540737987416302, guid: 011864bf2e7720b4db5eac92a0315c23, type: 2}
   - {fileID: 1434065401024616, guid: 9d408a7064d642d42bd9fa188e5fa0a1, type: 2}
-  - {fileID: 1852298052517150, guid: 235eb985f4153e74a9f45c161a1e62c7, type: 2}
+  - {fileID: 1707342748704972, guid: 3488187f61928354dbc09e7574fcc957, type: 2}
   - {fileID: 1923352835377202, guid: a26f0a79bdea88a4f93fca255de476c4, type: 2}
   - {fileID: 1520998482017394, guid: 5c760d085f686264a959c7edd4bd9ee4, type: 2}
   - {fileID: 1604254849448168, guid: 361675dcfb7a950439844732dd52ffd0, type: 2}
@@ -14634,7 +14635,7 @@ MonoBehaviour:
   - {fileID: 1799073094335300, guid: 98e6cf7cacb8f6a4b8fdc8009a25f73f, type: 2}
   - {fileID: 1634643701753654, guid: 827fa3850dafc7040b202f754d9787fb, type: 2}
   - {fileID: 1743227638368404, guid: 275e14d60fc940e409b897705d98e05b, type: 2}
-  - {fileID: 1665314718695286, guid: d3115ea72f41c9948bdc64d3398b8662, type: 2}
+  - {fileID: 1006143572764614, guid: c60125f752b2ceb41b92047f1cf0daf7, type: 2}
   - {fileID: 1228018377891322, guid: 98b972baa4f42374f914841e020a498b, type: 2}
   _MaxSpawnNum: 10
   _EggSpawnInterval: 3
@@ -19430,7 +19431,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1582019678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20304,6 +20305,7 @@ MonoBehaviour:
   _Prefab_Items: []
   _Audio_ItemCreate: {fileID: 1654578029}
   _Audio_ItemRelease: {fileID: 1437253363}
+  StopClose: 0
   _Prefab_ItemDragObj: {fileID: 1663398561517422, guid: 2245d2f825ed35a4dbf90afcc371bbad,
     type: 2}
   _Canvas: {fileID: 30057670}
@@ -21763,7 +21765,7 @@ MonoBehaviour:
   m_New_ViewSeconds: 1.5
   m_New_ReductionNeedSeconds: 0.15
   m_New_IntervalSeconds: 0.2
-  m_SnapShotDistance: 2
+  m_SnapShotDistance: 0.5
   m_PictureBookButton: {fileID: 1391462627}
   m_SnapShot_StoreNeedSeconds: 1
   m_Audio_SnapShot: {fileID: 116722174}
@@ -22034,6 +22036,7 @@ MonoBehaviour:
   _Prefab_Items: []
   _Audio_ItemCreate: {fileID: 0}
   _Audio_ItemRelease: {fileID: 0}
+  StopClose: 0
   _Prefab_ItemDragObj: {fileID: 0}
   _Canvas: {fileID: 0}
   _Left: {fileID: 0}
@@ -22648,7 +22651,7 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1759795985}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

@@ -11,12 +11,12 @@ public class Main_ModelViewWindow : MonoBehaviour {
 	private float _RotateY;
 
 	private List<int> _triggerHash = new List<int>(){
-		Animator.StringToHash("Idle"),
 		Animator.StringToHash("Walk"),
 		Animator.StringToHash("Run"),
 		Animator.StringToHash("Jump"),
 		Animator.StringToHash("Unique"),
-	};
+        Animator.StringToHash("Idle"),
+    };
 
 	private Animator _childAnimator;
 
@@ -29,8 +29,11 @@ public class Main_ModelViewWindow : MonoBehaviour {
         var angles = transform.localRotation.eulerAngles;
         _RotateX = angles.y;
         _RotateY = angles.x;
+    }
 
-		_childAnimator = GetComponentInChildren<Animator>();
+    public void ChangeObj(GameObject obj)
+    {
+        _childAnimator = obj.GetComponentInChildren<Animator>();
     }
 
 	private void OnEnable() {

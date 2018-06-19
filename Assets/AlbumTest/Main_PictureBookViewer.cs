@@ -143,6 +143,7 @@ public class Main_PictureBookViewer : MonoBehaviour {
             if (_CurrentModel != null) Destroy(_CurrentModel);
             if (Prefab != null) _CurrentModel = Instantiate(Prefab);
             Debug.Log(_CurrentModel);
+            _ViewWindowModel.GetComponent<Main_ModelViewWindow>().ChangeObj(_CurrentModel);
             _CurrentModel.transform.SetParent(_ViewWindowModel.transform, false);
             _Text_ViewName.text = chara.ViewName;
             _Text_Info.text = chara.Text;
