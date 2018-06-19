@@ -6,6 +6,9 @@ using GoogleARCore;
 
 public class EggBehaviour : MonoBehaviour {
 	[SerializeField]
+	bool _HARIBOTE;
+
+	[SerializeField]
 	Vector3 _tuneParams;
 
 	[SerializeField]
@@ -120,7 +123,7 @@ public class EggBehaviour : MonoBehaviour {
 		//		break;
 		//	}
 		//}
-		EggSpawnerARCore.Instance.RemoveEgg(gameObject);
+		if(!_HARIBOTE) EggSpawnerARCore.Instance.RemoveEgg(gameObject);
 		Destroy(gameObject);
 	}
 
