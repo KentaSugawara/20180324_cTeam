@@ -14,4 +14,5 @@ public class SnapShotInfo
     public int? CharaCloseIndex = null;
     public NavMeshCharacter.eCharaState CharaState = NavMeshCharacter.eCharaState.isWaiting;
     public int? ItemCloseIndex = null;
+    public Animator _Animator;
 }

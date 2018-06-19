@@ -9,22 +9,45 @@ public class ChallengeAsset_ItemPlayingEgg : Main_Challenge {
     private string _Comment;
 
     [SerializeField]
+    private int _NumOfChara;
+
+    [SerializeField]
     private int ItemCloseID;
+
+    [SerializeField]
+    private int _CharaCloseID = -1;
+
+    [SerializeField]
+    private string _AnimatorStateName = "";
 
     public override bool Check(List<KeyValuePair<GameObject, SnapShotInfo>> SnapShots)
     {
         if (SnapShots == null && SnapShots.Count <= 0) return false;
         if (ItemCloseID < 0) return false;
 
+        int cnt = 0;
         foreach (var s in SnapShots)
         {
             if (s.Value.CharaState == NavMeshCharacter.eCharaState.isItemPlaying &&
                 s.Value.ItemCloseIndex == ItemCloseID &&
                 s.Value.CharaCloseIndex >= 0)
             {
-                return true;
+                if (_CharaCloseID < 0 || s.Value.CharaCloseIndex == _CharaCloseID)
+                {
+                    if (_AnimatorStateName == "") {
+                        ++cnt;
+                    }
+                    else
+                    {
+                        var info = s.Value._Animator.GetCurrentAnimatorStateInfo(0);
+                        if (info.IsName(_AnimatorStateName))
+                        {
+                            ++cnt;
+                        }
+                    }
+                }
             }
         }
-        return false;
+        return _NumOfChara == cnt;
     }
 }

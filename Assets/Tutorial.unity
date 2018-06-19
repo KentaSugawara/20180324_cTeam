@@ -2327,7 +2327,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 8388608
+    m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -2619,6 +2619,7 @@ RectTransform:
   - {fileID: 1665769563}
   - {fileID: 643692823}
   - {fileID: 1049291642}
+  - {fileID: 1669030067}
   - {fileID: 1048952668}
   - {fileID: 714432621}
   m_Father: {fileID: 1978575920}
@@ -2684,7 +2685,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 15
   m_TargetDisplay: 0
 --- !u!1 &175697519
 GameObject:
@@ -8995,6 +8996,7 @@ MonoBehaviour:
   _EggPrefabs: []
   _MaxSpawnNum: 10
   _EggSpawnInterval: 1
+  _GiveUpAribalSeconds: 5
   _DistanceOfAlive: 10
   _DestroyCheckDelaySeconds: 5
 --- !u!114 &627916104
@@ -10803,7 +10805,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 175199055}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -13349,6 +13351,48 @@ Transform:
   m_Father: {fileID: 353810106}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1010172909
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1010172911}
+  - component: {fileID: 1010172910}
+  m_Layer: 0
+  m_Name: WaitFor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1010172910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1010172909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 364deae8f2f41164faa9fa055c36b041, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isActive: 1
+  _WaitSeconds: 1
+--- !u!4 &1010172911
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1010172909}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2021607670}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1012360059
 Prefab:
   m_ObjectHideFlags: 0
@@ -13740,7 +13784,7 @@ RectTransform:
   m_Children:
   - {fileID: 1890183895}
   m_Father: {fileID: 175199055}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -15076,6 +15120,7 @@ MonoBehaviour:
   - {fileID: 1228018377891322, guid: 84452c9e3e844a14983077daf49eda37, type: 2}
   _MaxSpawnNum: 1
   _EggSpawnInterval: 0
+  _GiveUpAribalSeconds: 5
   _DistanceOfAlive: 10
   _DestroyCheckDelaySeconds: 5
 --- !u!1 &1151340368
@@ -18893,7 +18938,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2021607670}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1461333728
 MonoBehaviour:
@@ -19602,7 +19647,7 @@ MonoBehaviour:
   _isActive: 1
   _CharaCloseIndex: 0
   _WaitSeconds: 0
-  _ViewSeconds: 3
+  _ViewSeconds: 2.3
 --- !u!4 &1521489385
 Transform:
   m_ObjectHideFlags: 0
@@ -20978,9 +21023,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _New: {fileID: 1642913898}
-  _OpenNeedSeconds: 1
+  _OpenNeedSeconds: 0.1
   _ViewSeconds: 1
-  _HideNeedSeconds: 1
+  _HideNeedSeconds: 0.1
 --- !u!1 &1654448483
 GameObject:
   m_ObjectHideFlags: 0
@@ -21714,6 +21759,39 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1665769562}
+--- !u!1 &1669030066
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1669030067}
+  m_Layer: 0
+  m_Name: ButtonParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1669030067
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1669030066}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 175199055}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1673809123
 Prefab:
   m_ObjectHideFlags: 0
@@ -22332,6 +22410,7 @@ MonoBehaviour:
   m_New_ViewSeconds: 1.5
   m_New_ReductionNeedSeconds: 0.15
   m_New_IntervalSeconds: 0.2
+  m_SnapShotDistance: 0
   m_PictureBookButton: {fileID: 1391462627}
   m_SnapShot_StoreNeedSeconds: 1
   m_Audio_SnapShot: {fileID: 116722174}
@@ -26203,6 +26282,23 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
     NextButton: {fileID: 0}
     _TutorialMethod: {fileID: 0}
+  - Type: 1
+    Tamago: 0
+    text: 
+    ChangeFontSize: 0
+    FontSize: 0
+    ActiveYubi: 1
+    YubiScreenPos: {x: 0, y: 0, z: 0}
+    ActiveHoleView: 1
+    HoleViewScreenPos: {x: 0, y: 0}
+    HoleViewSize: {x: 0, y: 0}
+    _OnTap:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    NextButton: {fileID: 1391462629}
+    _TutorialMethod: {fileID: 0}
   - Type: 0
     Tamago: 0
     text: "\u65B0\u3057\u3044\u305F\u307E\u3053\u3073\u3068\u3092\u5199\u3059\u3068\n\u305A\u304B\u3093\u304C\u66F4\u65B0\u3055\u308C\u308B\u3088"
@@ -26237,6 +26333,40 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
     NextButton: {fileID: 0}
     _TutorialMethod: {fileID: 0}
+  - Type: 1
+    Tamago: 0
+    text: 
+    ChangeFontSize: 0
+    FontSize: 0
+    ActiveYubi: 0
+    YubiScreenPos: {x: 0, y: 0, z: 0}
+    ActiveHoleView: 0
+    HoleViewScreenPos: {x: 0, y: 0}
+    HoleViewSize: {x: 0, y: 0}
+    _OnTap:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    NextButton: {fileID: 0}
+    _TutorialMethod: {fileID: 0}
+  - Type: 2
+    Tamago: 0
+    text: 
+    ChangeFontSize: 0
+    FontSize: 0
+    ActiveYubi: 0
+    YubiScreenPos: {x: 0, y: 0, z: 0}
+    ActiveHoleView: 0
+    HoleViewScreenPos: {x: 0, y: 0}
+    HoleViewSize: {x: 0, y: 0}
+    _OnTap:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    NextButton: {fileID: 0}
+    _TutorialMethod: {fileID: 1010172910}
   - Type: 0
     Tamago: 0
     text: "\u64AE\u3063\u305F\u5199\u771F\u306F\n\u30A2\u30EB\u30D0\u30E0\u304B\u3089\u78BA\u8A8D\u3067\u304D\u308B\u3088\uFF01"
@@ -26598,6 +26728,7 @@ MonoBehaviour:
   _TamagoTransform: {fileID: 421349458}
   _BackGround: {fileID: 1496967857}
   _Yubi: {fileID: 714432621}
+  _CanvasTransform: {fileID: 1669030067}
   _HoleView: {fileID: 1049291645}
   _Fukidashi: {fileID: 1665769563}
   _Text_Fukidashi: {fileID: 2073848437}
@@ -27165,6 +27296,7 @@ Transform:
   - {fileID: 116211402}
   - {fileID: 585903688}
   - {fileID: 1521489385}
+  - {fileID: 1010172911}
   - {fileID: 1461333727}
   m_Father: {fileID: 1978575920}
   m_RootOrder: 0

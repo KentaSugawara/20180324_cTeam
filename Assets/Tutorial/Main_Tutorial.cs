@@ -51,6 +51,9 @@ public class Main_Tutorial : MonoBehaviour {
     private Transform _Yubi;
 
     [SerializeField]
+    private Transform _CanvasTransform;
+
+    [SerializeField]
     private Image _HoleView;
 
     [SerializeField]
@@ -67,6 +70,8 @@ public class Main_Tutorial : MonoBehaviour {
 
     private Vector2 _Scale_Fukidashi;
     private Vector3 _TamagoPosition;
+    private Transform _OldButtonParent;
+    private bool canTap;
 
     void Start () {
         _Scale_Fukidashi = _Fukidashi.localScale;
@@ -105,6 +110,8 @@ public class Main_Tutorial : MonoBehaviour {
 
         if (_TutorialList[_TutorialIndex].Type == eTutorialType.Button)
         {
+            yield return StartCoroutine(Routine_Fade(false, false));
+
             _Fukidashi.gameObject.SetActive(false);
             _BackGround.gameObject.SetActive(false);
             _Animator_Tamago.gameObject.SetActive(false);
@@ -122,9 +129,15 @@ public class Main_Tutorial : MonoBehaviour {
             _HoleView.material.SetFloat("_Height", holesize.y);
 
             _Yubi.position = pos;
+
+            _OldButtonParent = _TutorialList[_TutorialIndex].NextButton.transform.parent;
+            _TutorialList[_TutorialIndex].NextButton.transform.parent = _CanvasTransform;
+
+            _TutorialList[_TutorialIndex].NextButton.onClick.AddListener(OnClickButton);
         }
         else if (_TutorialList[_TutorialIndex].Type == eTutorialType.Tamago)
         {
+            canTap = false;
             _Fukidashi.gameObject.SetActive(true);
 
             _Fukidashi.localScale = new Vector2(0, 0);
@@ -141,6 +154,7 @@ public class Main_Tutorial : MonoBehaviour {
                 }
                 _Fukidashi.localScale = _Scale_Fukidashi;
             }
+            canTap = true;
         }
         else if (_TutorialList[_TutorialIndex].Type == eTutorialType.Method)
         {
@@ -182,6 +196,13 @@ public class Main_Tutorial : MonoBehaviour {
     private void Next()
     {
         if (NextMoving) return;
+
+        if (_OldButtonParent != null)
+        {
+            _TutorialList[_TutorialIndex].NextButton.transform.parent = _OldButtonParent;
+            _OldButtonParent = null;
+        }
+
         if (_TutorialList.Count > _TutorialIndex + 1)
         {
             ++_TutorialIndex;
@@ -284,7 +305,15 @@ public class Main_Tutorial : MonoBehaviour {
 
     public void OnTap()
     {
-        if (_TutorialList[_TutorialIndex].Type == eTutorialType.Tamago)
+        if (_TutorialList[_TutorialIndex].Type == eTutorialType.Tamago && canTap)
+        {
+            Next();
+        }
+    }
+
+    public void OnClickButton()
+    {
+        if (_TutorialList[_TutorialIndex].Type == eTutorialType.Button)
         {
             Next();
         }

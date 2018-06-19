@@ -18,6 +18,9 @@ public class EggSpawnerARCore : MonoBehaviour {
     private float _EggSpawnInterval = 1;
 
     [SerializeField]
+    private float _GiveUpAribalSeconds = 5.0f;
+
+    [SerializeField]
     private float _DistanceOfAlive = 10.0f;
 
     [SerializeField]
@@ -108,32 +111,39 @@ public class EggSpawnerARCore : MonoBehaviour {
 
             if (Physics.Raycast(ray, out hit, 1000.0f, 1 << 12))
             {
-                Debug.DrawRay(
-                new Vector3(
-                    TargetPlane.CenterPose.position.x + Random.Range(-TargetPlane.ExtentX * 0.4f, TargetPlane.ExtentX * 0.4f),
-                    100.0f,
-                    TargetPlane.CenterPose.position.z + Random.Range(-TargetPlane.ExtentZ * 0.4f, TargetPlane.ExtentZ * 0.4f)
-                    ),
-                Vector3.down);
-                //画面外かどうか
-                if (CheckScreenOut(hit.point))
+                //Debug.DrawRay(
+                //new Vector3(
+                //    TargetPlane.CenterPose.position.x + Random.Range(-TargetPlane.ExtentX * 0.4f, TargetPlane.ExtentX * 0.4f),
+                //    100.0f,
+                //    TargetPlane.CenterPose.position.z + Random.Range(-TargetPlane.ExtentZ * 0.4f, TargetPlane.ExtentZ * 0.4f)
+                //    ),
+                //Vector3.down);
+
+                //Meshに出現できるか
+                var field = hit.collider.GetComponent<EggSpawnField>();
+                if (field != null && field.checkSpawnable())
                 {
-                    var pose = new Pose(hit.point, Quaternion.FromToRotation(Vector3.forward, hit.normal));
-                    //すぽーん
-                    var randEgg = _EggPrefabs[Random.Range(0, _EggPrefabs.Length)];
-                    var obj = Instantiate(randEgg, pose.position, pose.rotation);
+                    //画面外かどうか
+                    if (CheckScreenOut(hit.point))
+                    {
+                        var pose = new Pose(hit.point, Quaternion.FromToRotation(Vector3.forward, hit.normal));
+                        //すぽーん
+                        var randEgg = _EggPrefabs[Random.Range(0, _EggPrefabs.Length)];
+                        var obj = Instantiate(randEgg, pose.position, pose.rotation);
 
-                    obj.transform.localRotation = randEgg.transform.localRotation;
-					obj.transform.localScale *= 0.6f;
+                        obj.transform.localRotation = randEgg.transform.localRotation;
+                        obj.transform.localScale *= 0.6f;
 
-                    var anchor = TargetPlane.CreateAnchor(pose);
+                        var anchor = TargetPlane.CreateAnchor(pose);
 
-                    // Make Andy model a child of the anchor.
-                    obj.transform.parent = anchor.transform;
+                        // Make Andy model a child of the anchor.
+                        obj.transform.parent = anchor.transform;
 
-                    _EggList.Add(obj);
+                        _EggList.Add(obj);
+                        field.Spawn(obj);
 
-                    obj.GetComponent<NavMeshCharacter>().Init(this);
+                        obj.GetComponent<NavMeshCharacter>().Init(this, _GiveUpAribalSeconds);
+                    }
                 }
             }
 
