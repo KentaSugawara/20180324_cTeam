@@ -23,6 +23,9 @@ public class NavMeshCharacter : MonoBehaviour {
         isItemPlaying
     }
 
+	[SerializeField]
+	private bool _HARIBOTE;
+
     [SerializeField]
     private Renderer _BodyRenderer;
 
@@ -125,7 +128,7 @@ public class NavMeshCharacter : MonoBehaviour {
 
     private void OnDisable()
     {
-        if (gameObject != null) _EggSpawner.RemoveEgg(gameObject);
+        if (gameObject != null && !_HARIBOTE) _EggSpawner.RemoveEgg(gameObject);
         if (transform.parent != null) Destroy(transform.parent.gameObject);
     }
 
@@ -471,7 +474,7 @@ public class NavMeshCharacter : MonoBehaviour {
         return false;
     }
 
-    private float _GiveUpAribalSeconds;
+    private float _GiveUpAribalSeconds = 5.0f;
     private float _DestinationElapsedTime = 0.0f;
 
     public void SetTargetPoint(NavMeshTargetPoint MoveTargetPoint)

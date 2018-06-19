@@ -6,6 +6,9 @@ using GoogleARCore;
 
 public class EggBehaviour : MonoBehaviour {
 	[SerializeField]
+	bool _HARIBOTE;
+
+	[SerializeField]
 	Vector3 _tuneParams;
 
 	[SerializeField]
@@ -72,7 +75,7 @@ public class EggBehaviour : MonoBehaviour {
 	}
 
 	private void Start() {
-		StartCoroutine(Routine_CheckDestroy());
+		//StartCoroutine(Routine_CheckDestroy());
 	}
 
 	IEnumerator Routine_CheckDestroy() {
@@ -120,7 +123,7 @@ public class EggBehaviour : MonoBehaviour {
 		//		break;
 		//	}
 		//}
-		EggSpawnerARCore.Instance.RemoveEgg(gameObject);
+		if(!_HARIBOTE) EggSpawnerARCore.Instance.RemoveEgg(gameObject);
 		Destroy(gameObject);
 	}
 
@@ -131,60 +134,35 @@ public class EggBehaviour : MonoBehaviour {
 		GetComponent<NavMeshCharacter>().StartItemPlaying(ItemCloseIndex);
 	}
 
-	//
-	// property
-	//
-	public bool isInCamera {
-		get {
-			var M_V = Camera.main.worldToCameraMatrix;
-			var M_P = Camera.main.projectionMatrix;
-			var M_VP = M_P * M_V;
+	public bool IsInCamera(Vector3 tuneParams) {
 
-			var pos = transform.position;
-			var p = M_VP * new Vector4(pos.x, pos.y, pos.z, 1.0f);
+		var M_V = Camera.main.worldToCameraMatrix;
+		var M_P = Camera.main.projectionMatrix;
+		var M_VP = M_P * M_V;
 
-			if (p.w == 0) return true;
+		var pos = transform.position;
+		var p = M_VP * new Vector4(pos.x, pos.y, pos.z, 1.0f);
 
-			var x = p.x / p.w;
-			var y = p.y / p.w;
-			var z = p.z / p.w;
+		if (p.w == 0) return true;
 
-			if (x <= -1 - _tuneParams.x) return false;
-			if (x >= 1 + _tuneParams.x) return false;
-			if (y <= -1 - _tuneParams.y) return false;
-			if (y >= 1 + _tuneParams.y) return false;
-			if (z <= -1 - _tuneParams.z) return false;
-			if (z >= 1 + _tuneParams.z) return false;
+		var x = p.x / p.w;
+		var y = p.y / p.w;
+		var z = p.z / p.w;
 
-			return true;
-		}
+		if (x <= -1 - tuneParams.x) return false;
+		if (x >=  1 + tuneParams.x) return false;
+		if (y <= -1 - tuneParams.y) return false;
+		if (y >=  1 + tuneParams.y) return false;
+		if (z <= -1 - tuneParams.z) return false;
+		if (z >=  1 + tuneParams.z) return false;
+
+		return true;
 	}
+	
+	public bool isInCamera { get { return IsInCamera(_tuneParams); } }
 
-	public bool isInCameraForSnap {
-		get {
-			var M_V = Camera.main.worldToCameraMatrix;
-			var M_P = Camera.main.projectionMatrix;
-			var M_VP = M_P * M_V;
+	public bool isInCameraForSnap { get { return IsInCamera(_tuneParamsForSnap); } }
 
-			var pos = transform.position;
-			var p = M_VP * new Vector4(pos.x, pos.y, pos.z, 1.0f);
-
-			if (p.w == 0) return true;
-
-			var x = p.x / p.w;
-			var y = p.y / p.w;
-			var z = p.z / p.w;
-
-			if (x <= -1 - _tuneParamsForSnap.x) return false;
-			if (x >= 1 + _tuneParamsForSnap.x) return false;
-			if (y <= -1 - _tuneParamsForSnap.y) return false;
-			if (y >= 1 + _tuneParamsForSnap.y) return false;
-			if (z <= -1 - _tuneParamsForSnap.z) return false;
-			if (z >= 1 + _tuneParamsForSnap.z) return false;
-
-			return true;
-		}
-	}
 
 	public bool isFaceToCamera {
 		get {
