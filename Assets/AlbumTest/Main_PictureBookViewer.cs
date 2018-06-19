@@ -33,6 +33,7 @@ public class Main_PictureBookViewer : MonoBehaviour {
     private float _NewViewSeconds;
 
     private List<Main_PictureBookViewerNode> _ScrollViewNodes = new List<Main_PictureBookViewerNode>();
+    public List<Main_PictureBookViewerNode> ScrollViewNodes { get { return _ScrollViewNodes; } }
 
     public void Awake()
     {

@@ -100,13 +100,15 @@ public class Main_ItemViewer : MonoBehaviour {
 
     public void Close()
     {
-        if (!_isMoving)
+        if (!_isMoving && !StopClose)
         {
             StopAllCoroutines();
             Main_ItemManager.UpdateisNew();
             StartCoroutine(Routine_Close());
         }
     }
+
+    public bool StopClose = false;
 
     private IEnumerator Routine_Open()
     {

@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 public class Main_Tutorial : MonoBehaviour {
     public enum eTamago
     {
-        m1,m2,m3,m4,m5,m6
+        m1, m2, m3, m4, m5, m6
     }
 
     public enum eTutorialType
@@ -30,6 +30,7 @@ public class Main_Tutorial : MonoBehaviour {
         public bool ActiveHoleView;
         public Vector2 HoleViewScreenPos;
         public Vector2 HoleViewSize;
+        public bool DisableBackGround;
         public UnityEvent _OnTap;
         public Button NextButton;
         public TutorialMethod _TutorialMethod;
@@ -37,6 +38,7 @@ public class Main_Tutorial : MonoBehaviour {
 
     [SerializeField]
     private List<TutorialChild> _TutorialList = new List<TutorialChild>();
+    public List<TutorialChild> TutorialList { get { return _TutorialList; } }
 
     [SerializeField, Space(5)]
     private Animator _Animator_Tamago;
@@ -110,11 +112,13 @@ public class Main_Tutorial : MonoBehaviour {
 
         if (_TutorialList[_TutorialIndex].Type == eTutorialType.Button)
         {
-            yield return StartCoroutine(Routine_Fade(false, false));
-
             _Fukidashi.gameObject.SetActive(false);
+
+            yield return StartCoroutine(Routine_Fade(false, false));
+            
             _BackGround.gameObject.SetActive(false);
-            _Animator_Tamago.gameObject.SetActive(false);
+            _Yubi.gameObject.SetActive(true);
+            _HoleView.gameObject.SetActive(true);
 
             Vector3 pos = _TutorialList[_TutorialIndex].NextButton.transform.position;
             RectTransform r = (RectTransform)_TutorialList[_TutorialIndex].NextButton.transform;
@@ -142,7 +146,7 @@ public class Main_Tutorial : MonoBehaviour {
 
             _Fukidashi.localScale = new Vector2(0, 0);
 
-            yield return StartCoroutine(Routine_Fade(true, true));
+            yield return StartCoroutine(Routine_Fade(true, !_TutorialList[_TutorialIndex].DisableBackGround));
 
             //ふきだし
             {
