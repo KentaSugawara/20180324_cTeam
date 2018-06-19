@@ -8,6 +8,9 @@ public class EggBehaviour : MonoBehaviour {
 	[SerializeField]
 	Vector3 _tuneParams;
 
+	[SerializeField]
+	Vector3 _tuneParamsForSnap;
+
 	public Camera _camera { get; set; }
 
 	public bool _isTaken { get; set; }
@@ -165,12 +168,38 @@ public class EggBehaviour : MonoBehaviour {
 			var y = p.y / p.w;
 			var z = p.z / p.w;
 
-			if (x <= -_tuneParams.x) return false;
-			if (x >= _tuneParams.x) return false;
-			if (y <= -_tuneParams.y) return false;
-			if (y >= _tuneParams.y) return false;
-			if (z <= -_tuneParams.z) return false;
-			if (z >= _tuneParams.z) return false;
+			if (x <= -1 - _tuneParams.x) return false;
+			if (x >=  1 + _tuneParams.x) return false;
+			if (y <= -1 - _tuneParams.y) return false;
+			if (y >=  1 + _tuneParams.y) return false;
+			if (z <= -1 - _tuneParams.z) return false;
+			if (z >=  1 + _tuneParams.z) return false;
+
+			return true;
+		}
+	}
+
+	public bool isInCameraForSnap {
+		get {
+			var M_V = Camera.main.worldToCameraMatrix;
+			var M_P = Camera.main.projectionMatrix;
+			var M_VP = M_P * M_V;
+
+			var pos = transform.position;
+			var p = M_VP * new Vector4(pos.x, pos.y, pos.z, 1.0f);
+
+			if (p.w == 0) return true;
+
+			var x = p.x / p.w;
+			var y = p.y / p.w;
+			var z = p.z / p.w;
+
+			if (x <= -1 - _tuneParamsForSnap.x) return false;
+			if (x >=  1 + _tuneParamsForSnap.x) return false;
+			if (y <= -1 - _tuneParamsForSnap.y) return false;
+			if (y >=  1 + _tuneParamsForSnap.y) return false;
+			if (z <= -1 - _tuneParamsForSnap.z) return false;
+			if (z >=  1 + _tuneParamsForSnap.z) return false;
 
 			return true;
 		}
