@@ -75,7 +75,7 @@ public class EggBehaviour : MonoBehaviour {
 	}
 
 	private void Start() {
-		//StartCoroutine(Routine_CheckDestroy());
+		StartCoroutine(Routine_CheckDestroy());
 	}
 
 	IEnumerator Routine_CheckDestroy() {
@@ -123,7 +123,7 @@ public class EggBehaviour : MonoBehaviour {
 		//		break;
 		//	}
 		//}
-		if(!_HARIBOTE) EggSpawnerARCore.Instance.RemoveEgg(gameObject);
+		if (!_HARIBOTE) EggSpawnerARCore.Instance.RemoveEgg(gameObject);
 		Destroy(gameObject);
 	}
 
@@ -150,18 +150,23 @@ public class EggBehaviour : MonoBehaviour {
 		var z = p.z / p.w;
 
 		if (x <= -1 - tuneParams.x) return false;
-		if (x >=  1 + tuneParams.x) return false;
+		if (x >= 1 + tuneParams.x) return false;
 		if (y <= -1 - tuneParams.y) return false;
-		if (y >=  1 + tuneParams.y) return false;
+		if (y >= 1 + tuneParams.y) return false;
 		if (z <= -1 - tuneParams.z) return false;
-		if (z >=  1 + tuneParams.z) return false;
+		if (z >= 1 + tuneParams.z) return false;
 
 		return true;
 	}
-	
+
 	public bool isInCamera { get { return IsInCamera(_tuneParams); } }
 
-	public bool isInCameraForSnap { get { return IsInCamera(_tuneParamsForSnap); } }
+	public bool isInCameraForSnap {
+		get {
+			_isTaken = true;
+			return IsInCamera(_tuneParamsForSnap);
+		}
+	}
 
 
 	public bool isFaceToCamera {
