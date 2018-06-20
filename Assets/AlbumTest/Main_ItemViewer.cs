@@ -53,6 +53,11 @@ public class Main_ItemViewer : MonoBehaviour {
     private void Awake()
     {
         _ViewPosition = _BackGround.anchoredPosition;
+
+        var deltaSize = Vector2.Scale(_BackGround.sizeDelta, new Vector2(_BackGround.lossyScale.x, _BackGround.lossyScale.y));
+        var HidePosition = new Vector3(deltaSize.x * 0.6f, _ViewPosition.y, _ViewPosition.z);
+        _BackGround.anchoredPosition = HidePosition;
+        _ReleaseScreen.SetActive(false);
     }
 
     public void ListUpItems()
@@ -84,7 +89,9 @@ public class Main_ItemViewer : MonoBehaviour {
     {
         if (!_isMoving)
         {
-            gameObject.SetActive(true);
+            //gameObject.SetActive(true);
+            _BackGround.gameObject.SetActive(true);
+            _ReleaseScreen.SetActive(true);
 
             if (_DragObj != null)
             {
@@ -104,6 +111,16 @@ public class Main_ItemViewer : MonoBehaviour {
         {
             StopAllCoroutines();
             Main_ItemManager.UpdateisNew();
+            _ReleaseScreen.SetActive(false);
+            StartCoroutine(Routine_Close());
+        }
+    }
+
+    public void OnlyClose()
+    {
+        if (!_isMoving && !StopClose)
+        {
+            Main_ItemManager.UpdateisNew();
             StartCoroutine(Routine_Close());
         }
     }
@@ -112,6 +129,7 @@ public class Main_ItemViewer : MonoBehaviour {
 
     private IEnumerator Routine_Open()
     {
+        _ReleaseScreen.SetActive(true);
         _BackGround.anchoredPosition = new Vector3(_BackGround.sizeDelta.x * 0.6f, _ViewPosition.y, _ViewPosition.z);
         yield return null;
         var deltaSize = Vector2.Scale(_BackGround.sizeDelta, new Vector2(_BackGround.lossyScale.x, _BackGround.lossyScale.y));
@@ -154,7 +172,8 @@ public class Main_ItemViewer : MonoBehaviour {
             yield return null;
         }
         _BackGround.anchoredPosition = HidePosition;
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
+        _BackGround.gameObject.SetActive(false);
         _isMoving = false;
     }
 
@@ -167,9 +186,9 @@ public class Main_ItemViewer : MonoBehaviour {
         Ray ray = Camera.main.ScreenPointToRay(ScreenPos);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 1000.0f, 1 << 12))
+        if (/*Physics.Raycast(ray, out hit, 1000.0f, 1 << 12)*/_canSetItem)
         {
-            var pose = new Pose(hit.point, Quaternion.FromToRotation(Vector3.forward, hit.normal));
+            var pose = new Pose(_ItemRayCastHit.point, Quaternion.FromToRotation(Vector3.forward, _ItemRayCastHit.normal));
 
             var item = Main_ItemManager.ItemList.ItemList.Find(i => i.CloseID == CloseID);
             if (item == null || item.Prefab == null) return false;
@@ -177,7 +196,7 @@ public class Main_ItemViewer : MonoBehaviour {
             var obj = Instantiate(item.Prefab, pose.position, /*pose.rotation*/item.Prefab.transform.rotation * Quaternion.Euler(0.0f, Camera.main.transform.rotation.eulerAngles.y + 90.0f, 0.0f));
             obj.transform.localScale *= 0.45f;
 
-            var plane = hit.collider.gameObject.GetComponent<GoogleARCore.Examples.Common.DetectedPlaneVisualizer>();
+            var plane = _ItemRayCastHit.collider.gameObject.GetComponent<GoogleARCore.Examples.Common.DetectedPlaneVisualizer>();
 
             if (plane != null)
             {
@@ -214,8 +233,6 @@ public class Main_ItemViewer : MonoBehaviour {
     [SerializeField]
     private RectTransform _Left;
 
-    private IEnumerator RoutineItem;
-
     public void CreateDragObj(Sprite sprite, int ItemIndex, Main_ItemViewerNode child)
     {
         if (_DragObj != null)
@@ -234,13 +251,57 @@ public class Main_ItemViewer : MonoBehaviour {
         obj.transform.SetParent(_Canvas);
         _ItemIndex = ItemIndex;
         _DragObj = component;
+        _DragObj.SetActive_CanNotSetImage(false);
         _DragObjChild = child;
+        if (_RoutineItem != null) StopCoroutine(_RoutineItem);
+        _RoutineItem = Routine_Item();
+        StartCoroutine(_RoutineItem);
     }
+
+    [SerializeField]
+    private float _MaxDistanceOfItemRayCast;
+
+    private RaycastHit _ItemRayCastHit;
+    private IEnumerator _RoutineItem;
+    private bool _canSetItem;
+
+    [SerializeField]
+    private GameObject _ReleaseScreen;
 
     private IEnumerator Routine_Item()
     {
+        Ray ray;
+        _canSetItem = false;
+        //UI外に出るまで待つ
         while (true)
         {
+            if (Input.mousePosition.x < _Left.position.x)
+            {
+                OnlyClose();
+                break;
+            }
+            yield return null;
+        }
+
+        while (true)
+        {
+            ray = Camera.main.ScreenPointToRay(Input.mousePosition); //床のみ
+            if (Physics.Raycast(ray, out _ItemRayCastHit, _MaxDistanceOfItemRayCast, 1 << 12))
+            {
+                _DragObj.SetActive_CanNotSetImage(false);
+                _canSetItem = true;
+            }
+            else
+            {
+                _DragObj.SetActive_CanNotSetImage(true);
+                _canSetItem = false;
+            }
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                Debug.Log("Relese");
+                ReleaseDragObj(_DragObjChild);
+            }
 
             yield return null;
         }
@@ -248,14 +309,30 @@ public class Main_ItemViewer : MonoBehaviour {
 
     public void ReleaseDragObj(Main_ItemViewerNode child)
     {
-        if (_DragObjChild != child || _DragObj == null) return;
+        if (_RoutineItem != null) StopCoroutine(_RoutineItem);
+        if (_DragObjChild != child || _DragObj == null)
+        {
+            Open();
+            return;
+        }
 
         _Audio_ItemRelease.Play();
         Debug.Log(Input.mousePosition + " " + _Left.position);
         if (Input.mousePosition.x < _Left.position.x)
         {
-            Debug.Log("Spawn");
-            if (SpawnItem(_ItemIndex, Input.mousePosition)) child.SaveData.isNewActive = false;
+            if (SpawnItem(_ItemIndex, Input.mousePosition))
+            {
+                child.SaveData.isNewActive = false;
+                _ReleaseScreen.SetActive(false);
+            }
+            else
+            {
+                Open();
+            }
+        }
+        else
+        {
+            Open();
         }
 
         Destroy(_DragObj.gameObject);

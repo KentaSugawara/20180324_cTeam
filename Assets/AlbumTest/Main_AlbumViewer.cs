@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Linq;
 
 public class Main_AlbumViewer : MonoBehaviour {
     [SerializeField]
@@ -48,6 +49,12 @@ public class Main_AlbumViewer : MonoBehaviour {
     [SerializeField]
     private RectTransform _GarbageBoxInfo;
 
+    [SerializeField]
+    private Text _Text_GarbageBoxInfo;
+
+    [SerializeField]
+    private string _String_GarbageBoxInfo;
+
     private void Awake()
     {
         _GarbageBoxInfo_ViewPosition = _GarbageBoxInfo.anchoredPosition;
@@ -85,6 +92,7 @@ public class Main_AlbumViewer : MonoBehaviour {
     {
         var album = _DataFileManager.Load_AlbumData();
         _AlbumDataList = album;
+        _AlbumDataList.Pictures.Sort((a,b)=> b.FileName.CompareTo(a.FileName));
         _Text_NumOfPictures.text = "0枚";
 
         int NumOfLoding = 0;
@@ -134,11 +142,13 @@ public class Main_AlbumViewer : MonoBehaviour {
             {
                 node.GarbageBoxNonSelect();
                 GarbageBoxSelectList.Remove(node);
+                _Text_GarbageBoxInfo.text = _String_GarbageBoxInfo + "(" + GarbageBoxSelectList.Count + "枚)";
             }
             else
             {
                 node.GarbageBoxSelect();
                 GarbageBoxSelectList.Add(node);
+                _Text_GarbageBoxInfo.text = _String_GarbageBoxInfo + "(" + GarbageBoxSelectList.Count + "枚)";
             }
         }
         else
@@ -278,6 +288,7 @@ public class Main_AlbumViewer : MonoBehaviour {
 
     private void GarbageBoxInfoOpen()
     {
+        _Text_GarbageBoxInfo.text = _String_GarbageBoxInfo + "(0枚)";
         StartCoroutine(Routine_GarbageBoxInfoOpen());
     }
 
