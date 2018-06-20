@@ -1508,6 +1508,7 @@ MonoBehaviour:
   _Prefab_Items: []
   _Audio_ItemCreate: {fileID: 2093222345}
   _Audio_ItemRelease: {fileID: 790000967}
+  StopClose: 0
   _Prefab_ItemDragObj: {fileID: 1663398561517422, guid: 2245d2f825ed35a4dbf90afcc371bbad,
     type: 2}
   _Canvas: {fileID: 376130829}
@@ -5888,7 +5889,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1316449525652442, guid: 76c8e37a8850af140b81811416c08a1e, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 76c8e37a8850af140b81811416c08a1e, type: 2}
