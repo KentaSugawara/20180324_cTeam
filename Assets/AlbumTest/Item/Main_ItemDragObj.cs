@@ -28,12 +28,17 @@ public class Main_ItemDragObj : MonoBehaviour {
         var color = _Image.color;
         if (value)
         {
-            _Image.color = Color.black;
+            //color = Color.black;
+            color = Color.white;
+            color.a = 0.4f;
         }
         else
         {
-            _Image.color = Color.white;
+            //color = Color.white;
+            color = Color.white;
+            color.a = 1.0f;
         }
+        _Image.color = color;
     }
 
     private void Update()
