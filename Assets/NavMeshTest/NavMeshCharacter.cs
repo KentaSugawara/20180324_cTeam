@@ -24,7 +24,7 @@ public class NavMeshCharacter : MonoBehaviour {
     }
 
 	[SerializeField]
-	private bool _HARIBOTE;
+	public bool _HARIBOTE;
 
     [SerializeField]
     private Renderer _BodyRenderer;

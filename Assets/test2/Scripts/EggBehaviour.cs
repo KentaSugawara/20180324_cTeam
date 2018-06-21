@@ -6,7 +6,7 @@ using GoogleARCore;
 
 public class EggBehaviour : MonoBehaviour {
 	[SerializeField]
-	bool _HARIBOTE;
+	public bool _HARIBOTE;
 
 	[SerializeField]
 	Vector3 _tuneParams;
@@ -75,12 +75,13 @@ public class EggBehaviour : MonoBehaviour {
 	}
 
 	private void Start() {
-		StartCoroutine(Routine_CheckDestroy());
+			StartCoroutine(Routine_CheckDestroy());
 	}
 
 	IEnumerator Routine_CheckDestroy() {
 		while (true) {
 			yield return new WaitForSeconds(EggSpawnerARCore.DestroyCheckDelaySeconds);
+			if (_HARIBOTE) yield break;
 			//写真に写された後に画面外なら削除
 			if (_isTaken && !_animator.GetBool(_ID_Playing) && !isInCamera) KillSelf();
 			//プレイヤーから一定距離離れたら削除
@@ -171,7 +172,7 @@ public class EggBehaviour : MonoBehaviour {
 
 	public bool isFaceToCamera {
 		get {
-			if (Vector3.Dot(transform.forward.normalized, -Camera.main.transform.forward.normalized) > DotParam)
+			if (Vector3.Dot((transform.forward + transform.up * 0.2f).normalized, -Camera.main.transform.forward.normalized) > DotParam)
 				return true;
 			else
 				return false;
