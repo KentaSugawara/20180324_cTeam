@@ -25,10 +25,10 @@ public class CharacterAudio : MonoBehaviour {
 
     public void Play(eAudioType Type)
     {
-        if (Type == eAudioType.Unique) if (_Audio_Unique != null) _Audio_Unique.Play();
-        else if (Type == eAudioType.Happy) if (_Audio_Happy != null) _Audio_Happy.Play();
-        else if (Type == eAudioType.Angry) if (_Audio_Angry != null) _Audio_Angry.Play();
-        else if (Type == eAudioType.Sad) if (_Audio_Sad != null) _Audio_Sad.Play();
-        else if (Type == eAudioType.Funny) if (_Audio_Funny != null) _Audio_Funny.Play();
+		if (Type == eAudioType.Unique)     { if (_Audio_Unique != null) _Audio_Unique.Play(); }
+		else if (Type == eAudioType.Happy) { if (_Audio_Happy != null) _Audio_Happy.Play(); }
+		else if (Type == eAudioType.Angry) { if (_Audio_Angry != null) _Audio_Angry.Play(); }
+		else if (Type == eAudioType.Sad)   { if (_Audio_Sad != null) _Audio_Sad.Play(); }
+		else if (Type == eAudioType.Funny) { if (_Audio_Funny != null) _Audio_Funny.Play(); }
     }
 }
