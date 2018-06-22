@@ -221,10 +221,10 @@ public class NavMeshCharacter : MonoBehaviour {
 
     private IEnumerator Routine_Main()
     {
-        while (!CalcNextPoint())
-        {
-            yield return new WaitForSeconds(0.5f);
-        }
+        //while (!CalcNextPoint())
+        //{
+        //    yield return new WaitForSeconds(0.5f);
+        //}
 
         while (true)
         {
@@ -355,7 +355,12 @@ public class NavMeshCharacter : MonoBehaviour {
 
     private IEnumerator Routine_Move()
     {
-        _Agent.isStopped = false;
+        //次の地点が見つかるまで待機
+        while (_MoveTargetPoint == null && !CalcNextPoint())
+        {
+            yield return new WaitForSeconds(0.5f);
+            Debug.Log("Serching");
+        }
 
         if (Random.Range(0.0f, 100.0f) <= _RunPossibility)
         {
@@ -372,12 +377,7 @@ public class NavMeshCharacter : MonoBehaviour {
             _Agent.speed = _WalkSpeed;
         }
 
-        //次の地点が見つかるまで待機
-        while (_MoveTargetPoint == null && !CalcNextPoint())
-        {
-            yield return new WaitForSeconds(0.5f);
-            Debug.Log("Serching");
-        }
+        _Agent.isStopped = false;
 
         while (true)
         {

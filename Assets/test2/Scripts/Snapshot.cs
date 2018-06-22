@@ -231,6 +231,7 @@ public class Snapshot : MonoBehaviour
             }
         }
         Main_ChallengeManager.CheckChallenges(EggObjlist);
+        Main_ItemManager.CheckUpdateItems();
 
         //// テクスチャを PNG に変換
         //byte[] bytes = m_tex2d.EncodeToPNG();

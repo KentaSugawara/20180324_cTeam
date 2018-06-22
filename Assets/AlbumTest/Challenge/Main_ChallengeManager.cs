@@ -77,8 +77,6 @@ public static class Main_ChallengeManager {
             }
         }
 
-        Main_ItemManager.CheckUpdateItems();
-
         UpdateisNew();
     }
 
