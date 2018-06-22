@@ -31,8 +31,11 @@ public class Main_Tutorial : MonoBehaviour {
         public Vector2 HoleViewScreenPos;
         public Vector2 HoleViewSize;
         public bool DisableBackGround;
+        public bool DisableTapScreen;
         public UnityEvent _OnTap;
         public Button NextButton;
+        public bool isCameraCanvas;
+        public Camera TargetCamera;
         public TutorialMethod _TutorialMethod;
     }
 
@@ -59,7 +62,13 @@ public class Main_Tutorial : MonoBehaviour {
     private Image _HoleView;
 
     [SerializeField]
+    private GameObject _TapScreen;
+
+    [SerializeField]
     private RectTransform _Fukidashi;
+
+    [SerializeField]
+    private Tutorial_ButtonDummy _ButtonDummy;
 
     [SerializeField]
     private Text _Text_Fukidashi;
@@ -70,8 +79,18 @@ public class Main_Tutorial : MonoBehaviour {
     [SerializeField]
     private float _Seconds_Fade;
 
+    [SerializeField]
+    private float _Seconds_HoleFade;
+
+    [SerializeField]
+    private float _Seconds_YubiView;
+
+    [SerializeField]
+    private float _Seconds_YubiHide;
+
     private Vector2 _Scale_Fukidashi;
     private Vector3 _TamagoPosition;
+    private Vector3 _YubiScale;
     private Transform _OldButtonParent;
     private bool canTap;
 
@@ -83,59 +102,56 @@ public class Main_Tutorial : MonoBehaviour {
         _Fukidashi.localScale = Vector3.zero;
 
         _TamagoPosition = _Animator_Tamago.GetComponent<RectTransform>().anchoredPosition;
+        _YubiScale = _Yubi.transform.localScale;
 
         _TamagoTransform.gameObject.SetActive(false);
         _BackGround.gameObject.SetActive(false);
+        _ButtonDummy.SetActive(false);
 
         Next();
     }
 
     private IEnumerator Routine_Next()
     {
-        var YubiActive = _TutorialList[_TutorialIndex].ActiveYubi;
-        _Yubi.gameObject.SetActive(YubiActive);
+        _ButtonDummy.SetActive(false);
+        _TapScreen.SetActive(!_TutorialList[_TutorialIndex].DisableTapScreen);
+
+        var YubiActive = _TutorialList[_TutorialIndex].ActiveYubi || _TutorialList[_TutorialIndex].Type == eTutorialType.Button;
+        StartCoroutine(Routine_Yubi(YubiActive));
         if (YubiActive)
-        {
-            _Yubi.position = _TutorialList[_TutorialIndex].YubiScreenPos;
+        { 
+            _Yubi.localPosition = _TutorialList[_TutorialIndex].YubiScreenPos;
         }
 
-        var HoleViewActive = _TutorialList[_TutorialIndex].ActiveHoleView;
-        _HoleView.gameObject.SetActive(HoleViewActive);
-        if (HoleViewActive)
-        {
-            _HoleView.material.SetFloat("_HoleX", _TutorialList[_TutorialIndex].HoleViewScreenPos.x);
-            _HoleView.material.SetFloat("_HoleY", _TutorialList[_TutorialIndex].HoleViewScreenPos.y);
-
-            _HoleView.material.SetFloat("_Width", _TutorialList[_TutorialIndex].HoleViewSize.x);
-            _HoleView.material.SetFloat("_Height", _TutorialList[_TutorialIndex].HoleViewSize.y);
-        }
+        var HoleViewActive = _TutorialList[_TutorialIndex].ActiveHoleView && _TutorialList[_TutorialIndex].Type != eTutorialType.Button;
+        StartCoroutine(Routine_HoleView(HoleViewActive, _TutorialList[_TutorialIndex].HoleViewScreenPos, _TutorialList[_TutorialIndex].HoleViewSize));
 
         if (_TutorialList[_TutorialIndex].Type == eTutorialType.Button)
         {
             _Fukidashi.gameObject.SetActive(false);
 
-            yield return StartCoroutine(Routine_Fade(false, false));
-            
-            _BackGround.gameObject.SetActive(false);
-            _Yubi.gameObject.SetActive(true);
-            _HoleView.gameObject.SetActive(true);
-
-            Vector3 pos = _TutorialList[_TutorialIndex].NextButton.transform.position;
+            Vector2 pos;
+            if (_TutorialList[_TutorialIndex].isCameraCanvas) pos = _TutorialList[_TutorialIndex].TargetCamera.WorldToScreenPoint(_TutorialList[_TutorialIndex].NextButton.transform.position);
+            else pos = ((RectTransform)_TutorialList[_TutorialIndex].NextButton.transform).position;
             RectTransform r = (RectTransform)_TutorialList[_TutorialIndex].NextButton.transform;
 
-            Vector2 holesize = Vector2.Scale(r.sizeDelta, r.lossyScale);
+            if (!_TutorialList[_TutorialIndex].ActiveYubi) _Yubi.position = pos;
+
+            Vector2 holesize;
+            if (_TutorialList[_TutorialIndex].isCameraCanvas) holesize = Vector2.Scale(r.sizeDelta, r.localScale);
+            else holesize = Vector2.Scale(r.sizeDelta, r.lossyScale);
             holesize *= 1.2f;
 
-            _HoleView.material.SetFloat("_HoleX", pos.x - holesize.x * 0.5f);
-            _HoleView.material.SetFloat("_HoleY", pos.y - holesize.y * 0.5f);
+            StartCoroutine(Routine_HoleView(_TutorialList[_TutorialIndex].ActiveHoleView, pos - holesize * 0.5f, holesize));
 
-            _HoleView.material.SetFloat("_Width", holesize.x);
-            _HoleView.material.SetFloat("_Height", holesize.y);
+            yield return StartCoroutine(Routine_Fade(false, false));
 
-            _Yubi.position = pos;
+            _ButtonDummy.SetActive(true);
+            _BackGround.gameObject.SetActive(false);
 
-            _OldButtonParent = _TutorialList[_TutorialIndex].NextButton.transform.parent;
-            _TutorialList[_TutorialIndex].NextButton.transform.parent = _CanvasTransform;
+            _ButtonDummy.Init(_TutorialList[_TutorialIndex].NextButton, _TutorialList[_TutorialIndex].isCameraCanvas, _TutorialList[_TutorialIndex].TargetCamera);
+            //_OldButtonParent = _TutorialList[_TutorialIndex].NextButton.transform.parent;
+            //_TutorialList[_TutorialIndex].NextButton.transform.SetParent(_CanvasTransform, false);
 
             _TutorialList[_TutorialIndex].NextButton.onClick.AddListener(OnClickButton);
         }
@@ -195,17 +211,12 @@ public class Main_Tutorial : MonoBehaviour {
         NextMoving = false;
     }
 
+    [SerializeField]
     private int _TutorialIndex = -1;
     private bool NextMoving = false;
     private void Next()
     {
         if (NextMoving) return;
-
-        if (_OldButtonParent != null)
-        {
-            _TutorialList[_TutorialIndex].NextButton.transform.parent = _OldButtonParent;
-            _OldButtonParent = null;
-        }
 
         if (_TutorialList.Count > _TutorialIndex + 1)
         {
@@ -305,6 +316,145 @@ public class Main_Tutorial : MonoBehaviour {
         if (!background) _BackGround.gameObject.SetActive(false);
 
         endcallback();
+    }
+
+    private bool isHoleViewActive = false;
+    private Vector2 _Old_HoleViewScreenPos;
+    private Vector2 _Old_HoleViewSize;
+    private IEnumerator Routine_HoleView(bool value, Vector2 HoleViewScreenPos, Vector2 HoleViewSize)
+    {
+        Vector2 Zero_plus = Vector2.zero - new Vector2(1.0f, 1.0f);
+        Vector2 ScreenSize_plus = new Vector2(Screen.width, Screen.height) + new Vector2(1.0f, 1.0f);
+        if (isHoleViewActive != value)
+        {
+            isHoleViewActive = value;
+        }
+        else
+        {
+            if (value)
+            {
+                //Zero_plus = _Old_HoleViewScreenPos;
+                //ScreenSize_plus = _Old_HoleViewSize;
+
+                yield return StartCoroutine(Routine_HoleView(false, HoleViewScreenPos, HoleViewSize));
+                yield return StartCoroutine(Routine_HoleView(true, HoleViewScreenPos, HoleViewSize));
+            }
+            yield break;
+        }
+
+        if (value)
+        {
+            Vector2 HoleViewEnd = HoleViewScreenPos + HoleViewSize;
+
+            _Old_HoleViewScreenPos = HoleViewScreenPos;
+            _Old_HoleViewSize = HoleViewSize;
+
+            _HoleView.gameObject.SetActive(true);
+
+            Vector3 b;
+            Vector2 holepos;
+            Vector2 holeendpos;
+            for (float t = 0.0f; t < _Seconds_HoleFade; t += Time.deltaTime)
+            {
+                float e = t / _Seconds_HoleFade;
+                b = Vector2.Lerp(Zero_plus, HoleViewScreenPos, e);
+                holepos = Vector2.Lerp(b, HoleViewScreenPos, e);
+
+                b = Vector2.Lerp(ScreenSize_plus, HoleViewEnd, e);
+                holeendpos = Vector2.Lerp(b, HoleViewEnd, e);
+
+                SetHoleViewValue(holepos, holeendpos - holepos);
+
+                yield return null;
+            }
+
+            SetHoleViewValue(HoleViewScreenPos, HoleViewSize);
+        }
+        else
+        {
+            HoleViewScreenPos = _Old_HoleViewScreenPos;
+            HoleViewSize = _Old_HoleViewSize;
+            Vector2 HoleViewEnd = HoleViewScreenPos + HoleViewSize;
+
+            Vector3 b;
+            Vector2 holepos;
+            Vector2 holeendpos;
+            for (float t = 0.0f; t < _Seconds_HoleFade; t += Time.deltaTime)
+            {
+                float e = t / _Seconds_HoleFade;
+                b = Vector2.Lerp(HoleViewScreenPos, Zero_plus, e);
+                holepos = Vector2.Lerp(b, Zero_plus, e);
+
+                b = Vector2.Lerp(HoleViewEnd, ScreenSize_plus, e);
+                holeendpos = Vector2.Lerp(b, ScreenSize_plus, e);
+
+                SetHoleViewValue(holepos, holeendpos - holepos);
+
+                yield return null;
+            }
+
+            SetHoleViewValue(HoleViewScreenPos, HoleViewSize);
+
+            _HoleView.gameObject.SetActive(false);
+        }
+    }
+
+    private void SetHoleViewValue(Vector2 holepos, Vector2 holesize)
+    {
+        _HoleView.material.SetFloat("_HoleX", holepos.x);
+        _HoleView.material.SetFloat("_HoleY", holepos.y);
+
+        _HoleView.material.SetFloat("_Width", holesize.x);
+        _HoleView.material.SetFloat("_Height", holesize.y);
+    }
+
+    private bool isYubiActive = false;
+    private IEnumerator Routine_Yubi(bool value)
+    {
+        if (isYubiActive != value)
+        {
+            isYubiActive = value;
+        }
+        else
+        {
+            if (value)
+            {
+                yield return StartCoroutine(Routine_Yubi(false));
+                yield return StartCoroutine(Routine_Yubi(true));
+            }
+            yield break;
+        }
+
+        if (value)
+        {
+            _Yubi.gameObject.SetActive(true);
+
+            Vector3 b;
+            for (float t = 0.0f; t < _Seconds_YubiView; t += Time.deltaTime)
+            {
+                float e = t / _Seconds_YubiView;
+                b = Vector3.Lerp(Vector3.zero, _YubiScale, e);
+                _Yubi.localScale = Vector2.Lerp(b, _YubiScale, e);
+
+                yield return null;
+            }
+            _Yubi.localScale = _YubiScale;
+        }
+        else
+        {
+            Vector3 b;
+            for (float t = 0.0f; t < _Seconds_YubiHide; t += Time.deltaTime)
+            {
+                float e = t / _Seconds_YubiHide;
+                b = Vector3.Lerp(_YubiScale, Vector3.zero, e);
+                _Yubi.localScale = Vector2.Lerp(b, Vector3.zero, e);
+
+                yield return null;
+            }
+            _Yubi.localScale = Vector3.zero;
+
+            _Yubi.gameObject.SetActive(false);
+        }
     }
 
     public void OnTap()

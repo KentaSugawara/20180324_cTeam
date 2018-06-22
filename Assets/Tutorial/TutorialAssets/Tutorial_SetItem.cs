@@ -8,7 +8,7 @@ public class Tutorial_SetItem : TutorialMethod {
 
     public override void Method(System.Action endcallback)
     {
-        StartCoroutine(Routine_Find(endcallback));
+        //StartCoroutine(Routine_Find(endcallback));
     }
 
     private IEnumerator Routine_Find(System.Action endcallback)
@@ -16,7 +16,6 @@ public class Tutorial_SetItem : TutorialMethod {
         _ItemViewer.StopClose = true;
         while (_isActive)
         {
-            Debug.Log("serching");
             if (EggSpawnerARCore.EggList.Count > 0)
             {
                 var egg = EggSpawnerARCore.EggList[0].GetComponent<EggBehaviour>();
