@@ -58,8 +58,7 @@ public class TargetCollider : MonoBehaviour {
 			//Debug.LogError(1);
 			var baseItemBehaviour = GetComponentInParent<BaseItemBehaviour>();
 			baseItemBehaviour._eggList.Add(other.gameObject);
-
-			other.GetComponent<Animator>().SetBool("Playing", true);
+			
 			other.GetComponent<Animator>().SetBool("Waiting", true);
 			other.GetComponent<EggBehaviour>().SetTrigger(_playingState);
 
