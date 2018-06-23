@@ -131,11 +131,13 @@ public class EggBehaviour : MonoBehaviour {
 	public void PlayAgent() {
 		GetComponent<NavMeshCharacter>().EndItemPlaying();
 		_animator.SetBool("Playing", false);
+		_animator.SetBool("Waiting", false);
+
 	}
 	public void StopAgent(int ItemCloseIndex) {
 		GetComponent<NavMeshCharacter>().StartItemPlaying(ItemCloseIndex);
 		_animator.SetBool("Playing", true);
-		_animator.SetBool("Waiting", false);
+		_animator.SetBool("Waiting", true);
 	}
 
 	public bool IsInCamera(Vector3 tuneParams) {

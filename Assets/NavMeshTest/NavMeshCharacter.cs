@@ -128,7 +128,7 @@ public class NavMeshCharacter : MonoBehaviour {
 
     private void OnDisable()
     {
-        if (gameObject != null && !_HARIBOTE) _EggSpawner.RemoveEgg(gameObject);
+        if (gameObject != null) _EggSpawner.RemoveEgg(gameObject);
         if (transform.parent != null) Destroy(transform.parent.gameObject);
     }
 
