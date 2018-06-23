@@ -26,6 +26,12 @@ public class EggSpawnerARCore : MonoBehaviour {
     [SerializeField]
     private float _DestroyCheckDelaySeconds = 5.0f;
 
+    [SerializeField]
+    private float _SpawnDistance = 5.0f;
+
+    [SerializeField]
+    private bool _LookAtCameraSpawn = false;
+
     private static List<GameObject> _EggList = new List<GameObject>();
     private List<DetectedPlane> _AllPlaneList = new List<DetectedPlane>();
 
@@ -109,7 +115,7 @@ public class EggSpawnerARCore : MonoBehaviour {
                     ),
                 Vector3.down);
 
-            if (Physics.Raycast(ray, out hit, 1000.0f, 1 << 12))
+            if (Physics.Raycast(ray, out hit, 1000.0f, 1 << 12) && Vector3.SqrMagnitude(Camera.main.transform.position - hit.point) < _SpawnDistance * _SpawnDistance)
             {
                 //Debug.DrawRay(
                 //new Vector3(
@@ -133,6 +139,20 @@ public class EggSpawnerARCore : MonoBehaviour {
 
                         obj.transform.localRotation = randEgg.transform.localRotation;
                         obj.transform.localScale *= 0.45f;
+
+                        //カメラの方向ける
+                        if (_LookAtCameraSpawn)
+                        {
+                            var localrotation = obj.transform.localRotation;
+                            obj.transform.LookAt(Camera.main.transform, Vector3.up);
+
+                            //var angle = localrotation.eulerAngles;
+                            //var current = obj.transform.localEulerAngles;
+                            //obj.transform.localEulerAngles = new Vector3(angle.x, current.y, angle.z);
+                            //var degree = Mathf.Atan(Vector3.Dot(Vector3.forward, (Camera.main.transform.position - hit.point).normalized)) * Mathf.Rad2Deg;
+                            //var angle = obj.transform.localRotation.eulerAngles;
+                            //obj.transform.localRotation = Quaternion.Euler(angle.x, degree - 90.0f, angle.z);
+                        }
 
                         var anchor = TargetPlane.CreateAnchor(pose);
 
