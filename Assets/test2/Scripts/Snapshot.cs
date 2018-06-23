@@ -7,74 +7,74 @@ using System.IO;
 public class Snapshot : MonoBehaviour
 {
     [SerializeField]
-    private Main_AlbumViewer _AlbumViewer;
+    protected Main_AlbumViewer _AlbumViewer;
     [SerializeField]
-    Camera m_camera = null;
+    protected Camera m_camera = null;
     [SerializeField]
-    RenderTexture m_snap = null;
+    protected RenderTexture m_snap = null;
     [SerializeField]
-    EggSpawnerARCore m_eggSpawner = null;
+    protected EggSpawnerARCore m_eggSpawner = null;
 
     [SerializeField]
-    private GameObject m_BackGround;
+    protected GameObject m_BackGround;
 
     [SerializeField]
-    private RectTransform m_SnapShotBackGround;
+    protected RectTransform m_SnapShotBackGround;
 
     [SerializeField]
-    private Image m_SnapShotImage;
+    protected Image m_SnapShotImage;
 
     [SerializeField]
-    private float m_ReductionNeedSeconds;
+    protected float m_ReductionNeedSeconds;
 
     [SerializeField]
-    private Image m_EggNameImage;
+    protected Image m_EggNameImage;
 
     [SerializeField]
-    private GameObject m_Prefab_New;
+    protected GameObject m_Prefab_New;
 
     [SerializeField]
-    private float m_New_EnlargementNeedSeconds;
+    protected float m_New_EnlargementNeedSeconds;
 
     //[SerializeField]
-    //private float m_NameImage_EnlargementNeedSeconds;
+    //protected float m_NameImage_EnlargementNeedSeconds;
 
     [SerializeField]
-    private float m_New_ViewSeconds;
+    protected float m_New_ViewSeconds;
 
     [SerializeField]
-    private float m_New_ReductionNeedSeconds;
+    protected float m_New_ReductionNeedSeconds;
 
     [SerializeField]
-    private float m_New_IntervalSeconds;
+    protected float m_New_IntervalSeconds;
 
     [SerializeField]
-    private float m_SnapShotDistance;
+    protected float m_SnapShotDistance;
 
     [SerializeField]
-    private RectTransform m_PictureBookButton;
+    protected RectTransform m_PictureBookButton;
 
     [SerializeField]
-    private float m_SnapShot_StoreNeedSeconds;
+    protected float m_SnapShot_StoreNeedSeconds;
 
     [SerializeField]
-    private AudioSource m_Audio_SnapShot;
+    protected AudioSource m_Audio_SnapShot;
 
     [SerializeField]
-    private AudioSource m_Audio_NewChara;
+    protected AudioSource m_Audio_NewChara;
 
 #if true//UNITY_ANDROID && !UNITY_EDITOR
-    Texture2D m_tex2d;
-    int m_photoNum = 0;
+    protected Texture2D m_tex2d;
+    protected int m_photoNum = 0;
 #endif
 
-    private void Awake()
+    protected void Awake()
     {
         m_camera.targetTexture = null;
         m_BackGround.SetActive(false);
     }
 
-    private void Start()
+    protected void Start()
     {
 #if UNITY_ANDROID && !UNITY_EDITOR
         // Texture2D を作成
@@ -84,7 +84,7 @@ public class Snapshot : MonoBehaviour
 
     public void ClickSaveButton() { StartCoroutine(SaveCamImage()); }
 
-    IEnumerator SaveCamImage()
+    protected IEnumerator SaveCamImage()
     {
         var EggObjlist = new List<KeyValuePair<GameObject, SnapShotInfo>>();
 
@@ -222,14 +222,14 @@ public class Snapshot : MonoBehaviour
         _AlbumViewer.SnapShot(m_tex2d);
 
 
-        //チャレンジ判定に使うリストを作成
-        List<SnapShotInfo> SnapShots = new List<SnapShotInfo>();
-        {
-            foreach (var egg in EggObjlist)
-            {
-                SnapShotInfo s = new SnapShotInfo();
-            }
-        }
+        ////チャレンジ判定に使うリストを作成
+        //List<SnapShotInfo> SnapShots = new List<SnapShotInfo>();
+        //{
+        //    foreach (var egg in EggObjlist)
+        //    {
+        //        SnapShotInfo s = new SnapShotInfo();
+        //    }
+        //}
         Main_ChallengeManager.CheckChallenges(EggObjlist);
         Main_ItemManager.CheckUpdateItems();
 
@@ -265,7 +265,7 @@ public class Snapshot : MonoBehaviour
         yield break;
     }
 
-    private IEnumerator Routine_ImageReduction()
+    protected IEnumerator Routine_ImageReduction()
     {
         m_SnapShotBackGround.localScale = Vector3.one;
         Vector3 b;
@@ -279,7 +279,7 @@ public class Snapshot : MonoBehaviour
         m_SnapShotBackGround.localScale = Vector3.one * 0.6f;
     }
 
-    private IEnumerator Routine_NewEgg(List<GameObject> NewImageList, List<KeyValuePair<GameObject, Sprite>> NewEggList)
+    protected IEnumerator Routine_NewEgg(List<GameObject> NewImageList, List<KeyValuePair<GameObject, Sprite>> NewEggList)
     {
         m_EggNameImage.gameObject.SetActive(true);
         m_EggNameImage.transform.localScale = Vector3.zero;
@@ -335,7 +335,7 @@ public class Snapshot : MonoBehaviour
         m_EggNameImage.gameObject.SetActive(false);
     }
 
-    private IEnumerator Routine_StoreImage()
+    protected IEnumerator Routine_StoreImage()
     {
         Vector3 StartPos = m_SnapShotBackGround.transform.position;
         Vector3 EndPos = m_PictureBookButton.position;

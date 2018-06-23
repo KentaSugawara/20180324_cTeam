@@ -1419,6 +1419,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1150d55ca01676d48b5a55ac6b24e3f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _HARIBOTE: 0
   _BodyRenderer: {fileID: 137336936995921518}
   _CharaHight: 10
   _AutoMove: 0
@@ -1450,8 +1451,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be966690b5a2d3a459c12390578663d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tuneParams: {x: 1.45, y: 1.1, z: 1}
-  _rigTransform: {fileID: 4443310543780072}
+  _HARIBOTE: 0
+  _tuneParams: {x: -0.5, y: 0, z: 0}
+  _tuneParamsForSnap: {x: -0.2, y: -0.4, z: 0}
+  _dotParam: 0.6
+  _rigTransform: {fileID: 4772395195949288, guid: 111dd1153749b1c408d0962a67f76095,
+    type: 2}
 --- !u!136 &136912953133572638
 CapsuleCollider:
   m_ObjectHideFlags: 1
