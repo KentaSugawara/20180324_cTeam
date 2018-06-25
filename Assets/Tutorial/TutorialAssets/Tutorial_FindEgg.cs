@@ -47,7 +47,8 @@ public class Tutorial_FindEgg : TutorialMethod {
     private IEnumerator Routine_ViewInformation()
     {
         Color start = new Color(1.0f, 1.0f, 1.0f, 0.0f);
-        Color end = Color.white;
+        Color end1 = Color.white;
+        Color end2 = new Color(0.2f, 0.2f, 0.2f, 1.0f);
         Color b;
         float e;
         _Image_Information.gameObject.SetActive(true);
@@ -55,27 +56,38 @@ public class Tutorial_FindEgg : TutorialMethod {
         for (float t = 0.0f; t < _Seconds_ViewInformation; t += Time.deltaTime)
         {
             e = t / _Seconds_ViewInformation;
-            b = Color.Lerp(start, end, e);
-            _Image_Information.color = Color.Lerp(b, end, e);
+            b = Color.Lerp(start, end1, e);
+            _Image_Information.color = Color.Lerp(b, end1, e);
+
+            e = t / _Seconds_ViewInformation;
+            b = Color.Lerp(start, end2, e);
+            _Text_Information.color = Color.Lerp(b, end2, e);
             yield return null;
         }
-        _Image_Information.color = end;
+        _Image_Information.color = end1;
+        _Text_Information.color = end2;
     }
 
     private IEnumerator Routine_HideInformation()
     {
-        Color start = Color.white;
+        Color start1 = Color.white;
+        Color start2 = new Color(0.2f, 0.2f, 0.2f, 1.0f);
         Color end = new Color(1.0f, 1.0f, 1.0f, 0.0f);
         Color b;
         float e;
         for (float t = 0.0f; t < _Seconds_ViewInformation; t += Time.deltaTime)
         {
             e = t / _Seconds_ViewInformation;
-            b = Color.Lerp(start, end, e);
+            b = Color.Lerp(start1, end, e);
             _Image_Information.color = Color.Lerp(b, end, e);
+
+            e = t / _Seconds_ViewInformation;
+            b = Color.Lerp(start2, end, e);
+            _Text_Information.color = Color.Lerp(b, end, e);
             yield return null;
         }
         _Image_Information.color = end;
+        _Text_Information.color = end;
 
         _Image_Information.gameObject.SetActive(false);
     }

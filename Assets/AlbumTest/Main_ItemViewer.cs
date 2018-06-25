@@ -49,6 +49,10 @@ public class Main_ItemViewer : MonoBehaviour {
     private bool _isMoving = false;
 
     private List<Main_ItemViewerNode> _ScrollViewNodes = new List<Main_ItemViewerNode>();
+    public List<Main_ItemViewerNode> ScrollViewNodes
+    {
+        get { return _ScrollViewNodes; }
+    }
 
     private void Awake()
     {
@@ -118,7 +122,7 @@ public class Main_ItemViewer : MonoBehaviour {
 
     public void OnlyClose()
     {
-        if (!_isMoving && !StopClose)
+        if (!_isMoving)
         {
             Main_ItemManager.UpdateisNew();
             StartCoroutine(Routine_Close());
@@ -180,6 +184,10 @@ public class Main_ItemViewer : MonoBehaviour {
     private List<DetectedPlane> _AllPlaneList = new List<DetectedPlane>();
 
     private GameObject _CurrentItemInstance;
+    public GameObject CurrentItemInstance
+    {
+        get { return _CurrentItemInstance; }
+    }
 
     public bool SpawnItem(int CloseID, Vector3 ScreenPos)
     {
@@ -264,6 +272,7 @@ public class Main_ItemViewer : MonoBehaviour {
     private RaycastHit _ItemRayCastHit;
     private IEnumerator _RoutineItem;
     private bool _canSetItem;
+    private bool _inOnlyColse;
 
     [SerializeField]
     private GameObject _ReleaseScreen;
@@ -272,11 +281,13 @@ public class Main_ItemViewer : MonoBehaviour {
     {
         Ray ray;
         _canSetItem = false;
+        _inOnlyColse = false;
         //UI外に出るまで待つ
         while (true)
         {
             if (Input.mousePosition.x < _Left.position.x)
             {
+                _inOnlyColse = true;
                 OnlyClose();
                 break;
             }
@@ -312,7 +323,7 @@ public class Main_ItemViewer : MonoBehaviour {
         if (_RoutineItem != null) StopCoroutine(_RoutineItem);
         if (_DragObjChild != child || _DragObj == null)
         {
-            Open();
+            if (_inOnlyColse) Open();
             return;
         }
 
@@ -327,12 +338,12 @@ public class Main_ItemViewer : MonoBehaviour {
             }
             else
             {
-                Open();
+                if (_inOnlyColse) Open();
             }
         }
         else
         {
-            Open();
+            if (_inOnlyColse) Open();
         }
 
         Destroy(_DragObj.gameObject);
