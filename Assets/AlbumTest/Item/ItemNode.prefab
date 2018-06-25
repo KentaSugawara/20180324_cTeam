@@ -247,6 +247,7 @@ MonoBehaviour:
   _Text: {fileID: 114135179105238750}
   _Image: {fileID: 114633661102816226}
   _Image_New: {fileID: 114905800574500910}
+  _myEventTrigger: {fileID: 114382473413760530}
 --- !u!114 &114825605533438942
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -286,7 +287,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 114799368838476922}
         m_MethodName: 
         m_Mode: 1
         m_Arguments:

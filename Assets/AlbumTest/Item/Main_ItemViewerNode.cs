@@ -14,6 +14,13 @@ public class Main_ItemViewerNode : MonoBehaviour {
     [SerializeField]
     private Image _Image_New;
 
+    [SerializeField]
+    private EventTrigger _myEventTrigger;
+    public EventTrigger myEventTrigger
+    {
+        get { return _myEventTrigger; }
+    }
+
     private Main_ItemViewer _ParentComponent;
     private Json_Item_ListNode _mySaveData;
     public Json_Item_ListNode SaveData
@@ -71,6 +78,7 @@ public class Main_ItemViewerNode : MonoBehaviour {
 
             currentTrigger.triggers.Add(entry);
         }
+        _myEventTrigger = currentTrigger;
     }
 
     public void PointerDown()
