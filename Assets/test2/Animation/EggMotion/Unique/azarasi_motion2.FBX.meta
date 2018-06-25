@@ -1,68 +1,73 @@
 fileFormatVersion: 2
-guid: bd0d6a4f1dea87e469908ee32673a146
+guid: 6663ea92a6b360447a96948907920b23
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: body
-    100002: CTL_rig_footL
-    100004: CTL_rig_footR
-    100006: CTL_rig_root
-    100008: hat
-    100010: HP_IKchain_footL
-    100012: HP_IKchain_legL
-    100014: IK Chain001
-    100016: IK Chain002
-    100018: leg_L
-    100020: leg_R
-    100022: Plane001
-    100024: Plane002
-    100026: RIG_body
-    100028: RIG_footL
-    100030: RIG_footL(mirrored)
-    100032: RIG_footL_end
-    100034: RIG_footL_end(mirrored)
-    100036: RIG_legLa
-    100038: RIG_legLb
-    100040: RIG_legLb(mirrored)
-    100042: RIG_legRa
-    100044: //RootNode
-    400000: body
-    400002: CTL_rig_footL
-    400004: CTL_rig_footR
-    400006: CTL_rig_root
-    400008: hat
-    400010: HP_IKchain_footL
-    400012: HP_IKchain_legL
-    400014: IK Chain001
-    400016: IK Chain002
-    400018: leg_L
-    400020: leg_R
-    400022: Plane001
-    400024: Plane002
-    400026: RIG_body
-    400028: RIG_footL
-    400030: RIG_footL(mirrored)
-    400032: RIG_footL_end
-    400034: RIG_footL_end(mirrored)
-    400036: RIG_legLa
-    400038: RIG_legLb
-    400040: RIG_legLb(mirrored)
-    400042: RIG_legRa
-    400044: //RootNode
+    100000: //RootNode
+    100002: body
+    100004: Box001
+    100006: Box002
+    100008: Box003
+    100010: CTL_rig_footL
+    100012: CTL_rig_footR
+    100014: CTL_rig_root
+    100016: hat
+    100018: HP_IKchain_footL
+    100020: HP_IKchain_legL
+    100022: IK Chain001
+    100024: IK Chain002
+    100026: leg_L
+    100028: leg_R
+    100030: RIG_body
+    100032: RIG_footL
+    100034: RIG_footL(mirrored)
+    100036: RIG_footL_end
+    100038: RIG_footL_end(mirrored)
+    100040: RIG_legLa
+    100042: RIG_legLb
+    100044: RIG_legLb(mirrored)
+    100046: RIG_legRa
+    400000: //RootNode
+    400002: body
+    400004: Box001
+    400006: Box002
+    400008: Box003
+    400010: CTL_rig_footL
+    400012: CTL_rig_footR
+    400014: CTL_rig_root
+    400016: hat
+    400018: HP_IKchain_footL
+    400020: HP_IKchain_legL
+    400022: IK Chain001
+    400024: IK Chain002
+    400026: leg_L
+    400028: leg_R
+    400030: RIG_body
+    400032: RIG_footL
+    400034: RIG_footL(mirrored)
+    400036: RIG_footL_end
+    400038: RIG_footL_end(mirrored)
+    400040: RIG_legLa
+    400042: RIG_legLb
+    400044: RIG_legLb(mirrored)
+    400046: RIG_legRa
     2100000: Material mikan
-    2300000: hat
-    2300002: Plane001
-    2300004: Plane002
-    3300000: hat
-    3300002: Plane001
-    3300004: Plane002
+    2300000: Box001
+    2300002: Box002
+    2300004: Box003
+    2300006: hat
+    3300000: Box001
+    3300002: Box002
+    3300004: Box003
+    3300006: hat
     4300000: hat
-    4300002: Plane002
-    4300004: Plane001
-    4300006: body
-    4300008: leg_R
+    4300002: Box002
+    4300004: Box001
+    4300006: Box003
+    4300008: body
     4300010: leg_L
-    7400000: Unique_Surfer_2
+    4300012: leg_R
+    7400000: Unique_Azarashi_2
     9500000: //RootNode
     13700000: body
     13700002: leg_L
@@ -78,14 +83,14 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
-    motionNodeName: <Root Transform>
+    motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
-    importAnimatedCustomProperties: 1
+    importAnimatedCustomProperties: 0
     importConstraints: 0
     animationCompression: 1
     animationRotationError: 0.5
@@ -96,17 +101,17 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Unique_Surfer_2
+      name: Unique_Azarashi_2
       takeName: Take 001
       firstFrame: 0
-      lastFrame: 100
+      lastFrame: 164
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0

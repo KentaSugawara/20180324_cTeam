@@ -1,68 +1,74 @@
 fileFormatVersion: 2
-guid: bd0d6a4f1dea87e469908ee32673a146
+guid: 66cfba36c7f1526428293e829a9edfc6
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: body
-    100002: CTL_rig_footL
-    100004: CTL_rig_footR
-    100006: CTL_rig_root
-    100008: hat
-    100010: HP_IKchain_footL
-    100012: HP_IKchain_legL
-    100014: IK Chain001
-    100016: IK Chain002
-    100018: leg_L
-    100020: leg_R
-    100022: Plane001
-    100024: Plane002
-    100026: RIG_body
-    100028: RIG_footL
-    100030: RIG_footL(mirrored)
-    100032: RIG_footL_end
-    100034: RIG_footL_end(mirrored)
-    100036: RIG_legLa
-    100038: RIG_legLb
-    100040: RIG_legLb(mirrored)
-    100042: RIG_legRa
-    100044: //RootNode
+    100002: Bone001
+    100004: Bone002
+    100006: Box001
+    100008: CTL_rig_footL
+    100010: CTL_rig_footR
+    100012: CTL_rig_root
+    100014: //RootNode
+    100016: hat
+    100018: HP_IKchain_footL
+    100020: HP_IKchain_legL
+    100022: IK Chain001
+    100024: IK Chain002
+    100026: leg_L
+    100028: leg_R
+    100030: RIG_body
+    100032: RIG_footL
+    100034: RIG_footL(mirrored)
+    100036: RIG_footL_end
+    100038: RIG_footL_end(mirrored)
+    100040: RIG_legLa
+    100042: RIG_legLb
+    100044: RIG_legLb(mirrored)
+    100046: RIG_legRa
+    100048: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8001"
     400000: body
-    400002: CTL_rig_footL
-    400004: CTL_rig_footR
-    400006: CTL_rig_root
-    400008: hat
-    400010: HP_IKchain_footL
-    400012: HP_IKchain_legL
-    400014: IK Chain001
-    400016: IK Chain002
-    400018: leg_L
-    400020: leg_R
-    400022: Plane001
-    400024: Plane002
-    400026: RIG_body
-    400028: RIG_footL
-    400030: RIG_footL(mirrored)
-    400032: RIG_footL_end
-    400034: RIG_footL_end(mirrored)
-    400036: RIG_legLa
-    400038: RIG_legLb
-    400040: RIG_legLb(mirrored)
-    400042: RIG_legRa
-    400044: //RootNode
-    2100000: Material mikan
-    2300000: hat
-    2300002: Plane001
-    2300004: Plane002
-    3300000: hat
-    3300002: Plane001
-    3300004: Plane002
-    4300000: hat
-    4300002: Plane002
-    4300004: Plane001
-    4300006: body
-    4300008: leg_R
-    4300010: leg_L
-    7400000: Unique_Surfer_2
+    400002: Bone001
+    400004: Bone002
+    400006: Box001
+    400008: CTL_rig_footL
+    400010: CTL_rig_footR
+    400012: CTL_rig_root
+    400014: //RootNode
+    400016: hat
+    400018: HP_IKchain_footL
+    400020: HP_IKchain_legL
+    400022: IK Chain001
+    400024: IK Chain002
+    400026: leg_L
+    400028: leg_R
+    400030: RIG_body
+    400032: RIG_footL
+    400034: RIG_footL(mirrored)
+    400036: RIG_footL_end
+    400038: RIG_footL_end(mirrored)
+    400040: RIG_legLa
+    400042: RIG_legLb
+    400044: RIG_legLb(mirrored)
+    400046: RIG_legRa
+    400048: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8001"
+    2100000: Material kome
+    2100002: 07 - Default
+    2100004: 'Material #7'
+    2300000: Box001
+    2300002: hat
+    2300004: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8001"
+    3300000: Box001
+    3300002: hat
+    3300004: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8001"
+    4300000: body
+    4300002: leg_R
+    4300004: leg_L
+    4300006: hat
+    4300008: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8001"
+    4300010: Box001
+    7400000: Unique_Gohan_2
     9500000: //RootNode
     13700000: body
     13700002: leg_L
@@ -78,14 +84,14 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
-    motionNodeName: <Root Transform>
+    motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
-    importAnimatedCustomProperties: 1
+    importAnimatedCustomProperties: 0
     importConstraints: 0
     animationCompression: 1
     animationRotationError: 0.5
@@ -96,17 +102,17 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Unique_Surfer_2
+      name: Unique_Gohan_2
       takeName: Take 001
       firstFrame: 0
-      lastFrame: 100
+      lastFrame: 90
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
