@@ -1194,7 +1194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc1f64d44c111c540b1fdf6762eecaa3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isActive: 0
+  _isActive: 1
   _Image_Information: {fileID: 533894775}
   _Text_Information: {fileID: 806991162}
   _String_Information: "\u300C\u305F\u307E\u3054\u300D\u3092\u63A2\u3057\u3066\u307F\u3088\u3046"
@@ -1522,7 +1522,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294967039
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1633,6 +1633,7 @@ MonoBehaviour:
   _PictureBookViewer: {fileID: 406569726}
   _CharacterList: {fileID: 11400000, guid: a598bd75e4684e84992a17bde5492283, type: 2}
   _NoticeViewer: {fileID: 705190254}
+  _isMainScene: 0
 --- !u!1 &170237180
 GameObject:
   m_ObjectHideFlags: 0
@@ -2515,6 +2516,49 @@ Transform:
   m_Father: {fileID: 1129614669}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &247215303
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 247215305}
+  - component: {fileID: 247215304}
+  m_Layer: 0
+  m_Name: NextScene
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &247215304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 247215303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f579935769071c4f8fdbe591a7bc4a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isActive: 1
+  _DataFileManager: {fileID: 235448811}
+  _NextSceneName: ARCore
+--- !u!4 &247215305
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 247215303}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2021607670}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &257935669
 GameObject:
   m_ObjectHideFlags: 0
@@ -3070,8 +3114,8 @@ MonoBehaviour:
   _Sprite_GarbageBox_Close: {fileID: 21300000, guid: c3b539db0dbd29a4eaf4372c4739da2e,
     type: 3}
   _GarbageBoxInfo: {fileID: 692332854}
-  _Text_GarbageBoxInfo: {fileID: 0}
-  _String_GarbageBoxInfo: 
+  _Text_GarbageBoxInfo: {fileID: 1297080889}
+  _String_GarbageBoxInfo: "\u307B\u3093\u3068\u3046\u306B\u3051\u3059?"
   _AlbumDataList:
     Pictures: []
   _ZoomImage: {fileID: 1168325484}
@@ -4371,8 +4415,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -130}
-  m_SizeDelta: {x: 1024, y: 256}
+  m_AnchoredPosition: {x: 0, y: -350}
+  m_SizeDelta: {x: 1300, y: 256}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &533894775
 MonoBehaviour:
@@ -4957,7 +5001,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8123ab69f087f1346a3e30abb439fc94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isActive: 0
+  _isActive: 1
   _Tutorial: {fileID: 1978575919}
   _Button_SnapShot: {fileID: 1556433932}
   _ButtonDummy: {fileID: 581019126}
@@ -11606,8 +11650,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _EventTriggerDummy: {fileID: 1225482917}
-  _Yubi_StartPos: {x: 750, y: 1400, z: 0}
-  _Yubi_EndPos: {x: 200, y: 900, z: 0}
+  _Seconds_YubiHide: 1
+  _Yubi_StartPos: {x: 950, y: 1900, z: 0}
+  _Yubi_EndPos: {x: 200, y: 1250, z: 0}
 --- !u!1 &1472592402
 GameObject:
   m_ObjectHideFlags: 0
@@ -12254,7 +12299,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1714107942}
         m_MethodName: ClickSaveButton
         m_Mode: 1
         m_Arguments:
@@ -14188,6 +14233,7 @@ MonoBehaviour:
   m_SnapShot_StoreNeedSeconds: 1
   m_Audio_SnapShot: {fileID: 116722174}
   m_Audio_NewChara: {fileID: 1121866998}
+  _TestEggList: []
   _Tutorial_SnapShotEgg: {fileID: 585903687}
 --- !u!1 &1720749298
 GameObject:
@@ -14551,7 +14597,7 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1759795985}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -16148,8 +16194,8 @@ MonoBehaviour:
     text: "// \u305F\u307E\u3054\u3092\u5199\u3059"
     ChangeFontSize: 0
     FontSize: 0
-    ActiveYubi: 0
-    YubiScreenPos: {x: 0, y: 0, z: 0}
+    ActiveYubi: 1
+    YubiScreenPos: {x: 0, y: -725, z: 0}
     ActiveHoleView: 0
     HoleViewScreenPos: {x: 0, y: 0}
     HoleViewSize: {x: 0, y: 0}
@@ -16193,8 +16239,8 @@ MonoBehaviour:
     ActiveYubi: 0
     YubiScreenPos: {x: 0, y: 0, z: 0}
     ActiveHoleView: 1
-    HoleViewScreenPos: {x: 730, y: 30}
-    HoleViewSize: {x: 300, y: 350}
+    HoleViewScreenPos: {x: 1000, y: 60}
+    HoleViewSize: {x: 350, y: 450}
     DisableBackGround: 0
     DisableTapScreen: 0
     _OnTap:
@@ -16456,8 +16502,8 @@ MonoBehaviour:
     ActiveYubi: 0
     YubiScreenPos: {x: 0, y: 0, z: 0}
     ActiveHoleView: 1
-    HoleViewScreenPos: {x: 160, y: 130}
-    HoleViewSize: {x: 760, y: 1260}
+    HoleViewScreenPos: {x: 220, y: 170}
+    HoleViewSize: {x: 1000, y: 1700}
     DisableBackGround: 0
     DisableTapScreen: 0
     _OnTap:
@@ -16477,8 +16523,8 @@ MonoBehaviour:
     ActiveYubi: 0
     YubiScreenPos: {x: 0, y: 0, z: 0}
     ActiveHoleView: 1
-    HoleViewScreenPos: {x: 850, y: 1650}
-    HoleViewSize: {x: 180, y: 220}
+    HoleViewScreenPos: {x: 1150, y: 2230}
+    HoleViewSize: {x: 200, y: 240}
     DisableBackGround: 0
     DisableTapScreen: 0
     _OnTap:
@@ -16498,8 +16544,8 @@ MonoBehaviour:
     ActiveYubi: 0
     YubiScreenPos: {x: 0, y: 0, z: 0}
     ActiveHoleView: 1
-    HoleViewScreenPos: {x: 30, y: 1670}
-    HoleViewSize: {x: 240, y: 200}
+    HoleViewScreenPos: {x: 50, y: 2240}
+    HoleViewSize: {x: 300, y: 240}
     DisableBackGround: 0
     DisableTapScreen: 0
     _OnTap:
@@ -16540,8 +16586,8 @@ MonoBehaviour:
     ActiveYubi: 0
     YubiScreenPos: {x: 0, y: 0, z: 0}
     ActiveHoleView: 1
-    HoleViewScreenPos: {x: 0, y: 1680}
-    HoleViewSize: {x: 1080, y: 250}
+    HoleViewScreenPos: {x: -10, y: 2200}
+    HoleViewSize: {x: 2280, y: 400}
     DisableBackGround: 0
     DisableTapScreen: 0
     _OnTap:
@@ -16687,8 +16733,8 @@ MonoBehaviour:
     ActiveYubi: 0
     YubiScreenPos: {x: 0, y: 0, z: 0}
     ActiveHoleView: 1
-    HoleViewScreenPos: {x: 0, y: 1680}
-    HoleViewSize: {x: 1080, y: 250}
+    HoleViewScreenPos: {x: -10, y: 2200}
+    HoleViewSize: {x: 2280, y: 400}
     DisableBackGround: 0
     DisableTapScreen: 0
     _OnTap:
@@ -17005,6 +17051,27 @@ MonoBehaviour:
     isCameraCanvas: 0
     TargetCamera: {fileID: 0}
     _TutorialMethod: {fileID: 0}
+  - Type: 2
+    Tamago: 0
+    text: "\u9811\u5F35\u3063\u3066\u306D\uFF01\u30D0\u30A4\u30D0\u30A4\uFF01"
+    ChangeFontSize: 0
+    FontSize: 0
+    ActiveYubi: 0
+    YubiScreenPos: {x: 0, y: 0, z: 0}
+    ActiveHoleView: 0
+    HoleViewScreenPos: {x: 0, y: 0}
+    HoleViewSize: {x: 0, y: 0}
+    DisableBackGround: 0
+    DisableTapScreen: 0
+    _OnTap:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    NextButton: {fileID: 0}
+    isCameraCanvas: 0
+    TargetCamera: {fileID: 0}
+    _TutorialMethod: {fileID: 247215304}
   _Animator_Tamago: {fileID: 421349461}
   _TamagoTransform: {fileID: 421349458}
   _BackGround: {fileID: 1496967857}
@@ -17292,6 +17359,7 @@ Transform:
   - {fileID: 1102522029}
   - {fileID: 1461333727}
   - {fileID: 1124526413}
+  - {fileID: 247215305}
   m_Father: {fileID: 1978575920}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

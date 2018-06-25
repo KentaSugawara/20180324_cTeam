@@ -115,7 +115,7 @@ public class EggSpawnerARCore : MonoBehaviour {
                     ),
                 Vector3.down);
 
-            if (Physics.Raycast(ray, out hit, 1000.0f, 1 << 12) && Vector3.SqrMagnitude(Camera.main.transform.position - hit.point) < _SpawnDistance * _SpawnDistance)
+            if (Physics.Raycast(ray, out hit, 1000.0f, 1 << 12) && Vector3.SqrMagnitude(_camera.transform.position - hit.point) < _SpawnDistance * _SpawnDistance)
             {
                 //Debug.DrawRay(
                 //new Vector3(
@@ -144,7 +144,7 @@ public class EggSpawnerARCore : MonoBehaviour {
                         if (_LookAtCameraSpawn)
                         {
                             var localrotation = obj.transform.localRotation;
-                            obj.transform.LookAt(Camera.main.transform, Vector3.up);
+                            obj.transform.LookAt(_camera.transform, Vector3.up);
 
                             //var angle = localrotation.eulerAngles;
                             //var current = obj.transform.localEulerAngles;
@@ -153,6 +153,8 @@ public class EggSpawnerARCore : MonoBehaviour {
                             //var angle = obj.transform.localRotation.eulerAngles;
                             //obj.transform.localRotation = Quaternion.Euler(angle.x, degree - 90.0f, angle.z);
                         }
+
+                        obj.GetComponent<EggBehaviour>()._camera = _camera;
 
                         var anchor = TargetPlane.CreateAnchor(pose);
 
@@ -231,6 +233,8 @@ public class EggSpawnerARCore : MonoBehaviour {
                 var obj = Instantiate(prefab, pose.position, prefab.transform.rotation);
 
                 var anchor = TargetPlane.CreateAnchor(pose);
+
+                obj.GetComponent<EggBehaviour>()._camera = _camera;
 
                 // Make Andy model a child of the anchor.
                 obj.transform.parent = anchor.transform;

@@ -338,7 +338,7 @@ public class Main_ItemViewer : MonoBehaviour {
             }
             else
             {
-                if (_inOnlyColse) Open();
+                Open();
             }
         }
         else

@@ -121,6 +121,40 @@ public class Main_DataFileManager : MonoBehaviour {
         Save_AlbumData(album);
     }
 
+    public void Save_SaveData(Json_SaveData savedata)
+    {
+        string FilePath = getSaveDataPath();
+        var file = new FileInfo(FilePath);
+
+        //ファイルが存在しなかったら
+        if (!file.Exists)
+        {
+            file.Create();
+        }
+
+        //アルバムリストのインスタンスを受け取る
+        CreateJsonFile<Json_SaveData>(file, savedata);
+    }
+
+    public Json_SaveData Load_SaveData()
+    {
+        string FilePath = getSaveDataPath();
+        var file = new FileInfo(FilePath);
+
+        //ファイルが存在しなかったら
+        if (!file.Exists)
+        {
+            //新規作成
+            CreateFile_PictureBookDataList();
+            return new Json_SaveData();
+            //file = new FileInfo(FilePath + "/PictureBookDataList.json");
+        }
+
+        //アルバムリストのインスタンスを受け取る
+        var savedata = getJsonClassInstance<Json_SaveData>(file);
+        return savedata;
+    }
+
     public Json_Challenge_DataList Load_ChallengeData()
     {
         string FilePath = getRootPath();
@@ -452,7 +486,7 @@ public class Main_DataFileManager : MonoBehaviour {
     /// </summary>
     public string getRootPath()
     {
-        string FullPath = "";
+        string FullPath = Application.persistentDataPath;
     #if UNITY_ANDROID
         FullPath = Application.persistentDataPath;
     #endif
@@ -491,6 +525,22 @@ public class Main_DataFileManager : MonoBehaviour {
 
     #if UNITY_EDITOR
         FullPath = getRootPath() + "/SmallPictures";
+    #endif
+        return FullPath;
+    }
+
+    /// <summary>
+    /// セーブデータの
+    /// </summary>
+    public string getSaveDataPath()
+    {
+        string FullPath = "";
+    #if UNITY_ANDROID
+        FullPath = Application.persistentDataPath + "/SaveData.json";
+    #endif
+
+    #if UNITY_EDITOR
+        FullPath = Application.persistentDataPath + "/SaveData.json";
     #endif
         return FullPath;
     }
@@ -590,4 +640,10 @@ public class Json_Item_ListNode
 public class Json_Item_DataList
 {
     public List<Json_Item_ListNode> Data = new List<Json_Item_ListNode>();
+}
+
+[System.Serializable]
+public class Json_SaveData
+{
+    public bool isAlreadyTutorial = false;
 }

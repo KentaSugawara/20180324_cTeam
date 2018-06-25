@@ -63,6 +63,9 @@ public class Snapshot : MonoBehaviour
     [SerializeField]
     protected AudioSource m_Audio_NewChara;
 
+    [SerializeField]
+    private List<GameObject> _TestEggList = new List<GameObject>();
+
 #if true//UNITY_ANDROID && !UNITY_EDITOR
     protected Texture2D m_tex2d;
     protected int m_photoNum = 0;
@@ -95,6 +98,7 @@ public class Snapshot : MonoBehaviour
         //}
 
         RaycastHit hit;
+        //foreach (var egg in EggSpawnerARCore.EggList)
         foreach (var egg in EggSpawnerARCore.EggList)
         {
             //範囲外なら棄却

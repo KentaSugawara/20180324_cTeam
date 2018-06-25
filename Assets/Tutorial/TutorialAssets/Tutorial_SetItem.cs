@@ -16,6 +16,9 @@ public class Tutorial_SetItem : TutorialMethod {
     [SerializeField]
     private Tutorial_EventTriggerDummy _EventTriggerDummy;
 
+    [SerializeField]
+    private float _Seconds_YubiHide;
+
     public override void Method(System.Action endcallback)
     {
         StartCoroutine(Routine_Find(endcallback));
@@ -43,6 +46,8 @@ public class Tutorial_SetItem : TutorialMethod {
             yield return null;
         }
 
+        yield return StartCoroutine(Routine_HideYubi());
+
         //アイテム置いたら
         _ItemViewer.Close();
 
@@ -69,5 +74,22 @@ public class Tutorial_SetItem : TutorialMethod {
             }
             yield return new WaitForSeconds(1.0f);
         }
+    }
+
+    private IEnumerator Routine_HideYubi()
+    {
+        Vector3 scale = _Yubi.transform.localScale;
+        Vector3 b;
+        for (float t = 0.0f; t < _Seconds_YubiHide; t += Time.deltaTime)
+        {
+            float e = t / _Seconds_YubiHide;
+            b = Vector3.Lerp(scale, Vector3.zero, e);
+            _Yubi.transform.localScale = Vector2.Lerp(b, Vector3.zero, e);
+
+            yield return null;
+        }
+        _Yubi.transform.localScale = Vector3.zero;
+
+        _Yubi.gameObject.SetActive(false);
     }
 }
