@@ -35,7 +35,9 @@ public class TargetCollider : MonoBehaviour {
 	float _delaySeconds;
 
 	private void OnEnable() {
-		SetActiveTarget(_initActive);
+		SetActiveOfTarget(false);
+		if (_initActive)
+			StartCoroutine(DelayMethod_Cor(1, () => SetActiveOfTarget(true)));
 	}
 
 	IEnumerator DelayMethod_Cor(float delaySeconds, Action action) {
@@ -45,12 +47,12 @@ public class TargetCollider : MonoBehaviour {
 		action();
 	}
 
-	void SetActiveTarget(GameObject obj, bool b) {
+	void SetActiveOfTarget(GameObject obj, bool b) {
 		obj.GetComponent<Collider>().enabled = b;
 		obj.transform.GetChild(0).gameObject.SetActive(b);
 	}
-	void SetActiveTarget(bool b) {
-		SetActiveTarget(gameObject, b);
+	void SetActiveOfTarget(bool b) {
+		SetActiveOfTarget(gameObject, b);
 	}
 
 	private void OnTriggerEnter(Collider other) {
@@ -59,7 +61,6 @@ public class TargetCollider : MonoBehaviour {
 			var baseItemBehaviour = GetComponentInParent<BaseItemBehaviour>();
 			baseItemBehaviour._eggList.Add(other.gameObject);
 
-			other.GetComponent<Animator>().SetBool("Playing", true);
 			other.GetComponent<Animator>().SetBool("Waiting", true);
 			other.GetComponent<EggBehaviour>().SetTrigger(_playingState);
 
@@ -74,9 +75,9 @@ public class TargetCollider : MonoBehaviour {
 				eggList.Clear();
 			}
 			if (_itemAnimStart) baseItemBehaviour.PlayAnimation();
-			if (_nextTargetObject) StartCoroutine(DelayMethod_Cor(_delaySeconds, () => SetActiveTarget(_nextTargetObject, true)));
-			
-			SetActiveTarget(false);
+			if (_nextTargetObject) StartCoroutine(DelayMethod_Cor(_delaySeconds, () => SetActiveOfTarget(_nextTargetObject, true)));
+
+			SetActiveOfTarget(false);
 		}
 	}
 }
