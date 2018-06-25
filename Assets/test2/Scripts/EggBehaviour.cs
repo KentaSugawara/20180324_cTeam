@@ -142,8 +142,8 @@ public class EggBehaviour : MonoBehaviour {
 
 	public bool IsInCamera(Vector3 tuneParams) {
 
-		var M_V = Camera.main.worldToCameraMatrix;
-		var M_P = Camera.main.projectionMatrix;
+		var M_V = _camera.worldToCameraMatrix;
+		var M_P = _camera.projectionMatrix;
 		var M_VP = M_P * M_V;
 
 		var pos = transform.position;
