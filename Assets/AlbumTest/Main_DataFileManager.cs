@@ -145,7 +145,6 @@ public class Main_DataFileManager : MonoBehaviour {
         if (!file.Exists)
         {
             //新規作成
-            CreateFile_PictureBookDataList();
             return new Json_SaveData();
             //file = new FileInfo(FilePath + "/PictureBookDataList.json");
         }
@@ -431,7 +430,7 @@ public class Main_DataFileManager : MonoBehaviour {
 
     public string getPictureBookDataListPath()
     {
-        string FullPath = "";
+        string FullPath = Application.persistentDataPath + "/PictureBookDataList.json";
     #if UNITY_ANDROID
         FullPath = Application.persistentDataPath + "/PictureBookDataList.json";
     #endif
@@ -444,7 +443,7 @@ public class Main_DataFileManager : MonoBehaviour {
 
     public string getAlbumDataListPath()
     {
-        string FullPath = "";
+        string FullPath = Application.persistentDataPath + "/AlbumDataList.json";
     #if UNITY_ANDROID
         FullPath = Application.persistentDataPath + "/AlbumDataList.json";
     #endif
@@ -457,7 +456,7 @@ public class Main_DataFileManager : MonoBehaviour {
 
     public string getChallengeDataListPath()
     {
-        string FullPath = "";
+        string FullPath = Application.persistentDataPath + "/ChallengeDataList.json";
     #if UNITY_ANDROID
         FullPath = Application.persistentDataPath + "/ChallengeDataList.json";
     #endif
@@ -470,7 +469,7 @@ public class Main_DataFileManager : MonoBehaviour {
 
     public string getItemDataListPath()
     {
-        string FullPath = "";
+        string FullPath = FullPath = Application.persistentDataPath + "/ItemDataList.json";
     #if UNITY_ANDROID
         FullPath = Application.persistentDataPath + "/ItemDataList.json";
     #endif
@@ -502,7 +501,7 @@ public class Main_DataFileManager : MonoBehaviour {
     /// </summary>
     public string getAlbumPicturesPath()
     {
-        string FullPath = "";
+        string FullPath = getRootPath() + "/Pictures";
     #if UNITY_ANDROID
         FullPath = getRootPath() + "/Pictures";
     #endif
@@ -518,7 +517,7 @@ public class Main_DataFileManager : MonoBehaviour {
     /// </summary>
     public string getAlbumSmallPicturesPath()
     {
-        string FullPath = "";
+        string FullPath = getRootPath() + "/SmallPictures";
     #if UNITY_ANDROID
         FullPath = getRootPath() + "/SmallPictures";
     #endif
@@ -534,7 +533,7 @@ public class Main_DataFileManager : MonoBehaviour {
     /// </summary>
     public string getSaveDataPath()
     {
-        string FullPath = "";
+        string FullPath = Application.persistentDataPath + "/SaveData.json";
     #if UNITY_ANDROID
         FullPath = Application.persistentDataPath + "/SaveData.json";
     #endif
@@ -547,7 +546,7 @@ public class Main_DataFileManager : MonoBehaviour {
 
     public void SavePhoto(int CharacterCloseID, Json_Album_Data_Picture PhotoData)
     {
-        string FullPath = "";
+        string FullPath = Application.persistentDataPath + "/GameData.json";
     #if UNITY_ANDROID
         FullPath = Application.persistentDataPath + "/GameData.json";
     #endif
