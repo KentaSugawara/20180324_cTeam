@@ -35,7 +35,7 @@ public class TargetCollider : MonoBehaviour {
 	float _delaySeconds;
 
 	private void OnEnable() {
-		SetActiveTarget(_initActive);
+		StartCoroutine(DelayMethod_Cor(1, () => SetActiveTarget(_initActive)));
 	}
 
 	IEnumerator DelayMethod_Cor(float delaySeconds, Action action) {
