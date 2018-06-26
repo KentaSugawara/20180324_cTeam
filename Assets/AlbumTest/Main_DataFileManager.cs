@@ -428,12 +428,14 @@ public class Main_DataFileManager : MonoBehaviour {
     public T getJsonClassInstance<T> (FileInfo file)
     {
         //FileStream fs = new FileStream(file.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+        T j;
         using (StreamReader sr = file.OpenText())
         {
-            T j = JsonUtility.FromJson<T>(sr.ReadToEnd());
-            sr.Close();
-            return j;
+            j = JsonUtility.FromJson<T>(sr.ReadToEnd());
+            sr.Close(); 
         }
+
+        return j;
     }
 
     /// <summary>
