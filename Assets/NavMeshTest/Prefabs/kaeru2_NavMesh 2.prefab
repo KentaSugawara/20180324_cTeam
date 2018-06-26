@@ -526,16 +526,16 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1358348944212996}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.5}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children:
   - {fileID: 4763960497822678}
   - {fileID: 4276124910527064}
   - {fileID: 4502150390731182}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!4 &4104131216239632
 Transform:
   m_ObjectHideFlags: 1
@@ -1053,7 +1053,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 508296dc413aa514c99773f53f971b22, type: 3}
+  - {fileID: 2100000, guid: cf371941efa43c14eb6b763b61963f58, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1193,7 +1193,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 508296dc413aa514c99773f53f971b22, type: 3}
+  - {fileID: 2100000, guid: cf371941efa43c14eb6b763b61963f58, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1745,8 +1745,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _HARIBOTE: 0
-  _tuneParams: {x: 0.15, y: 0, z: 0}
-  _tuneParamsForSnap: {x: -0.2, y: -0.4, z: 0}
+  _tuneParams: {x: 0, y: 0, z: 0}
+  _tuneParamsForSnap: {x: 0, y: 0, z: 0}
   _dotParam: 0.6
   _camera: {fileID: 0}
   _rigTransform: {fileID: 4276124910527064}

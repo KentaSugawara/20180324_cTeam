@@ -99,10 +99,16 @@ public class Snapshot : MonoBehaviour
 
         RaycastHit hit;
         //foreach (var egg in EggSpawnerARCore.EggList)
-        foreach (var egg in EggSpawnerARCore.EggList)
+        foreach (var egg in _TestEggList)
         {
+            if (egg == null) continue;
             //範囲外なら棄却
-            if ((Camera.main.transform.position - egg.transform.position).sqrMagnitude >= m_SnapShotDistance * m_SnapShotDistance) continue;
+            if ((Camera.main.transform.position - egg.transform.position).sqrMagnitude >= m_SnapShotDistance * m_SnapShotDistance)
+            {
+                Debug.Log("遠い");
+                continue;
+            }
+
             var eggbhaviour = egg.GetComponent<EggBehaviour>();
             var nchara = egg.GetComponent<NavMeshCharacter>();
             if (eggbhaviour.isInCameraForSnap && (nchara.CharaState == NavMeshCharacter.eCharaState.isItemPlaying || eggbhaviour.isFaceToCamera))
@@ -111,16 +117,28 @@ public class Snapshot : MonoBehaviour
                 Ray ray = new Ray(Camera.main.transform.position, vector.normalized);
                 if (Physics.Raycast(ray, out hit, m_SnapShotDistance, 1 << 8))
                 {
-                    if (hit.collider.gameObject != egg) continue;
-
+                    if (hit.collider.gameObject != egg)
+                    {
+                        Debug.Log("他のにRay当たった");
+                        continue;
+                    }
+                    Debug.Log("成功");
                     var info = new SnapShotInfo();
                     info.CharaCloseIndex = egg.GetComponent<EggData>()._closeID;
                     info.CharaState = nchara.CharaState;
                     info.ItemCloseIndex = nchara.PlayingItemIndex;
                     info._Animator = egg.GetComponent<Animator>();
-                    egg.GetComponent<EggBehaviour>()._isTaken = true;
+                    eggbhaviour._isTaken = true;
                     EggObjlist.Add(new KeyValuePair<GameObject, SnapShotInfo>(egg, info));
                 }
+                else
+                {
+                    Debug.Log("RayCast失敗");
+                }
+            }
+            else
+            {
+                Debug.Log("カメラ外");
             }
         }
 
