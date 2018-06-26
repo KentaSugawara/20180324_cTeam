@@ -374,6 +374,7 @@ public class Main_DataFileManager : MonoBehaviour {
         using (StreamWriter sw = new StreamWriter(file.FullName, false))
         {
             sw.WriteLine(JsonUtility.ToJson(new Json_PictureBook_DataList(), true));
+            sw.Flush();
             sw.Close();
         }
     }
@@ -386,6 +387,7 @@ public class Main_DataFileManager : MonoBehaviour {
         using (StreamWriter sw = new StreamWriter(file.FullName, false))
         {
             sw.WriteLine(JsonUtility.ToJson(new Json_Album_DataList(), true));
+            sw.Flush();
             sw.Close();
         }
     }
@@ -410,6 +412,7 @@ public class Main_DataFileManager : MonoBehaviour {
         using (StreamWriter sw = new StreamWriter(file.FullName, false))
         {
             sw.WriteLine(JsonUtility.ToJson(new Json_Item_DataList(), true));
+            sw.Flush();
             sw.Close();
         }
     }
@@ -421,6 +424,7 @@ public class Main_DataFileManager : MonoBehaviour {
         using (StreamWriter sw = new StreamWriter(file.FullName, false))
         {
             sw.WriteLine(JsonUtility.ToJson(Instance, true));
+            sw.Flush();
             sw.Close();
         }
     }
