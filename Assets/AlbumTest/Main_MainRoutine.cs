@@ -36,6 +36,7 @@ public class Main_MainRoutine : MonoBehaviour {
         if (_isMainScene)
         {
             var savedata = _DataFileManager.Load_SaveData();
+			Debug.Log(savedata);
             if (savedata.isAlreadyTutorial == false)
             {
                 SceneManager.LoadScene("Tutorial");
