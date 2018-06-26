@@ -241,15 +241,18 @@ public class NavMeshCharacter : MonoBehaviour {
             {
                 yield return StartCoroutine(Routine_Move());
             }
-            else
-            {
-                yield return null;
-            }
+
+            yield return null;
         }
     }
 
     private IEnumerator Routine_Intarval()
     {
+        if (_Agent.pathStatus == NavMeshPathStatus.PathInvalid)
+        {
+            yield return new WaitForSeconds(1.0f);
+            yield break;
+        }
         _Agent.isStopped = true;
 
         //ランダムに次のモーションを設定
@@ -355,8 +358,13 @@ public class NavMeshCharacter : MonoBehaviour {
 
     private IEnumerator Routine_Move()
     {
+        if (_Agent.pathStatus == NavMeshPathStatus.PathInvalid)
+        {
+            yield return new WaitForSeconds(1.0f);
+            yield break;
+        }
         //次の地点が見つかるまで待機
-        while (_MoveTargetPoint == null && !CalcNextPoint())
+        while (_Agent.pathStatus != NavMeshPathStatus.PathInvalid && _MoveTargetPoint == null && !CalcNextPoint())
         {
             yield return new WaitForSeconds(0.5f);
             Debug.Log("Serching");
@@ -444,6 +452,11 @@ public class NavMeshCharacter : MonoBehaviour {
 
     private bool CalcNextPoint()
     {
+        if (_Agent.pathStatus == NavMeshPathStatus.PathInvalid)
+        {
+            return false;
+        }
+
         Ray ray = new Ray(
             transform.position + 
             new Vector3(
@@ -479,6 +492,11 @@ public class NavMeshCharacter : MonoBehaviour {
 
     public void SetTargetPoint(NavMeshTargetPoint MoveTargetPoint)
     {
+        if (_Agent.pathStatus == NavMeshPathStatus.PathInvalid)
+        {
+            return;
+        }
+
         if (_LastMoveTargetPoint == null || (_LastMoveTargetPoint != MoveTargetPoint && _MoveTargetPoint == null))
         {
             _MoveTargetPoint = MoveTargetPoint;
