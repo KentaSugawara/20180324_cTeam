@@ -33,6 +33,7 @@ public class EggSpawnerARCore : MonoBehaviour {
     private bool _LookAtCameraSpawn = false;
 
     private static List<GameObject> _EggList = new List<GameObject>();
+    private static List<int> _EggIDList = new List<int>();
     private List<DetectedPlane> _AllPlaneList = new List<DetectedPlane>();
 
     private void Awake()
@@ -45,6 +46,7 @@ public class EggSpawnerARCore : MonoBehaviour {
     void Start()
     {
         _EggList.Clear();
+        _EggIDList.Clear();
         StartCoroutine(Routine_Spawn());
     }
 
@@ -134,37 +136,43 @@ public class EggSpawnerARCore : MonoBehaviour {
                     {
                         var pose = new Pose(hit.point, Quaternion.FromToRotation(Vector3.forward, hit.normal));
                         //すぽーん
-                        var randEgg = _EggPrefabs[Random.Range(0, _EggPrefabs.Length)];
-                        var obj = Instantiate(randEgg, pose.position, pose.rotation);
+                        int index = getRandomEggID();
+                        if (index >= 0) {
 
-                        obj.transform.localRotation = randEgg.transform.localRotation;
-                        obj.transform.localScale *= 0.45f;
+                            var randEgg = _EggPrefabs[index];
+                            var obj = Instantiate(randEgg, pose.position, pose.rotation);
 
-                        //カメラの方向ける
-                        if (_LookAtCameraSpawn)
-                        {
-                            var localrotation = obj.transform.localRotation;
-                            obj.transform.LookAt(_camera.transform, Vector3.up);
+                            obj.transform.localRotation = randEgg.transform.localRotation;
+                            obj.transform.localScale *= 0.45f;
 
-                            //var angle = localrotation.eulerAngles;
-                            //var current = obj.transform.localEulerAngles;
-                            //obj.transform.localEulerAngles = new Vector3(angle.x, current.y, angle.z);
-                            //var degree = Mathf.Atan(Vector3.Dot(Vector3.forward, (Camera.main.transform.position - hit.point).normalized)) * Mathf.Rad2Deg;
-                            //var angle = obj.transform.localRotation.eulerAngles;
-                            //obj.transform.localRotation = Quaternion.Euler(angle.x, degree - 90.0f, angle.z);
+                            //カメラの方向ける
+                            if (_LookAtCameraSpawn)
+                            {
+                                var localrotation = obj.transform.localRotation;
+                                obj.transform.LookAt(_camera.transform, Vector3.up);
+
+                                //var angle = localrotation.eulerAngles;
+                                //var current = obj.transform.localEulerAngles;
+                                //obj.transform.localEulerAngles = new Vector3(angle.x, current.y, angle.z);
+                                //var degree = Mathf.Atan(Vector3.Dot(Vector3.forward, (Camera.main.transform.position - hit.point).normalized)) * Mathf.Rad2Deg;
+                                //var angle = obj.transform.localRotation.eulerAngles;
+                                //obj.transform.localRotation = Quaternion.Euler(angle.x, degree - 90.0f, angle.z);
+                            }
+
+                            obj.GetComponent<EggBehaviour>()._camera = _camera;
+
+                            var anchor = TargetPlane.CreateAnchor(pose);
+
+                            // Make Andy model a child of the anchor.
+                            obj.transform.parent = anchor.transform;
+
+                            _EggList.Add(obj);
+                            _EggIDList.Add(index);
+
+                            field.Spawn(obj);
+
+                            obj.GetComponent<NavMeshCharacter>().Init(this, _GiveUpAribalSeconds);
                         }
-
-                        obj.GetComponent<EggBehaviour>()._camera = _camera;
-
-                        var anchor = TargetPlane.CreateAnchor(pose);
-
-                        // Make Andy model a child of the anchor.
-                        obj.transform.parent = anchor.transform;
-
-                        _EggList.Add(obj);
-                        field.Spawn(obj);
-
-                        obj.GetComponent<NavMeshCharacter>().Init(this, _GiveUpAribalSeconds);
                     }
                 }
             }
@@ -229,7 +237,9 @@ public class EggSpawnerARCore : MonoBehaviour {
             {
                 var pose = new Pose(hit.point, Quaternion.FromToRotation(Vector3.forward, hit.normal));
                 //すぽーん
-                var prefab = _EggPrefabs[Random.Range(0, _EggPrefabs.Length)];
+                int index = getRandomEggID();
+                if (index < 0) return;
+                var prefab = _EggPrefabs[index];
                 var obj = Instantiate(prefab, pose.position, prefab.transform.rotation);
 
                 var anchor = TargetPlane.CreateAnchor(pose);
@@ -240,8 +250,33 @@ public class EggSpawnerARCore : MonoBehaviour {
                 obj.transform.parent = anchor.transform;
 
                 _EggList.Add(obj);
+                _EggIDList.Add(index);
             }
         }
+    }
+
+    private int getRandomEggID()
+    {
+        var list = new List<int>();
+        for (int i = 0; i < _EggPrefabs.Length; ++i) list.Add(i);
+        foreach (var egg in _EggIDList)
+        {
+            for (int i = 0; i < list.Count; ++i)
+            {
+                if (list[i] == egg)
+                {
+                    list.RemoveAt(i);
+                    break;
+                }
+            }
+        }
+        
+        if (list.Count <= 0)
+        {
+            return -1;
+        }
+
+        return list[Random.Range(0, list.Count)];
     }
 
     public static bool CheckScreenOut(Vector3 _pos)
@@ -269,6 +304,7 @@ public class EggSpawnerARCore : MonoBehaviour {
                 if (obj) Destroy(obj);
             }
             _EggList.Clear();
+            _EggIDList.Clear();
         }
     }
 
@@ -278,7 +314,17 @@ public class EggSpawnerARCore : MonoBehaviour {
     /// <param name="target"></param>
     public void RemoveEgg(GameObject target)
     {
-        if (_EggList.Contains(target)) _EggList.Remove(target);
+        if (_EggList.Contains(target))
+        {
+            for (int i = 0; i < _EggIDList.Count; ++i)
+            {
+                if (_EggList[i] == target)
+                {
+                    _EggList.RemoveAt(i);
+                    _EggIDList.RemoveAt(i);
+                }
+            }
+        }
     }
 
     public void CheckEggsInCamera()
@@ -287,7 +333,7 @@ public class EggSpawnerARCore : MonoBehaviour {
         {
             if (!egg)
             {
-                _EggList.Remove(egg);
+                RemoveEgg(egg);
                 continue;
             }
             var eggBehaviour = egg.GetComponent<EggBehaviour>();
