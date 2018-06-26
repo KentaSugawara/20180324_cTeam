@@ -77,6 +77,7 @@ public static class Main_ChallengeManager {
             }
         }
 
+        DatafileManager.Save_ChallengeData(ChallengeSaveData);
         UpdateisNew();
     }
 

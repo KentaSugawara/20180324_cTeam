@@ -106,7 +106,7 @@ public class Main_ItemManager : MonoBehaviour {
 
             }
         }
-
+        DatafileManager.Save_ItemData(ItemSaveData);
         UpdateisNew();
     }
 }

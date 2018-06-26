@@ -107,6 +107,13 @@ public class Main_DataFileManager : MonoBehaviour {
         CreateJsonFile<Json_Album_DataList>(file, Album);
     }
 
+    public void Save_PictureBookData(Json_PictureBook_DataList picturebook)
+    {
+        var file = new FileInfo(getPictureBookDataListPath());
+
+        CreateJsonFile<Json_PictureBook_DataList>(file, picturebook);
+    }
+
     public void Save_NewAlbumPicture(Json_Album_Data_Picture Picture)
     {
         //アルバムデータリストに追加
