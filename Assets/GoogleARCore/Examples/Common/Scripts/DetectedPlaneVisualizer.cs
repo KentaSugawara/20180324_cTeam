@@ -95,7 +95,7 @@ namespace GoogleARCore.Examples.Common
                  return;
             }
 
-            m_MeshRenderer.enabled = false;
+            m_MeshRenderer.enabled = true;
 
             _UpdateMeshIfNeeded();
         }
