@@ -104,12 +104,6 @@ public class Main_DataFileManager : MonoBehaviour {
     {
         var file = new FileInfo(getAlbumDataListPath());
 
-        //ファイルが存在しなかったら
-        if (!file.Exists)
-        {
-            file.Create();
-        }
-
         CreateJsonFile<Json_Album_DataList>(file, Album);
     }
 
@@ -123,14 +117,7 @@ public class Main_DataFileManager : MonoBehaviour {
 
     public void Save_SaveData(Json_SaveData savedata)
     {
-        string FilePath = getSaveDataPath();
-        var file = new FileInfo(FilePath);
-
-        //ファイルが存在しなかったら
-        if (!file.Exists)
-        {
-            file.Create();
-        }
+        var file = new FileInfo(getSaveDataPath());
 
         //アルバムリストのインスタンスを受け取る
         CreateJsonFile<Json_SaveData>(file, savedata);
@@ -138,8 +125,7 @@ public class Main_DataFileManager : MonoBehaviour {
 
     public Json_SaveData Load_SaveData()
     {
-        string FilePath = getSaveDataPath();
-        var file = new FileInfo(FilePath);
+        var file = new FileInfo(getSaveDataPath());
 
         //ファイルが存在しなかったら
         if (!file.Exists)
@@ -178,12 +164,6 @@ public class Main_DataFileManager : MonoBehaviour {
     {
         var file = new FileInfo(getChallengeDataListPath());
 
-        //ファイルが存在しなかったら
-        if (!file.Exists)
-        {
-            file.Create();
-        }
-
         CreateJsonFile<Json_Challenge_DataList>(file, challenge);
     }
 
@@ -210,12 +190,6 @@ public class Main_DataFileManager : MonoBehaviour {
     public void Save_ItemData(Json_Item_DataList itemlist)
     {
         var file = new FileInfo(getItemDataListPath());
-
-        //ファイルが存在しなかったら
-        if (!file.Exists)
-        {
-            file.Create();
-        }
 
         CreateJsonFile<Json_Item_DataList>(file, itemlist);
     }
@@ -354,6 +328,7 @@ public class Main_DataFileManager : MonoBehaviour {
             if (file.Exists)
             {
                 file.Delete();
+                file.Create();
             }
         }
 
@@ -370,7 +345,10 @@ public class Main_DataFileManager : MonoBehaviour {
     {
         var file = new FileInfo(getPictureBookDataListPath());
         //FileStream fs = new FileStream(file.FullName, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.ReadWrite);
-        File.CreateText(file.FullName).Dispose();
+        if (!file.Exists)
+        {
+            File.CreateText(file.FullName).Dispose();
+        }
         using (StreamWriter sw = new StreamWriter(file.FullName, false))
         {
             sw.WriteLine(JsonUtility.ToJson(new Json_PictureBook_DataList(), true));
@@ -383,7 +361,10 @@ public class Main_DataFileManager : MonoBehaviour {
     {
         var file = new FileInfo(getAlbumDataListPath());
         //FileStream fs = new FileStream(file.FullName, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.ReadWrite);
-        File.CreateText(file.FullName).Dispose();
+        if (!file.Exists)
+        {
+            File.CreateText(file.FullName).Dispose();
+        }
         using (StreamWriter sw = new StreamWriter(file.FullName, false))
         {
             sw.WriteLine(JsonUtility.ToJson(new Json_Album_DataList(), true));
@@ -396,7 +377,10 @@ public class Main_DataFileManager : MonoBehaviour {
     {
         var file = new FileInfo(getChallengeDataListPath());
         //FileStream fs = new FileStream(file.FullName, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.ReadWrite);
-        File.CreateText(file.FullName).Dispose();
+        if (!file.Exists)
+        {
+            File.CreateText(file.FullName).Dispose();
+        }
         using (StreamWriter sw = new StreamWriter(file.FullName, false))
         {
             sw.WriteLine(JsonUtility.ToJson(new Json_Challenge_DataList(), true));
@@ -408,7 +392,10 @@ public class Main_DataFileManager : MonoBehaviour {
     {
         var file = new FileInfo(getItemDataListPath());
         //FileStream fs = new FileStream(file.FullName, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.ReadWrite);
-        File.CreateText(file.FullName).Dispose();
+        if (!file.Exists)
+        {
+            File.CreateText(file.FullName).Dispose();
+        }
         using (StreamWriter sw = new StreamWriter(file.FullName, false))
         {
             sw.WriteLine(JsonUtility.ToJson(new Json_Item_DataList(), true));
@@ -419,8 +406,14 @@ public class Main_DataFileManager : MonoBehaviour {
 
     public void CreateJsonFile<T>(FileInfo file, T Instance)
     {
-        //FileStream fs = new FileStream(file.FullName, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.ReadWrite);
-        File.CreateText(file.FullName).Dispose();
+        //var s = File.CreateText(file.FullName);
+        //s.Flush();
+        //s.Close();
+        //s.Dispose();
+        if (!file.Exists)
+        {
+            File.CreateText(file.FullName).Dispose();
+        }
         using (StreamWriter sw = new StreamWriter(file.FullName, false))
         {
             sw.WriteLine(JsonUtility.ToJson(Instance, true));
@@ -669,4 +662,7 @@ public class Json_Item_DataList
 public class Json_SaveData
 {
     public bool isAlreadyTutorial = false;
+    public int CloseID = -1;
+    public bool isActive = false;
+    public bool isNewActive = false;
 }

@@ -21,9 +21,11 @@ public class ChallengeAsset_SnapEggs : Main_Challenge {
 
         for (int i = 0; i < eggs.Count; ++i)
         {
+            Debug.Log(i + " " + eggs[i]);
             var info = SnapShots.Find(c => c.Value.CharaCloseIndex == eggs[i]);
             if (info.Value != null)
             {
+                Debug.Log("Remove " + i);
                 eggs.RemoveAt(i);
             }
         }
