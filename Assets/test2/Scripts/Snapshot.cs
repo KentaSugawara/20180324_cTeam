@@ -99,7 +99,7 @@ public class Snapshot : MonoBehaviour
 
         RaycastHit hit;
         //foreach (var egg in EggSpawnerARCore.EggList)
-        foreach (var egg in _TestEggList)
+        foreach (var egg in EggSpawnerARCore.EggList)
         {
             //範囲外なら棄却
             if ((Camera.main.transform.position - egg.transform.position).sqrMagnitude >= m_SnapShotDistance * m_SnapShotDistance) continue;
@@ -118,6 +118,7 @@ public class Snapshot : MonoBehaviour
                     info.CharaState = nchara.CharaState;
                     info.ItemCloseIndex = nchara.PlayingItemIndex;
                     info._Animator = egg.GetComponent<Animator>();
+                    egg.GetComponent<EggBehaviour>()._isTaken = true;
                     EggObjlist.Add(new KeyValuePair<GameObject, SnapShotInfo>(egg, info));
                 }
             }
