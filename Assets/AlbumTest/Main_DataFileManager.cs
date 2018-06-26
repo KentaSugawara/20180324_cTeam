@@ -369,52 +369,65 @@ public class Main_DataFileManager : MonoBehaviour {
     public void CreateFile_PictureBookDataList()
     {
         var file = new FileInfo(getPictureBookDataListPath());
+        //FileStream fs = new FileStream(file.FullName, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.ReadWrite);
         using (StreamWriter sw = file.CreateText())
         {
             sw.WriteLine(JsonUtility.ToJson(new Json_PictureBook_DataList(), true));
+            sw.Close();
         }
     }
 
     public void CreateFile_AlbumDataList()
     {
         var file = new FileInfo(getAlbumDataListPath());
+        //FileStream fs = new FileStream(file.FullName, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.ReadWrite);
         using (StreamWriter sw = file.CreateText())
         {
             sw.WriteLine(JsonUtility.ToJson(new Json_Album_DataList(), true));
+            sw.Close();
         }
     }
 
     public void CreateFile_ChallengeDataList()
     {
         var file = new FileInfo(getChallengeDataListPath());
+        //FileStream fs = new FileStream(file.FullName, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.ReadWrite);
         using (StreamWriter sw = file.CreateText())
         {
             sw.WriteLine(JsonUtility.ToJson(new Json_Challenge_DataList(), true));
+            sw.Close();
         }
     }
 
     public void CreateFile_ItemDataList()
     {
         var file = new FileInfo(getItemDataListPath());
+        //FileStream fs = new FileStream(file.FullName, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.ReadWrite);
         using (StreamWriter sw = file.CreateText())
         {
             sw.WriteLine(JsonUtility.ToJson(new Json_Item_DataList(), true));
+            sw.Close();
         }
     }
 
     public void CreateJsonFile<T>(FileInfo file, T Instance)
     {
+        //FileStream fs = new FileStream(file.FullName, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.ReadWrite);
         using (StreamWriter sw = file.CreateText())
         {
             sw.WriteLine(JsonUtility.ToJson(Instance, true));
+            sw.Close();
         }
     }
 
     public T getJsonClassInstance<T> (FileInfo file)
     {
-        using (StreamReader sr = new StreamReader(file.OpenRead()))
+        //FileStream fs = new FileStream(file.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+        using (StreamReader sr = file.OpenText())
         {
-            return JsonUtility.FromJson<T>(sr.ReadToEnd());
+            T j = JsonUtility.FromJson<T>(sr.ReadToEnd());
+            sr.Close();
+            return j;
         }
     }
 
