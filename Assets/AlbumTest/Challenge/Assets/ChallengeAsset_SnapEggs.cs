@@ -27,6 +27,7 @@ public class ChallengeAsset_SnapEggs : Main_Challenge {
             {
                 Debug.Log("Remove " + i);
                 eggs.RemoveAt(i);
+                --i;
             }
         }
 
