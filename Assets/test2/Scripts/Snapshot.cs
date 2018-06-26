@@ -99,7 +99,7 @@ public class Snapshot : MonoBehaviour
 
         RaycastHit hit;
         //foreach (var egg in EggSpawnerARCore.EggList)
-        foreach (var egg in _TestEggList)
+        foreach (var egg in EggSpawnerARCore.EggList)
         {
             if (egg == null) continue;
             //範囲外なら棄却
