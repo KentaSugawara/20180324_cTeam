@@ -370,7 +370,8 @@ public class Main_DataFileManager : MonoBehaviour {
     {
         var file = new FileInfo(getPictureBookDataListPath());
         //FileStream fs = new FileStream(file.FullName, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.ReadWrite);
-        using (StreamWriter sw = file.CreateText())
+        File.CreateText(file.FullName).Dispose();
+        using (StreamWriter sw = new StreamWriter(file.FullName, false))
         {
             sw.WriteLine(JsonUtility.ToJson(new Json_PictureBook_DataList(), true));
             sw.Close();
@@ -381,7 +382,8 @@ public class Main_DataFileManager : MonoBehaviour {
     {
         var file = new FileInfo(getAlbumDataListPath());
         //FileStream fs = new FileStream(file.FullName, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.ReadWrite);
-        using (StreamWriter sw = file.CreateText())
+        File.CreateText(file.FullName).Dispose();
+        using (StreamWriter sw = new StreamWriter(file.FullName, false))
         {
             sw.WriteLine(JsonUtility.ToJson(new Json_Album_DataList(), true));
             sw.Close();
@@ -392,7 +394,8 @@ public class Main_DataFileManager : MonoBehaviour {
     {
         var file = new FileInfo(getChallengeDataListPath());
         //FileStream fs = new FileStream(file.FullName, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.ReadWrite);
-        using (StreamWriter sw = file.CreateText())
+        File.CreateText(file.FullName).Dispose();
+        using (StreamWriter sw = new StreamWriter(file.FullName, false))
         {
             sw.WriteLine(JsonUtility.ToJson(new Json_Challenge_DataList(), true));
             sw.Close();
@@ -403,7 +406,8 @@ public class Main_DataFileManager : MonoBehaviour {
     {
         var file = new FileInfo(getItemDataListPath());
         //FileStream fs = new FileStream(file.FullName, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.ReadWrite);
-        using (StreamWriter sw = file.CreateText())
+        File.CreateText(file.FullName).Dispose();
+        using (StreamWriter sw = new StreamWriter(file.FullName, false))
         {
             sw.WriteLine(JsonUtility.ToJson(new Json_Item_DataList(), true));
             sw.Close();
@@ -413,7 +417,8 @@ public class Main_DataFileManager : MonoBehaviour {
     public void CreateJsonFile<T>(FileInfo file, T Instance)
     {
         //FileStream fs = new FileStream(file.FullName, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.ReadWrite);
-        using (StreamWriter sw = file.CreateText())
+        File.CreateText(file.FullName).Dispose();
+        using (StreamWriter sw = new StreamWriter(file.FullName, false))
         {
             sw.WriteLine(JsonUtility.ToJson(Instance, true));
             sw.Close();

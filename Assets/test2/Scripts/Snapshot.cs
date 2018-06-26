@@ -99,7 +99,7 @@ public class Snapshot : MonoBehaviour
 
         RaycastHit hit;
         //foreach (var egg in EggSpawnerARCore.EggList)
-        foreach (var egg in EggSpawnerARCore.EggList)
+        foreach (var egg in _TestEggList)
         {
             //範囲外なら棄却
             if ((Camera.main.transform.position - egg.transform.position).sqrMagnitude >= m_SnapShotDistance * m_SnapShotDistance) continue;
