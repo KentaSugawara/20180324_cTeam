@@ -129,6 +129,8 @@ public class snapshot_Tutorial : Snapshot {
         }
 
         _Tutorial_SnapShotEgg.CheckSnapShot(EggObjlist);
+
+        _AlbumViewer.SnapShot(m_tex2d);
 #endif
         yield break;
     }
