@@ -66,8 +66,8 @@ public class TargetCollider : MonoBehaviour {
 
 			other.GetComponent<EggBehaviour>().StopAgent(baseItemBehaviour._ID);
 
-			other.transform.position = transform.parent.transform.position;
-			other.transform.rotation = transform.parent.transform.rotation;
+			other.transform.position = transform.parent.position;
+			other.transform.rotation = transform.parent.rotation;
 
 			if (_lastCollider) {
 				var eggList = baseItemBehaviour._eggList;

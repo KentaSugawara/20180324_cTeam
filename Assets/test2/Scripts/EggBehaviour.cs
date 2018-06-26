@@ -85,7 +85,7 @@ public class EggBehaviour : MonoBehaviour {
 			//写真に写された後に画面外なら削除
 			if (_isTaken && !_animator.GetBool(_ID_Playing) && !isInCamera) KillSelf();
 			//プレイヤーから一定距離離れたら削除
-			else if (Vector3.SqrMagnitude((Camera.main.transform.position - transform.position)) > EggSpawnerARCore.DistanceOfAlive * EggSpawnerARCore.DistanceOfAlive) KillSelf();
+			else if (Vector3.SqrMagnitude((_camera.transform.position - transform.position)) > EggSpawnerARCore.DistanceOfAlive * EggSpawnerARCore.DistanceOfAlive) KillSelf();
 		}
 	}
 
@@ -177,7 +177,7 @@ public class EggBehaviour : MonoBehaviour {
 
 	public bool isFaceToCamera {
 		get {
-			if (Vector3.Dot((transform.forward + transform.up * 0.2f).normalized, -Camera.main.transform.forward.normalized) > DotParam)
+			if (Vector3.Dot((transform.forward + transform.up * 0.2f).normalized, -_camera.transform.forward.normalized) > DotParam)
 				return true;
 			else
 				return false;
