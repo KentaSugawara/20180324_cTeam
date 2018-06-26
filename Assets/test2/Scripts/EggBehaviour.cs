@@ -169,7 +169,6 @@ public class EggBehaviour : MonoBehaviour {
 
 	public bool isInCameraForSnap {
 		get {
-			_isTaken = true;
 			return IsInCamera(_tuneParamsForSnap);
 		}
 	}
