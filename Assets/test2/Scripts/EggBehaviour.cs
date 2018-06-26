@@ -17,7 +17,7 @@ public class EggBehaviour : MonoBehaviour {
 	[SerializeField]
 	float _dotParam;
 
-	public Camera _camera { get; set; }
+	public Camera _camera;
 
 	public bool _isTaken { get; set; }
 
