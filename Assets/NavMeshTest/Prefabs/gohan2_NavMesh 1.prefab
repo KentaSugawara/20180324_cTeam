@@ -463,7 +463,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1040794101817482}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -893,6 +893,7 @@ MonoBehaviour:
   _tuneParams: {x: 0.15, y: 0, z: 0}
   _tuneParamsForSnap: {x: -0.2, y: -0.4, z: 0}
   _dotParam: 0.6
+  _camera: {fileID: 0}
   _rigTransform: {fileID: 4078379453110314}
 --- !u!114 &114670283614771758
 MonoBehaviour:

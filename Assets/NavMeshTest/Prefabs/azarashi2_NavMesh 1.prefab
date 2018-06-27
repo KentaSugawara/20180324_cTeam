@@ -762,16 +762,16 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1234703679376500}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0.09, y: 0, z: 0.5}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4311641912289814}
   - {fileID: 4594636082445384}
   - {fileID: 4519861109818530}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4992921327467590
 Transform:
   m_ObjectHideFlags: 1
@@ -1034,11 +1034,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _HARIBOTE: 0
-  _tuneParams: {x: 0, y: 0, z: 0}
-  _tuneParamsForSnap: {x: 0, y: 0, z: 0}
+  _tuneParams: {x: 0.15, y: 0, z: 0}
+  _tuneParamsForSnap: {x: -0.2, y: -0.4, z: 0}
   _dotParam: 0.6
   _camera: {fileID: 0}
-  _rigTransform: {fileID: 0}
+  _rigTransform: {fileID: 4594636082445384}
 --- !u!114 &114837589333298590
 MonoBehaviour:
   m_ObjectHideFlags: 1
