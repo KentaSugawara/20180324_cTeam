@@ -228,6 +228,12 @@ public class Main_ItemViewer : MonoBehaviour {
         return false;
     }
 
+    private IEnumerator Routine_LateOpen()
+    {
+        while (_isMoving || _BackGround.gameObject.activeInHierarchy) { yield return null; }
+        Open();
+    }
+
     [SerializeField]
     private GameObject _Prefab_ItemDragObj;
 
@@ -323,7 +329,7 @@ public class Main_ItemViewer : MonoBehaviour {
         if (_RoutineItem != null) StopCoroutine(_RoutineItem);
         if (_DragObjChild != child || _DragObj == null)
         {
-            if (_inOnlyColse) Open();
+            if (_inOnlyColse) StartCoroutine(Routine_LateOpen());
             return;
         }
 
@@ -338,12 +344,12 @@ public class Main_ItemViewer : MonoBehaviour {
             }
             else
             {
-                Open();
+                StartCoroutine(Routine_LateOpen());
             }
         }
         else
         {
-            if (_inOnlyColse) Open();
+            if (_inOnlyColse) StartCoroutine(Routine_LateOpen());
         }
 
         Destroy(_DragObj.gameObject);

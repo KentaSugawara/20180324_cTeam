@@ -95,6 +95,7 @@ public class Main_PictureBookManager : MonoBehaviour {
 
         if (isChenge)
         {
+            DatafileManager.Save_PictureBookData(CharacterSaveData);
             UpdateisNew();
         }
     }
