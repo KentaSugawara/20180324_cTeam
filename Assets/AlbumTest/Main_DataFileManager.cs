@@ -176,21 +176,19 @@ public class Main_DataFileManager : MonoBehaviour {
 
     public Json_Item_DataList Load_ItemData()
     {
-        string FilePath = getRootPath();
         var file = new FileInfo(getItemDataListPath());
 
         //ファイルが存在しなかったら
         if (!file.Exists)
         {
             //新規作成
-            CreateFile_ChallengeDataList();
+            CreateFile_ItemDataList();
             return new Json_Item_DataList();
             //file = new FileInfo(FilePath + "/PictureBookDataList.json");
         }
 
         //アルバムリストのインスタンスを受け取る
         var itemlist = getJsonClassInstance<Json_Item_DataList>(file);
-
         return itemlist;
     }
 
@@ -494,6 +492,7 @@ public class Main_DataFileManager : MonoBehaviour {
     public string getItemDataListPath()
     {
         string FullPath = FullPath = Application.persistentDataPath + "/ItemDataList.json";
+        Debug.Log(FullPath);
     #if UNITY_ANDROID
         FullPath = Application.persistentDataPath + "/ItemDataList.json";
     #endif

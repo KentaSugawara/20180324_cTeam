@@ -255,12 +255,12 @@ public class Main_AlbumViewer : MonoBehaviour {
 
         string fileName
             = "Image"
-            + picture.Year
-            + picture.Month
-            + picture.Day
-            + picture.Hour
-            + picture.Minute
-            + picture.Second;
+            + picture.Year.ToString("D4")
+            + picture.Month.ToString("D2")
+            + picture.Day.ToString("D2")
+            + picture.Hour.ToString("D2")
+            + picture.Minute.ToString("D2")
+            + picture.Second.ToString("D2");
 
         picture.FileName = fileName + ".png";
         picture.FileName_Small = fileName + "_s.png";

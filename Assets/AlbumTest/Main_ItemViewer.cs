@@ -204,6 +204,18 @@ public class Main_ItemViewer : MonoBehaviour {
             var obj = Instantiate(item.Prefab, pose.position, /*pose.rotation*/item.Prefab.transform.rotation * Quaternion.Euler(0.0f, Camera.main.transform.rotation.eulerAngles.y + 90.0f, 0.0f));
             obj.transform.localScale *= 0.45f;
 
+            if (_CurrentItemInstance != null)
+            {
+                //アンカーごと消す
+                if (_CurrentItemInstance.transform.parent != null)
+                    Destroy(_CurrentItemInstance.transform.parent.gameObject);
+                if (_CurrentItemInstance != null)
+                {
+                    Destroy(_CurrentItemInstance);
+                }
+            }
+            _CurrentItemInstance = obj;
+
             var plane = _ItemRayCastHit.collider.gameObject.GetComponent<GoogleARCore.Examples.Common.DetectedPlaneVisualizer>();
 
             if (plane != null)
@@ -212,14 +224,6 @@ public class Main_ItemViewer : MonoBehaviour {
 
                 // Make Andy model a child of the anchor.
                 obj.transform.parent = anchor.transform;
-
-
-                if (_CurrentItemInstance != null)
-                {
-                    //アンカーごと消す
-                    Destroy(_CurrentItemInstance.transform.parent.gameObject);
-                }
-                _CurrentItemInstance = obj;
 
                 Debug.Log("ItemSpawn");
                 return true;
@@ -302,17 +306,26 @@ public class Main_ItemViewer : MonoBehaviour {
 
         while (true)
         {
-            ray = Camera.main.ScreenPointToRay(Input.mousePosition); //床のみ
-            if (Physics.Raycast(ray, out _ItemRayCastHit, _MaxDistanceOfItemRayCast, 1 << 12))
+            if (Camera.main != null)
             {
-                _DragObj.SetActive_CanNotSetImage(false);
-                _canSetItem = true;
+                ray = Camera.main.ScreenPointToRay(Input.mousePosition); //床のみ
+                if (Physics.Raycast(ray, out _ItemRayCastHit, _MaxDistanceOfItemRayCast, 1 << 12))
+                {
+                    _DragObj.SetActive_CanNotSetImage(false);
+                    _canSetItem = true;
+                }
+                else
+                {
+                    _DragObj.SetActive_CanNotSetImage(true);
+                    _canSetItem = false;
+                }
             }
             else
             {
                 _DragObj.SetActive_CanNotSetImage(true);
                 _canSetItem = false;
             }
+
 
             if (Input.GetMouseButtonUp(0))
             {
@@ -327,11 +340,6 @@ public class Main_ItemViewer : MonoBehaviour {
     public void ReleaseDragObj(Main_ItemViewerNode child)
     {
         if (_RoutineItem != null) StopCoroutine(_RoutineItem);
-        if (_DragObjChild != child || _DragObj == null)
-        {
-            if (_inOnlyColse) StartCoroutine(Routine_LateOpen());
-            return;
-        }
 
         _Audio_ItemRelease.Play();
         Debug.Log(Input.mousePosition + " " + _Left.position);
