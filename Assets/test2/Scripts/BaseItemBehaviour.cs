@@ -16,5 +16,9 @@ public class BaseItemBehaviour : MonoBehaviour {
 		_animator = GetComponent<Animator>();
 	}
 
+	private void OnDisable() {
+		_eggList.ForEach(egg => egg.GetComponent<EggBehaviour>().SetTrigger(EggBehaviour.EggState.Free));
+	}
+
 	public void PlayAnimation() { _animator.SetTrigger("Play"); }
 }

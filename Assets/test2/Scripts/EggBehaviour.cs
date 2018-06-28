@@ -45,12 +45,14 @@ public class EggBehaviour : MonoBehaviour {
 		Trampoline,
 		Wheel,
 		WoodBlockA, WoodBlockB, WoodBlockC,
+
+		Free,
 	}
 
 	static Dictionary<EggState, string> triggers = new Dictionary<EggState, string>(){
 		{ EggState.Idle,        "Idle" },
 		{ EggState.Walk,        "Walk" },
-		{ EggState.Run,         "Run" },
+		{ EggState.Run,         "Run"  },
 		{ EggState.Jump,        "Jump" },
 		{ EggState.CampFireA,   "Play_CampFire_A" },
 		{ EggState.CampFireB,   "Play_CampFire_B" },
@@ -63,6 +65,7 @@ public class EggBehaviour : MonoBehaviour {
 		{ EggState.WoodBlockA,  "Play_WoodBlock_A"  },
 		{ EggState.WoodBlockB,  "Play_WoodBlock_B"  },
 		{ EggState.WoodBlockC,  "Play_WoodBlock_C"  },
+		{ EggState.Free,		"Free"  },
 	};
 
 	//

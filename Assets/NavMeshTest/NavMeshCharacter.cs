@@ -208,6 +208,7 @@ public class NavMeshCharacter : MonoBehaviour {
         _PlayingItemIndex = ItemIndex;
         _CharaState = eCharaState.isItemPlaying;
         Stop();
+		Debug.Log(_PlayingItemIndex);
     }
 
     public void EndItemPlaying()
