@@ -100,11 +100,12 @@ public class Main_ItemViewer : MonoBehaviour {
             if (_DragObj != null)
             {
                 Destroy(_DragObj.gameObject);
+                _DragObj = null;
                 _DragObjChild = null;
             }
 
             ListUpItems();
-            StopAllCoroutines();
+            //StopAllCoroutines();
             StartCoroutine(Routine_Open());
         }
     }
@@ -113,6 +114,12 @@ public class Main_ItemViewer : MonoBehaviour {
     {
         if (!_isMoving && !StopClose)
         {
+            if (_DragObj != null)
+            {
+                Destroy(_DragObj.gameObject);
+                _DragObj = null;
+                _DragObjChild = null;
+            }
             StopAllCoroutines();
             Main_ItemManager.UpdateisNew();
             _ReleaseScreen.SetActive(false);

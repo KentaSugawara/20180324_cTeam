@@ -182,7 +182,6 @@ public class NavMeshCharacter : MonoBehaviour {
     }
 
     public void Play() {
-        _PlayingItemIndex = null;
         _Agent.enabled = true;
         _CharaFieldOfVision.Play();
         StartCoroutine(Routine_Main());
@@ -191,7 +190,6 @@ public class NavMeshCharacter : MonoBehaviour {
     }
 
     public void Stop() {
-        _PlayingItemIndex = null;
         _CharaFieldOfVision.Stop();
         StopAllCoroutines();
         _Agent.isStopped = true;
