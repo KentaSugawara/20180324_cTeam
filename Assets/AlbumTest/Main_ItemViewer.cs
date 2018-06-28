@@ -256,6 +256,7 @@ public class Main_ItemViewer : MonoBehaviour {
         if (_DragObj != null)
         {
             Destroy(_DragObj.gameObject);
+			_DragObj = null;
             _DragObjChild = null;
         }
 
@@ -360,9 +361,12 @@ public class Main_ItemViewer : MonoBehaviour {
             if (_inOnlyColse) StartCoroutine(Routine_LateOpen());
         }
 
-        Destroy(_DragObj.gameObject);
-        _DragObjChild = null;
-    }
+		if (_DragObj != null) {
+			Destroy(_DragObj.gameObject);
+			_DragObj = null;
+			_DragObjChild = null;
+		}
+	}
 
     public void SetNew(int NumOfNew)
     {

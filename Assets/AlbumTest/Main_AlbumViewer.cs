@@ -92,7 +92,12 @@ public class Main_AlbumViewer : MonoBehaviour {
     {
         var album = _DataFileManager.Load_AlbumData();
         _AlbumDataList = album;
-        _AlbumDataList.Pictures.Sort((a,b)=> b.FileName.CompareTo(a.FileName));
+		_AlbumDataList.Pictures.Sort((a,b)=> b.Year - a.Year);
+		_AlbumDataList.Pictures.Sort((a, b) => b.Month - a.Month);
+		_AlbumDataList.Pictures.Sort((a, b) => b.Day - a.Day);
+		_AlbumDataList.Pictures.Sort((a, b) => b.Hour - a.Hour);
+		_AlbumDataList.Pictures.Sort((a, b) => b.Minute - a.Minute);
+		_AlbumDataList.Pictures.Sort((a, b) => b.Second - a.Second);
         _Text_NumOfPictures.text = "0枚";
 
         int NumOfLoding = 0;

@@ -62,5 +62,5 @@ namespace GoogleARCore.Examples.Common
                 planeObject.GetComponent<DetectedPlaneVisualizer>().Initialize(m_NewPlanes[i]);
             }
         }
-    }
+	}
 }

@@ -133,6 +133,15 @@ public class Snapshot : MonoBehaviour
                 }
                 else
                 {
+					if (nchara.CharaState == NavMeshCharacter.eCharaState.isItemPlaying) {
+						var info = new SnapShotInfo();
+						info.CharaCloseIndex = egg.GetComponent<EggData>()._closeID;
+						info.CharaState = nchara.CharaState;
+						info.ItemCloseIndex = nchara.PlayingItemIndex;
+						info._Animator = egg.GetComponent<Animator>();
+						eggbhaviour._isTaken = true;
+						EggObjlist.Add(new KeyValuePair<GameObject, SnapShotInfo>(egg, info));
+					}
                     Debug.Log("RayCast失敗");
                 }
             }

@@ -146,7 +146,7 @@ public class EggBehaviour : MonoBehaviour {
 		var M_P = _camera.projectionMatrix;
 		var M_VP = M_P * M_V;
 
-		var pos = transform.position;
+		var pos = _rigTransform.position;
 		var p = M_VP * new Vector4(pos.x, pos.y, pos.z, 1.0f);
 
 		if (p.w == 0) return true;
