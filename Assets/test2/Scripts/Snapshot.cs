@@ -52,6 +52,9 @@ public class Snapshot : MonoBehaviour
     protected float m_SnapShotDistance;
 
     [SerializeField]
+    protected float m_SnapShotDistance_PlayingItem = 3.0f;
+
+    [SerializeField]
     protected RectTransform m_PictureBookButton;
 
     [SerializeField]
@@ -102,15 +105,28 @@ public class Snapshot : MonoBehaviour
         foreach (var egg in EggSpawnerARCore.EggList)
         {
             if (egg == null) continue;
-            //範囲外なら棄却
-            if ((Camera.main.transform.position - egg.transform.position).sqrMagnitude >= m_SnapShotDistance * m_SnapShotDistance)
-            {
-                Debug.Log("遠い");
-                continue;
-            }
 
             var eggbhaviour = egg.GetComponent<EggBehaviour>();
             var nchara = egg.GetComponent<NavMeshCharacter>();
+            //範囲外なら棄却
+            if (nchara.CharaState != NavMeshCharacter.eCharaState.isItemPlaying)
+            {
+                if ((Camera.main.transform.position - egg.transform.position).sqrMagnitude >= m_SnapShotDistance * m_SnapShotDistance)
+                {
+                    Debug.Log("遠い");
+                    continue;
+                }
+            }
+            else
+            {
+                if ((Camera.main.transform.position - egg.transform.position).sqrMagnitude >= m_SnapShotDistance_PlayingItem * m_SnapShotDistance_PlayingItem)
+                {
+                    Debug.Log("遠い");
+                    continue;
+                }
+            }
+
+
             if (eggbhaviour.isInCameraForSnap && (nchara.CharaState == NavMeshCharacter.eCharaState.isItemPlaying || eggbhaviour.isFaceToCamera))
             {
                 var vector = (egg.transform.position - Camera.main.transform.position);

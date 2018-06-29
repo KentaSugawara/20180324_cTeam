@@ -60,7 +60,7 @@ public class Main_PictureBookManager : MonoBehaviour {
                 if (savedata.NumOfPhotos <= 0)
                 {
                     var CharaData = CharacterList.CharacterList.Find(c => c.CloseID == keyValue.Value.CharaCloseIndex);
-                    if (CharaData != null)
+                    if (CharaData != null && keyValue.Value.CharaState != NavMeshCharacter.eCharaState.isItemPlaying)
                     {
                         NewList.Add(new KeyValuePair<GameObject, Sprite>(keyValue.Key, CharaData.CharaNameSprite));
                     }

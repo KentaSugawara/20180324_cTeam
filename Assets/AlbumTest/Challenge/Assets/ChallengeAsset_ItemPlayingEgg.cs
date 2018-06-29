@@ -18,11 +18,14 @@ public class ChallengeAsset_ItemPlayingEgg : Main_Challenge {
     private int _CharaCloseID = -1;
 
     [SerializeField]
+    private bool _CheckAnimatorState;
+
+    [SerializeField]
     private string _AnimatorStateName = "";
 
     public override bool Check(List<KeyValuePair<GameObject, SnapShotInfo>> SnapShots)
     {
-        if (SnapShots == null && SnapShots.Count <= 0) return false;
+        if (SnapShots == null || SnapShots.Count <= 0) return false;
         if (ItemCloseID < 0) return false;
 
         int cnt = 0;
@@ -34,11 +37,12 @@ public class ChallengeAsset_ItemPlayingEgg : Main_Challenge {
             {
                 if (_CharaCloseID < 0 || s.Value.CharaCloseIndex == _CharaCloseID)
                 {
-                    if (_AnimatorStateName == "") {
+                    if (!_CheckAnimatorState || _AnimatorStateName == "") {
                         ++cnt;
                     }
                     else
                     {
+                        if (s.Value._Animator == null) continue;
                         var info = s.Value._Animator.GetCurrentAnimatorStateInfo(0);
                         if (info.IsName(_AnimatorStateName))
                         {
@@ -48,6 +52,6 @@ public class ChallengeAsset_ItemPlayingEgg : Main_Challenge {
                 }
             }
         }
-        return _NumOfChara == cnt;
+        return _NumOfChara <= cnt;
     }
 }
