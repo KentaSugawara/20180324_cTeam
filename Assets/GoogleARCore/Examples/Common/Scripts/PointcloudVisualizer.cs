@@ -46,8 +46,6 @@ namespace GoogleARCore.Examples.Common
 		/// Unity update.
 		/// </summary>
 		public void Update() {
-			Debug.Log(GoogleARCoreInternal.ARCoreAndroidLifecycleManager.Instance != null ? "exist" : "null");
-
 			// Fill in the data to draw the point cloud.
 			if (Frame.PointCloud.IsUpdatedThisFrame) {
 				// Copy the point cloud points for mesh verticies.
